@@ -1,0 +1,25 @@
+@import "~bootstrap/scss/bootstrap";
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+
+/* Base */
+@import "base/_reset.scss";
+@import "base/_typography.scss";
+
+/* Components */
+@import "components/_buttons.scss";
+@import "components/_forms.scss";
+
+/* Layout */
+@import "layout/_header.scss";
+@import "layout/_footer.scss";
+@import "layout/_nav.scss";
+
+/* Pages */
+@import "pages/_home.scss";
+
+/* Themes */
+@import "themes/_theme.scss";
+
+/* Utils */
+@import "utils/_mixins.scss";
+@import "utils/_variables.scss";
