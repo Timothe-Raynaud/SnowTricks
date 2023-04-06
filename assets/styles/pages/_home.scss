@@ -1,0 +1,27 @@
+#banner-home {
+  position: relative;
+
+  #catch-phrase {
+    background-color: rgba(50, 50, 50, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #tricks-arrow-anchor{
+    a{
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      padding: 5px 15px;
+      background-color: rgba(0, 0, 0, 0.2);
+      font-size: 2em;
+      border-radius: 10px;
+      color: white;
+
+      &:hover{
+        color: lightgray;
+      }
+    }
+  }
+}

@@ -1,3 +1,18 @@
-<header>
-    <div>I'm header</div>
+<header id="header" class="px-4">
+    <div class="d-sm-none d-block">
+        <div id="hamburger">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </div>
+    <div class="container-fluid d-sm-flex d-none justify-content-between align-items-center py-2 ">
+        <div id="logo" class="h-100">
+            <img src="{{ asset('images/pages/logo.jpg') }}" class="img-fluid h-100" alt="logo">
+        </div>
+        <ul id="nav" class="d-flex align-items-center">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Tricks</a></li>
+            <li><a href="#">Sign in</a></li>
+            <li><a href="#">Sign up</a></li>
+        </ul>
+    </div>
 </header>
