@@ -1,0 +1,77 @@
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity()
+ * @ORM\Table(name="tricks")
+ **/
+class Tricks
+{
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
+     */
+    private ?int $trick_id = null;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private ?string $name = null;
+
+    /**
+     * @ORM\Column(type="string", length=3000)
+     */
+    private ?string $description = null;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypesTricks")
+     * @ORM\JoinColumn(name="type_trick_id", referencedColumnName="trick_id")
+     */
+    private ?TypesTricks $type = null;
+
+    public function getId(): ?int
+    {
+        return $this->trick_id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getType(): ?TypesTricks
+    {
+        return $this->type;
+    }
+
+    public function setType(TypesTricks $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+}

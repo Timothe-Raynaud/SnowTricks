@@ -2,6 +2,16 @@
   position: relative;
 
   #catch-phrase {
+
+    -webkit-animation-name: fadeInOpacity;
+    animation-name: fadeInOpacity;
+    -webkit-animation-iteration-count: 1;
+    animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+    -webkit-animation-duration: 1.5s;
+    animation-duration: 1.5s;
+
     background-color: rgba(50, 50, 50, 0.8);
     display: flex;
     justify-content: center;
@@ -14,14 +24,33 @@
       bottom: 20px;
       right: 20px;
       padding: 5px 15px;
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: rgba(0, 0, 0, 0.15);
       font-size: 2em;
       border-radius: 10px;
       color: white;
 
       &:hover{
+        background-color: rgba(0, 0, 0, 0.3);
         color: lightgray;
       }
     }
+  }
+}
+
+@-webkit-keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

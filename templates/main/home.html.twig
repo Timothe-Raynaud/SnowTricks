@@ -1,0 +1,32 @@
+{% extends 'layout/_layout.html.twig' %}
+
+{% block title %}{{ siteName }}{% endblock %}
+
+{% block main %}
+    <div {{ stimulus_controller('anchor') }}>
+        <div id="banner-home"
+             style="
+                     background-image:url('{{ asset('images/pages/banner-home.jpg') }}');
+                     background-size: cover;
+                     background-position: top left;
+                     background-repeat: no-repeat;
+                     height: 90vh;
+                     ">
+            <div id="catch-phrase" class="container-fluid">
+                <h3 class="w-50 text-center border-top border-bottom border-1 border-white py-4 fs-4 text-white">
+                    Découvrez les secrets des plus grandes figures de snowboard sur notre plateforme de référence.
+                </h3>
+            </div>
+            <div id="tricks-arrow-anchor">
+                <a href="" data-action="click->anchor#moveTo" >
+                    <i class="fa-solid fa-arrow-down"></i>
+                </a>
+            </div>
+        </div>
+        <div data-anchor-target="path" class="container">
+            <div class="p-4 my-5">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
