@@ -39,6 +39,16 @@ class TricksRepository extends ServiceEntityRepository
         }
     }
 
+    public function getAllTricksWithType()
+    {
+        return $this->createQueryBuilder('t')
+            ->leftJoin('t.type', 'type')
+            ->addSelect('type')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 //    /**
 //     * @return Tricks[] Returns an array of Tricks objects
 //     */

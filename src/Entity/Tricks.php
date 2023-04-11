@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\TypesTricks;
 
 /**
  * @ORM\Entity()
@@ -18,23 +19,22 @@ class Tricks
     private ?int $trick_id = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=100)
      */
-    private ?string $name = null;
+    private string $name;
 
     /**
      * @ORM\Column(type="string", length=3000)
      */
-    private ?string $description = null;
+    private string $description;
 
     /**
-     * @ORM\Column(type="integer")
      * @ORM\ManyToOne(targetEntity="App\Entity\TypesTricks")
-     * @ORM\JoinColumn(name="type_trick_id", referencedColumnName="trick_id")
+     * @ORM\JoinColumn(name="type_trick_id", referencedColumnName="type_trick_id")
      */
-    private ?TypesTricks $type = null;
+    private TypesTricks $type;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->trick_id;
     }

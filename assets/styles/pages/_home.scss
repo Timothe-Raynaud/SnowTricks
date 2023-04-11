@@ -1,3 +1,5 @@
+@import '../utils/_variables.scss';
+
 #banner-home {
   position: relative;
 
@@ -23,7 +25,7 @@
       position: absolute;
       bottom: 20px;
       right: 20px;
-      padding: 5px 15px;
+      padding: 5px 20px;
       background-color: rgba(0, 0, 0, 0.15);
       font-size: 2em;
       border-radius: 10px;
@@ -36,6 +38,34 @@
     }
   }
 }
+
+#load-more{
+  border-top: 1px solid $gray;
+  text-align: center;
+
+  a{
+    color: black;
+    text-decoration: none;
+
+    span{
+      display: block;
+      margin-top: 0.7em;
+      line-height: 0.5em;
+    }
+    i{
+      font-size: 1em;
+    }
+
+    &:hover{
+      color: $primary;
+
+      i{
+        font-size: 1.3em;
+      }
+    }
+  }
+}
+
 
 @-webkit-keyframes fadeInOpacity {
   0% {

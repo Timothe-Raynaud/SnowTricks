@@ -2,15 +2,15 @@ import { Controller } from '@hotwired/stimulus';
 
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
-    static targets = ["path"];
+    static targets = ["path"]
 
     moveTo(event) {
-        event.preventDefault();
+        event.preventDefault()
 
-        let target = this.pathTarget;
+        let target = this.pathTarget
 
         if (target) {
-            target.scrollIntoView({ behavior: "smooth" });
+            target.scrollIntoView({ behavior: "smooth" })
         }
     }
 }
