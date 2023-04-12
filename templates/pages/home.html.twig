@@ -24,9 +24,11 @@
                 </a>
             </div>
         </div>
-        <div data-anchor-target="path" class="container-fluid mt-4" {{ stimulus_controller('loader') }}>
+        <div data-anchor-target="path" class="container-fluid row justify-content-center" {{ stimulus_controller('loader') }}>
 
-            <div class="container-fluid" data-loader-target="tricksContainer"></div>
+            <div class="row g-4 px-4 justify-content-center" data-loader-target="tricksContainer"></div>
+
+            <div id="load-more" class="col-8 mt-4" data-loader-target="buttonDisplayMore"></div>
 
         </div>
 
