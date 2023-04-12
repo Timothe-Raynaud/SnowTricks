@@ -4,9 +4,10 @@
 
 {% block main %}
     <div {{ stimulus_controller('anchor') }}>
+
         <div id="banner-home"
              style="
-                     background-image:url('{{ asset('images/pages/banner-home.jpg') }}');
+                     background-image:url('{{ asset('images/pages/home/banner-home.jpg') }}');
                      background-size: cover;
                      background-position: top left;
                      background-repeat: no-repeat;
@@ -17,7 +18,7 @@
                     Découvrez les secrets des plus grandes figures de snowboard sur notre plateforme de référence.
                 </h3>
             </div>
-            <div id="tricks-arrow-anchor">
+            <div id="tricks-arrow-anchor-down">
                 <a href="" data-action="click->anchor#moveTo" >
                     <i class="fa-solid fa-arrow-down"></i>
                 </a>
@@ -28,5 +29,12 @@
             <div class="container-fluid" data-loader-target="tricksContainer"></div>
 
         </div>
+
+        <div id="tricks-arrow-anchor-up" class="d-none">
+            <a href="" data-action="click->anchor#moveTo" >
+                <i class="fa-solid fa-arrow-up"></i>
+            </a>
+        </div>
+
     </div>
 {% endblock %}

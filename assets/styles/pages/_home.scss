@@ -20,7 +20,7 @@
     align-items: center;
   }
 
-  #tricks-arrow-anchor{
+  #tricks-arrow-anchor-down{
     a{
       position: absolute;
       bottom: 20px;
@@ -36,6 +36,55 @@
         color: lightgray;
       }
     }
+  }
+
+}
+
+#tricks-arrow-anchor-up{
+  a{
+    position: absolute;
+    bottom: 1em;
+    right: 20px;
+    padding: 5px 20px;
+    background-color: rgba(0, 0, 0, 0.4);
+    font-size: 2em;
+    border-radius: 10px;
+    color: white;
+
+    &:hover{
+      background-color: rgba(0, 0, 0, 0.6);
+      color: lightgray;
+    }
+  }
+}
+
+.tricks-card{
+  box-shadow: 1px 1px 10px rgba(10, 10, 10, 0.3),
+            -1px -1px 10px rgba(10, 10, 10, 0.3);
+
+  &:hover{
+    box-shadow: 1px 1px 15px rgba(10, 10, 10, 0.35),
+                 1px 1px 15px rgba(10, 10, 10, 0.35);
+  }
+
+  .card-header{
+    text-transform: capitalize;
+    text-align: center;
+    color: #f0eee6;
+  }
+
+  .card-text{
+    text-transform: capitalize;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 70px;
+  }
+
+  .card-footer{
+    text-align: center;
+    text-transform: capitalize;
+    color: #f0eee6;
   }
 }
 

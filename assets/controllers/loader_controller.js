@@ -1,7 +1,7 @@
-import {Controller} from '@hotwired/stimulus';
+import {Controller} from '@hotwired/stimulus'
 
 export default class extends Controller {
-    static targets = ['loader', 'tricksContainer']
+    static targets = ['tricksContainer']
     static values = {
         displayRecurrence : {type : Number, default : 2},
         tricksByRow : Array,
@@ -23,6 +23,10 @@ export default class extends Controller {
     loadMore(){
         this.displayRecurrenceValue = this.displayRecurrenceValue + 1
         this.displayTricks()
+        if (this.displayRecurrenceValue === 3){
+            const anchor = document.getElementById('tricks-arrow-anchor-up')
+            anchor.classList.remove('d-none')
+        }
     }
 
     generateTricksHtml() {
@@ -34,10 +38,13 @@ export default class extends Controller {
 
             for (const trick of this.tricksByRowValue[i]) {
                 tricksHtml += `
-                    <div class="card shadow col-xl-2 col-lg-3 col-md-5 col-10 mx-2 p-0 tricks-card">
-                        <h2 class="card-header text-white bg-primary ">${trick.name}</h2>
+                    <div class="card border-0 col-xl-2 col-lg-3 col-md-5 col-10 mx-2 p-0 tricks-card">
+                        <h2 class="card-header bg-primary text-uppercase">${trick.name}</h2>
                         <div class="card-img-top">
-                            ${trick.image ? `<img src="${trick.image}" alt="${trick.image.name}" class="img-fluid">` : ''}
+                            ${trick.image ? 
+                                `<img src="${this.assetPath(trick.image)}" alt="${trick.image.name}" height="220px" width="100%">` : 
+                                `<img src="${this.assetPath('images/tricks/default.jpg')}" alt="default" height="220px" width="100%">
+                            `}
                         </div>
                         <div class="card-body">
                             <p class="card-text">${trick.description}</p>
@@ -48,7 +55,6 @@ export default class extends Controller {
                     </div>
                 `
             }
-
 
             if (maxIterations !== this.tricksByRowValue.length && i === (maxIterations - 1) ){
                 tricksHtml += `
@@ -64,6 +70,19 @@ export default class extends Controller {
         tricksHtml += '</div>'
 
         return tricksHtml
+    }
+
+    assetPath(path) {
+        const assetHost = this.assetHost()
+        if (!assetHost) {
+            return path
+        }
+        return new URL(path, assetHost).toString()
+    }
+
+    assetHost() {
+        const assetHostMeta = document.head.querySelector('meta[name="asset-host"]');
+        return assetHostMeta ? assetHostMeta.getAttribute('content') || '' : '';
     }
 
 }
