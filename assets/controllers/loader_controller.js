@@ -49,8 +49,8 @@ export default class extends Controller {
                     <h2 class="card-header bg-primary text-uppercase">${trick.name}</h2>
                     <div class="card-img-top">
                         ${trick.image ?
-                `<img src="${this.assetPath(trick.image)}" alt="${trick.image.name}" height="220px" width="100%">` :
-                `<img src="${this.assetPath('images/tricks/default.jpg')}" alt="default" height="220px" width="100%">
+                `<img src="/images/tricks/${this.assetPath(trick.image)}" alt="${trick.image.name}" height="220px" width="100%">` :
+                `<img src="/images/tricks/default.jpg" alt="default" height="220px" width="100%">
                         `}
                     </div>
                     <div class="card-body">
@@ -88,20 +88,6 @@ export default class extends Controller {
             const anchor = document.getElementById('tricks-arrow-anchor-up')
             anchor.classList.remove('d-none')
         }
-    }
-
-    // Path for image search
-    assetPath(path) {
-        const assetHost = this.assetHost()
-        if (!assetHost) {
-            return path
-        }
-        return new URL(path, assetHost).toString()
-    }
-
-    assetHost() {
-        const assetHostMeta = document.head.querySelector('meta[name="asset-host"]');
-        return assetHostMeta ? assetHostMeta.getAttribute('content') || '' : '';
     }
 
 }
