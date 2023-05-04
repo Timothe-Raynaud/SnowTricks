@@ -22,6 +22,11 @@ class TypesTricks
      */
     private string $name;
 
+    public function setId(?int $type_trick_id): void
+    {
+        $this->type_trick_id = $type_trick_id;
+    }
+
     public function getId(): int
     {
         return $this->type_trick_id;

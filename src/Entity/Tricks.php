@@ -34,6 +34,14 @@ class Tricks
      */
     private TypesTricks $type;
 
+    /**
+     * @param int|null $trick_id
+     */
+    public function setId(?int $trick_id): void
+    {
+        $this->trick_id = $trick_id;
+    }
+
     public function getId(): int
     {
         return $this->trick_id;
