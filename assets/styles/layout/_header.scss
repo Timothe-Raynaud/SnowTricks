@@ -1,0 +1,39 @@
+@import "../utils/_variables.scss";
+
+
+#header {
+  height: 10vh;
+
+  #hamburger{
+    color: black;
+    font-size: 3em;
+    text-align: center;
+
+    &:hover{
+      color: $primary;
+    }
+  }
+
+  ul {
+
+    margin-right: 1rem;
+    margin-bottom: 0;
+
+    li {
+      &:not(:last-child) {
+        border-right: 1px solid black;
+      }
+    }
+
+    a {
+      padding: 0 10px;
+      list-style: none;
+      text-decoration: none;
+      color: black;
+
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+}

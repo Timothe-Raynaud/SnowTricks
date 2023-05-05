@@ -10,6 +10,9 @@
 
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
+        <script>
+            window.APP_BASE_PATH = '/public/';
+        </script>
     {% endblock %}
 </head>
 <body>
