@@ -71,13 +71,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return ['ROLE_USER'];
     }
 
-    // TODO - Mettre en place une exception
-    public function getSalt()
+    public function getSalt() : ?string
     {
         return null;
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials() : void
     {
     }
 

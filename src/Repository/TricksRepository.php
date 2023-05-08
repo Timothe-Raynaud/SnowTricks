@@ -39,7 +39,7 @@ class TricksRepository extends ServiceEntityRepository
         }
     }
 
-    public function getAllTricksWithType()
+    public function getAllTricksWithType() : array
     {
         return $this->createQueryBuilder('t')
             ->leftJoin('t.type', 'type')

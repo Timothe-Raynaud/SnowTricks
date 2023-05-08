@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TricksController extends AbstractController
 {
     /**
-     * @Route("/getTricks", name="getTricks")
+     * @Route("/getTricks", name="getTricks", methods={"GET"})
      */
     public function getTricks(TricksRepository $tricksRepository): Response
     {
