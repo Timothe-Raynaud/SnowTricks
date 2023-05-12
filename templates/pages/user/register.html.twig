@@ -1,0 +1,21 @@
+{% extends 'layout/_layout.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block main %}
+    <main class="d-flex justify-content-center align-items-center flex-grow-1">
+        <div class="">
+            {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.username) }}
+                {{ form_row(registrationForm.plainPassword, {
+                    label: 'Password'
+                }) }}
+                {{ form_row(registrationForm.agreeTerms) }}
+
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-primary w-100">Inscription</button>
+                </div>
+            {{ form_end(registrationForm) }}
+        </div>
+    </main>
+{% endblock %}
