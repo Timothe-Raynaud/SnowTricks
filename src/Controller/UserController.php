@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\RegistrationFormType;
+use App\Form\RegisterFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,14 +15,18 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user", name="user_login", methods={"GET"})
+     * @Route("/login", name="user_login", methods={"GET", "POST"})
      */
-    public function index(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
+        if($this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
+
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('pages/user/index.html.twig', [
+        return $this->render('pages/user/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
@@ -33,17 +37,16 @@ class UserController extends AbstractController
      */
     public function logout(): void
     {
-        // controller can be blank: it will never be called!
         throw new \Exception('Don\'t forget to activate logout in security.yaml');
     }
 
     /**
-     * @Route("/inscription", name="user_register", methods={"GET"})
+     * @Route("/inscription", name="user_register", methods={"POST", "GET"})
      */
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form = $this->createForm(RegisterFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -59,6 +62,10 @@ class UserController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('home');
+        }
+
+        foreach ($form->getErrors(true, true) as $error) {
+            $this->addFlash('error', $error->getMessage());
         }
 
         return $this->render('pages/user/register.html.twig', [

@@ -1,0 +1,33 @@
+{% extends 'layout/_layout.html.twig' %}
+
+{% block title %}{{ siteName }}{% endblock %}
+
+{% block main %}
+    <main class="d-flex justify-content-center align-items-center flex-grow-1">
+        {% if app.user %}
+            <div>
+                Vous êtes déjà connecté.
+            </div>
+        {% else %}
+            <div>
+                {% if error %}
+                    <div>{{ error.messageKey|trans(error.messageData, 'security')|raw }}</div>
+                {% endif %}
+                <form action="{{ path('user_login') }}" method="post">
+                    <label for="username" class="form-label">Username :</label>
+                    <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control"/>
+
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" id="password" name="_password" class="form-control"/>
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+
+                    <div class="text-center mt-3">
+                        <button type="submit" class="btn btn-primary w-100">Connexion</button>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+    </main>
+{% endblock %}

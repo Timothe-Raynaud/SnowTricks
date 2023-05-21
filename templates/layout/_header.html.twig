@@ -11,8 +11,12 @@
         <ul id="nav" class="d-flex align-items-center">
             <li><a href="{{ path('home') }}">Home</a></li>
             <li><a href="#">Tricks</a></li>
-            <li><a href="{{ path('user_login') }}">Sign in</a></li>
-            <li><a href="{{ path('user_register') }}">Sign up</a></li>
+            {% if app.user %}
+                <li><a href="{{ path('user_logout') }}">Se deconnecter</a></li>
+            {% else %}
+                <li><a href="{{ path('user_login') }}">Sign in</a></li>
+                <li><a href="{{ path('user_register') }}">Sign up</a></li>
+            {% endif %}
         </ul>
     </div>
 </header>

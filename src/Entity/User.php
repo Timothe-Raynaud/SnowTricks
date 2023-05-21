@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -11,7 +11,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity()
  * @ORM\Table(name="user")
  **/
-#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
@@ -22,7 +21,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=2, max=50)
      */
     private string $username;
 
@@ -76,6 +77,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getSalt() : ?string
     {
         return null;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->username;
     }
 
     public function eraseCredentials() : void

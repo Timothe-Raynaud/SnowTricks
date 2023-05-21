@@ -3,6 +3,13 @@
 {% block title %}Register{% endblock %}
 
 {% block main %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+
     <main class="d-flex justify-content-center align-items-center flex-grow-1">
         <div class="">
             {{ form_start(registrationForm) }}
