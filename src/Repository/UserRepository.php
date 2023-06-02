@@ -51,4 +51,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         $this->save($user, true);
     }
+
+    public function setIsValidated(int $id) : bool
+    {
+        $user = $this->findOneBy(['id' => $id]);
+
+        if ($user instanceof User){
+            $user->setIsVerified(true);
+            $this->_em->flush();
+            return true;
+        }
+        return false;
+    }
+
 }

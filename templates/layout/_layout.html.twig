@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
+{% import "layout/_macros.html.twig" as macros %}
 
 {% block body %}
+    {{ macros.render_flash_messages() }}
 
     {% block header %}
         {% include 'layout/_header.html.twig' %}

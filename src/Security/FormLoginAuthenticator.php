@@ -35,21 +35,24 @@ class FormLoginAuthenticator extends AbstractAuthenticator
     public function authenticate(Request $request): Passport
     {
         $username = $request->request->get('_username');
+        $password = $request->request->get('_password');
 
         $user = $this->userRepository->findOneBy(['username' => $username]);
         if (!$user){
             throw new UserNotFoundException();
         }
 
-        return new Passport(
-            new UserBadge($user->getUserIdentifier(), function () use ($user) {
+        $userBadge = new UserBadge($username);
+        $passwordCredentials = new PasswordCredentials($password);
+        $badges =[
+            new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
+            new RememberMeBadge(),
+        ];
 
-            }),
-            new PasswordCredentials($request->request->get('_password')),
-            [
-                new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
-                new RememberMeBadge(),
-            ]
+        return new Passport(
+            $userBadge,
+            $passwordCredentials,
+            $badges
         );
     }
 
