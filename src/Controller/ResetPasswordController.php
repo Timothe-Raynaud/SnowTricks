@@ -33,7 +33,7 @@ class ResetPasswordController extends AbstractController
     }
 
     /**
-     * @Route("", name="app_forgot_password_request")
+     * @Route("", name="app_forgot_password_request", methods={"GET", "POST"})
      * @throws TransportExceptionInterface
      */
     public function request(Request $request, MailerInterface $mailer, TranslatorInterface $translator): Response
@@ -55,21 +55,18 @@ class ResetPasswordController extends AbstractController
     }
 
     /**
-     * @Route("/check-email", name="app_check_email")
+     * @Route("/check-email", name="app_check_email", methods={"GET", "POST"})
      */
     public function checkEmail(): Response
     {
-        if (null === ($resetToken = $this->getTokenObjectFromSession())) {
-            $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
-        }
+        $this->addFlash('success', 'Un mail de réinitialisation vient d\'être envoyé.');
 
-        return $this->render('pages/user/reset_password/check_email.html.twig', [
-            'resetToken' => $resetToken,
+        return $this->render('pages/home.html.twig', [
         ]);
     }
 
     /**
-     * @Route("/reset/{token}", name="app_reset_password")
+     * @Route("/reset/{token}", name="app_reset_password", methods={"GET", "POST"})
      * Validates and process the reset URL that the user clicked in their email.
      */
     public function reset(Request $request, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator, string $token = null): Response

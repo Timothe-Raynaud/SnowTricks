@@ -74,7 +74,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/verify", name="user_verify_email")
+     * @Route("/verify", name="user_verify_email", methods={"GET"})
      */
     public function verifyUserEmail(Request $request, UserRepository $userRepository): Response
     {

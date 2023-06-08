@@ -24,7 +24,7 @@ class MailerController extends AbstractController
     }
 
     /**
-     * @Route("/confirmation", name="email_confirmation_user")
+     * @Route("/confirmation", name="email_confirmation_user", methods={"GET", "POST"})
      * @throws TransportExceptionInterface
      */
     public function sendConfirmationMailUser(User $user): void
