@@ -2,8 +2,8 @@
     {% if app.flashes('error') is defined or app.flashes('success') is defined %}
         <div class="flash-container">
             {% for message in app.flashes('error') %}
-                <div class="alert-danger" {{ stimulus_controller('flash') }}>
-                    <div class="mr-4">{{ message }}</div>
+                <div class="flash-message flash-danger" {{ stimulus_controller('flash') }}>
+                    <div class="me-4">{{ message }}</div>
 
                     <a type="button" data-action="click->flash#dismiss">
                         <i class="fa-solid fa-circle-xmark"></i>
@@ -12,8 +12,8 @@
             {% endfor %}
 
             {% for message in app.flashes('success') %}
-                <div class="alert-danger" {{ stimulus_controller('flash') }}>
-                    <div class="mr-4">{{ message }}</div>
+                <div class="flash-message flash-success" {{ stimulus_controller('flash') }}>
+                    <div class="me-4">{{ message }}</div>
 
                     <a type="button" data-action="click->flash#dismiss">
                         <i class="fa-solid fa-circle-xmark"></i>

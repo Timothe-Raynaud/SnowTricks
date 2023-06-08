@@ -1,0 +1,16 @@
+{% extends 'layout/_layout.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% block main %}
+    <main class="d-flex justify-content-center align-items-center flex-grow-1 row">
+        <div class="col-lg-3 col-md-5 col-sm-8 col-10">
+            <h3 class="text-center">Mot de passe oubliée</h3>
+
+            {{ form_start(resetForm) }}
+                {{ form_row(resetForm.plainPassword) }}
+                <button class="btn btn-primary">Reset password</button>
+            {{ form_end(resetForm) }}
+        </div>
+    </main>
+{% endblock %}
