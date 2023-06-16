@@ -3,24 +3,26 @@
 @import "~@fortawesome/fontawesome-free/css/all.css";
 
 /* Base */
-@import "base/_typography.scss";
-@import "base/_global.scss";
+@import "base/typography";
+@import "base/global";
 
 /* Components */
-@import "components/_buttons.scss";
-@import "components/_forms.scss";
+@import "components/buttons";
+@import "components/forms";
+@import "components/flash";
 
 /* Layout */
-@import "layout/_header.scss";
-@import "layout/_footer.scss";
-@import "layout/_nav.scss";
+@import "layout/header";
+@import "layout/footer";
+@import "layout/nav";
+@import "layout/macros";
 
 /* Pages */
-@import "pages/_home.scss";
+@import "pages/home";
 
 
 /* Utils */
-@import "utils/_mixins.scss";
-@import "utils/_variables.scss";
+@import "utils/mixins";
+@import "utils/variables";
 
 @import "~bootstrap/scss/bootstrap";

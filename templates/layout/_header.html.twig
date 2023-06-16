@@ -9,10 +9,14 @@
             <img src="{{ asset('images/pages/logo.jpg') }}" class="img-fluid h-100" alt="logo">
         </div>
         <ul id="nav" class="d-flex align-items-center">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Tricks</a></li>
-            <li><a href="#">Sign in</a></li>
-            <li><a href="#">Sign up</a></li>
+            <li><a href="{{ path('home') }}">Home</a></li>
+            <li><a href="{{ path('add_tricks') }}">Tricks</a></li>
+            {% if app.user %}
+                <li><a href="{{ path('user_logout') }}">Se deconnecter</a></li>
+            {% else %}
+                <li><a href="{{ path('user_login') }}">Sign in</a></li>
+                <li><a href="{{ path('user_register') }}">Sign up</a></li>
+            {% endif %}
         </ul>
     </div>
 </header>

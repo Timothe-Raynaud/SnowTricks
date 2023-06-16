@@ -9,7 +9,7 @@ export default class extends Controller {
     }
 
     connect() {
-        fetch('/getTricks')
+        fetch('/get_tricks')
             .then(response => response.json())
             .then(data => {
                 this.tricksByRowValue = data
@@ -49,8 +49,8 @@ export default class extends Controller {
                     <h2 class="card-header bg-primary text-uppercase">${trick.name}</h2>
                     <div class="card-img-top">
                         ${trick.image ?
-                `<img src="/images/tricks/${this.assetPath(trick.image)}" alt="${trick.image.name}" height="220px" width="100%">` :
-                `<img src="/images/tricks/default.jpg" alt="default" height="220px" width="100%">
+                `<img src="/uploads/images/tricks/${this.assetPath(trick.image)}" alt="${trick.image.name}" height="220px" width="100%">` :
+                `<img src="/uploads/images/tricks/default.jpg" alt="default" height="220px" width="100%">
                         `}
                     </div>
                     <div class="card-body">
