@@ -37,7 +37,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
         $username = $request->request->get('_username');
         $password = $request->request->get('_password');
 
-        $user = $this->userRepository->findOneBy(['username' => $username]);
+        $user = $this->userRepository->findOneBy(['username' => $username, 'isVerified' => true]);
         if (!$user){
             throw new UserNotFoundException();
         }

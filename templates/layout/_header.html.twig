@@ -10,7 +10,7 @@
         </div>
         <ul id="nav" class="d-flex align-items-center">
             <li><a href="{{ path('home') }}">Home</a></li>
-            <li><a href="#">Tricks</a></li>
+            <li><a href="{{ path('add_tricks') }}">Tricks</a></li>
             {% if app.user %}
                 <li><a href="{{ path('user_logout') }}">Se deconnecter</a></li>
             {% else %}
