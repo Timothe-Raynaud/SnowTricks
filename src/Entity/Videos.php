@@ -19,51 +19,62 @@ class Videos
     private ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tricks")
-     * @ORM\JoinColumn(name="trick_id", referencedColumnName="trick_id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tricks", inversedBy="videos")
+     * @ORM\JoinColumn(name="trick_id", referencedColumnName="trick_id", nullable=true)
      */
-    private Tricks $type;
+    private ?Tricks $trick;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=255)
      */
-    private string $path;
+    private string $url;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * @return Tricks
+     * @param int|null $id
      */
-    public function getType(): Tricks
+    public function setId(?int $id): void
     {
-        return $this->type;
+        $this->id = $id;
     }
 
     /**
-     * @param Tricks $type
+     * @return Tricks
      */
-    public function setType(Tricks $type): void
+    public function getTrick(): Tricks
     {
-        $this->type = $type;
+        return $this->trick;
+    }
+
+    /**
+     * @param Tricks|null $trick
+     */
+    public function setTrick(?Tricks $trick): void
+    {
+        $this->trick = $trick;
     }
 
     /**
      * @return string
      */
-    public function getFilename(): string
+    public function getUrl(): string
     {
-        return $this->filename;
+        return $this->url;
     }
 
     /**
-     * @param string $filename
+     * @param string $url
      */
-    public function setFilename(string $filename): void
+    public function setUrl(string $url): void
     {
-        $this->filename = $filename;
+        $this->url = $url;
     }
 
 }

@@ -4,17 +4,17 @@
 #header {
   height: 10vh;
 
-  #hamburger{
+  #hamburger {
     color: black;
     font-size: 3em;
     text-align: center;
 
-    &:hover{
+    &:hover {
       color: $primary;
     }
   }
 
-  ul {
+  #nav {
 
     margin-right: 1rem;
     margin-bottom: 0;
@@ -33,6 +33,35 @@
 
       &:hover {
         color: $primary;
+      }
+    }
+  }
+
+  .offcanvas-body{
+    padding: 0;
+  }
+
+  #nav-canvas {
+    padding: 0;
+    margin: 0;
+
+    li {
+      width: 100%;
+
+      a {
+        width: 100%;
+        display: block;
+        text-align: center;
+        padding: 15px 0;
+        font-size: 2em;
+        list-style: none;
+        text-decoration: none;
+        color: black;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+
+        &:hover {
+          color: $primary;
+        }
       }
     }
   }
