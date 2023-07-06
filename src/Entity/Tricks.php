@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  **/
 class Tricks
 {
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+        $this->videos = new ArrayCollection();
+    }
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -32,6 +40,16 @@ class Tricks
      * @ORM\JoinColumn(name="type_trick_id", referencedColumnName="type_trick_id")
      */
     private TypesTricks $type;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Images", mappedBy="trick", cascade={"persist", "remove"})
+     */
+    private ?Collection $images;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Videos", mappedBy="trick", cascade={"persist", "remove"})
+     */
+    private ?Collection $videos;
 
     /**
      * @param int|null $trick_id
@@ -81,4 +99,75 @@ class Tricks
 
         return $this;
     }
+
+    /**
+     * @return int|null
+     */
+    public function getTrickId(): ?int
+    {
+        return $this->trick_id;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Images $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Images $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getTrick() === $this) {
+                $image->setTrick(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(Videos $video): self
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos[] = $video;
+            $video->setTrick($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(Videos $video): self
+    {
+        if ($this->videos->contains($video)) {
+            $this->videos->removeElement($video);
+            // set the owning side to null (unless already changed)
+            if ($video->getTrick() === $this) {
+                $video->setTrick(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

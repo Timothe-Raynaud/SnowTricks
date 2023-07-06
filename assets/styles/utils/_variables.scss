@@ -5,3 +5,8 @@ $dark-blue: #333652;
 
 $primary: #10564F;
 $secondary: #9CA89E;
+
+$media-desktop: "only screen and (max-width : 1024px)";
+$media-tablet: "only screen and (max-width : 768px)";
+$media-mobile: "only screen and (max-width : 600px)";
+$media-mobile-sm: "only screen and (max-width : 480px)";

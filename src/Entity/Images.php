@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ImagesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity()
@@ -20,14 +21,19 @@ class Images
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Tricks")
-     * @ORM\JoinColumn(name="trick_id", referencedColumnName="trick_id")
+     * @ORM\JoinColumn(name="trick_id", referencedColumnName="trick_id", nullable=true)
      */
-    private Tricks $type;
+    private ?Tricks $trick;
 
     /**
      * @ORM\Column(type="string", length=100)
      */
     private string $filename;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     */
+    private bool $isMain;
 
 
 
@@ -39,17 +45,17 @@ class Images
     /**
      * @return Tricks
      */
-    public function getType(): Tricks
+    public function getTrick(): Tricks
     {
-        return $this->type;
+        return $this->trick;
     }
 
     /**
-     * @param Tricks $type
+     * @param Tricks|null $trick
      */
-    public function setType(Tricks $type): void
+    public function setTrick(?Tricks $trick): void
     {
-        $this->type = $type;
+        $this->trick = $trick;
     }
 
     /**
@@ -61,11 +67,26 @@ class Images
     }
 
     /**
-     * @param string $filename
+     * @param File $file
      */
-    public function setFilename(string $filename): void
+    public function setFilename(File $file): void
     {
-        $this->filename = $filename;
+        $this->filename = $file->getFilename();
     }
 
+    /**
+     * @return bool
+     */
+    public function isMain(): bool
+    {
+        return $this->isMain;
+    }
+
+    /**
+     * @param bool $isMain
+     */
+    public function setIsMain(bool $isMain = false): void
+    {
+        $this->isMain = $isMain;
+    }
 }

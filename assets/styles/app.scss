@@ -10,6 +10,7 @@
 @import "components/buttons";
 @import "components/forms";
 @import "components/flash";
+@import "components/embed";
 
 /* Layout */
 @import "layout/header";
@@ -19,7 +20,7 @@
 
 /* Pages */
 @import "pages/home";
-
+@import "pages/new_tricks";
 
 /* Utils */
 @import "utils/mixins";
