@@ -1,4 +1,4 @@
-import { Controller } from "@hotwired/stimulus";
+import {Controller} from "@hotwired/stimulus";
 
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
@@ -6,15 +6,15 @@ export default class extends Controller {
         "formFilename",
         "preview",
         "box",
+        "formInputLabel",
         "formInput"
     ]
 
-    upload(event)
-    {
+    upload(event) {
         let displayBox = this.previewTarget
         let box = this.boxTarget
         let formFilename = this.formFilenameTarget
-        let formInput = this.formInputTarget
+        let formInputLabel = this.formInputLabelTarget
 
         let input = event.currentTarget
         let file = input.files[0];
@@ -27,23 +27,22 @@ export default class extends Controller {
         }).then(response => {
             return response.json();
         }).then(data => {
-            formInput.classList.add('d-none')
-
+            formInputLabel.classList.add('d-none')
             formFilename.value = data
-
             displayBox.setAttribute('src', './uploads/tmp/' + data)
             box.classList.remove('d-none')
         });
     }
 
-    delete(event)
-    {
+    delete(event) {
         let box = this.boxTarget
+        let formInputLabel = this.formInputLabelTarget
         let formInput = this.formInputTarget
         let formFilename = this.formFilenameTarget
 
         box.classList.add('d-none')
-        formInput.classList.remove('d-none')
         formFilename.setAttribute('src', '')
+        formInputLabel.classList.remove('d-none')
+        formInput.value = ''
     }
 }

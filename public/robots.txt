@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: /
-Disallow: /
-Sitemap: https://snowtricks.com

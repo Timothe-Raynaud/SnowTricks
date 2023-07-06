@@ -67,11 +67,11 @@ class Images
     }
 
     /**
-     * @param File $file
+     * @param string $filename
      */
-    public function setFilename(File $file): void
+    public function setFilename(string $filename): void
     {
-        $this->filename = $file->getFilename();
+        $this->filename = $filename;
     }
 
     /**

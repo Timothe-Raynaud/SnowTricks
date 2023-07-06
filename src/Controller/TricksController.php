@@ -29,7 +29,7 @@ class TricksController extends AbstractController
     /**
      * @Route("/add-tricks", name="add_tricks", methods={"GET", "POST"})
      */
-    public function addTricks(Request $request): Response
+    public function addTricks(Request $request, TricksRepository $tricksRepository): Response
     {
         $tricks = new Tricks();
 
@@ -37,23 +37,29 @@ class TricksController extends AbstractController
 
         $form->handleRequest($request);
 
-//        if ($form->isSubmitted()) {
-//            dd($form->getData());
-//        }
-
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($form->getData());
-            // Traitez les données du formulaire, par exemple, enregistrer dans la base de données
+            $data = $form->getData();
 
+            if ($tricksRepository->findOneBy(['name' => $data->getName()]) instanceof Tricks) {
+                $this->addFlash('error', 'Un trick avec ce nom existe déja.');
+                return $this->render('pages/tricks/new_trick.html.twig', [
+                    'trickForm' => $form->createView(),
+                ]);
+            }
 
-            // Redirigez l'utilisateur vers une autre page après la création réussie
+            if ($tricksRepository->addNewFromForm($data)) {
+                $this->addFlash('success', 'L\'ajout d\'un nouveau trick à été fait');
+                return $this->redirectToRoute('home');
+            }
+
+            $this->addFlash('error', 'Trick non importé');
         }
 
         foreach ($form->getErrors() as $key => $error) {
             $template = $error->getMessageTemplate();
             $parameters = $error->getMessageParameters();
 
-            foreach($parameters as $var => $value){
+            foreach ($parameters as $var => $value) {
                 $template = str_replace($var, $value, $template);
             }
 
@@ -75,10 +81,10 @@ class TricksController extends AbstractController
         $file = $request->files->get('image');
         $newFilename = '';
 
-        if ($file){
+        if ($file) {
             $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFilename = $slugger->slug($originalFilename);
-            $newFilename = $now->format('YmdHis').$safeFilename.'.'.$file->guessExtension();
+            $newFilename = $now->format('YmdHis') . $safeFilename . '.' . $file->guessExtension();
             try {
                 $file->move(
                     $this->getParameter('images_temporary'),

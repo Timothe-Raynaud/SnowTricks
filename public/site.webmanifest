@@ -1,8 +1,0 @@
-{
-  "lang": "fr",
-  "name": "Snowtricks",
-  "description": "Site de referencement de figure de snowboard",
-  "short_name": "Snowtricks",
-  "start_url": "/index.html",
-  "display": "standalone"
-},

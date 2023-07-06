@@ -49,7 +49,7 @@ export default class extends Controller {
                     <h2 class="card-header bg-primary text-uppercase">${trick.name}</h2>
                     <div class="card-img-top">
                         ${trick.image ?
-                `<img src="/uploads/images/tricks/${this.assetPath(trick.image)}" alt="${trick.image}" height="220px" width="100%">` :
+                `<img src="/uploads/images/tricks/${trick.image}" alt="${trick.image}" height="220px" width="100%">` :
                 `<img src="/uploads/images/tricks/default.jpg" alt="default" height="220px" width="100%">
                         `}
                     </div>
