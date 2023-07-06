@@ -19,7 +19,7 @@ class Videos
     private ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tricks")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tricks", inversedBy="videos")
      * @ORM\JoinColumn(name="trick_id", referencedColumnName="trick_id", nullable=true)
      */
     private ?Tricks $trick;

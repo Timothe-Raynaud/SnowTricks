@@ -20,7 +20,7 @@ class Images
     private ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tricks")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tricks", inversedBy="images")
      * @ORM\JoinColumn(name="trick_id", referencedColumnName="trick_id", nullable=true)
      */
     private ?Tricks $trick;
