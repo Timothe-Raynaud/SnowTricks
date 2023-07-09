@@ -54,6 +54,7 @@ class TricksRepository extends ServiceEntityRepository
             SELECT t.trick_id
                 , t.description
                 , t.name
+                , t.slug
                 , tt.name AS type
                 , subquery_image.image 
             FROM tricks t 
@@ -70,6 +71,7 @@ class TricksRepository extends ServiceEntityRepository
         $rsm->addScalarResult('trick_id', 'trickId', 'integer');
         $rsm->addScalarResult('description', 'description');
         $rsm->addScalarResult('name', 'name');
+        $rsm->addScalarResult('slug', 'slug');
         $rsm->addScalarResult('type', 'type');
         $rsm->addScalarResult('image', 'image');
 
@@ -83,7 +85,8 @@ class TricksRepository extends ServiceEntityRepository
         $newTrick = new Tricks();
         $newTrick->setType($trick->getType())
             ->setName($trick->getName())
-            ->setDescription($trick->getDescription());
+            ->setDescription($trick->getDescription())
+            ->setSlug(strtolower(str_replace(' ', '-', $trick->getName())));
 
         $this->em->persist($newTrick);
         $this->em->flush();

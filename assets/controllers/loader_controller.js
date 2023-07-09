@@ -45,7 +45,7 @@ export default class extends Controller {
 
         for (const trick of this.tricksByRowValue[i]) {
             tricksHtml += `
-                <div class="card border-0 col-xl-2 col-lg-3 col-md-5 col-10 mx-2 p-0 tricks-card">
+                <a class="card border-0 col-xl-2 col-lg-3 col-md-5 col-10 mx-2 p-0 tricks-card" href="{{ path('home') }}">
                     <h2 class="card-header bg-primary text-uppercase">${trick.name}</h2>
                     <div class="card-img-top">
                         ${trick.image ?
@@ -59,7 +59,7 @@ export default class extends Controller {
                     <div class="card-footer bg-secondary">
                         ${trick.type}
                     </div>
-                </div>
+                </a>
             `
         }
 

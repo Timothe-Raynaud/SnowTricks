@@ -31,6 +31,11 @@ class Tricks
     private string $name;
 
     /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private string $slug;
+
+    /**
      * @ORM\Column(type="string", length=3000)
      */
     private string $description;
@@ -74,6 +79,22 @@ class Tricks
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 
     public function getDescription(): ?string
