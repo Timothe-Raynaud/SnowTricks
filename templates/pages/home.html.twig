@@ -28,19 +28,37 @@
         </div>
         <div data-anchor-target="path" class="container-fluid row justify-content-center" {{ stimulus_controller('loader') }}>
 
-            <div class="row g-4 px-4 justify-content-center" data-loader-target="tricksContainer"></div>
+            <div id="tricks-container" class="row g-4 px-4 justify-content-center" data-loader-target="tricksContainer"></div>
 
             <div id="load-more" class="col-8 mt-4" data-loader-target="buttonDisplayMore"></div>
 
         </div>
 
         <div id="tricks-arrow-anchor-up" class="d-none">
-            <a href="" data-action="click->anchor#moveTo" >
+            <a href="" data-action="click->anchor#moveTo" >q
                 <i class="fa-solid fa-arrow-up"></i>
             </a>
         </div>
 
     </div>
 </main>
+
+<div class="modal fade" id="tricksModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

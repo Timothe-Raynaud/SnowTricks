@@ -45,6 +45,10 @@ class UserController extends AbstractController
      */
     public function register(Request $request, UserManager $userManager): Response
     {
+        if($this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
+
         $user = new User();
         $form = $this->createForm(RegisterFormType::class, $user);
         $form->handleRequest($request);

@@ -45,7 +45,8 @@ export default class extends Controller {
 
         for (const trick of this.tricksByRowValue[i]) {
             tricksHtml += `
-                <a class="card border-0 col-xl-2 col-lg-3 col-md-5 col-10 mx-2 p-0 tricks-card" href="{{ path('home') }}">
+                <a class="card border-0 col-xl-2 col-lg-3 col-md-5 col-10 mx-2 p-0 tricks-card" href="#${trick.slug}" 
+                data-bs-toggle="modal" data-bs-target="#tricksModal">
                     <h2 class="card-header bg-primary text-uppercase">${trick.name}</h2>
                     <div class="card-img-top">
                         ${trick.image ?

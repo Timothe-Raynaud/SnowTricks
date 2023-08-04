@@ -31,6 +31,9 @@ class TricksController extends AbstractController
      */
     public function addTricks(Request $request, TricksRepository $tricksRepository): Response
     {
+        if(!$this->getUser()) {
+            return $this->redirectToRoute('user_login');
+        }
         $tricks = new Tricks();
 
         $form = $this->createForm(TricksFormType::class, $tricks);

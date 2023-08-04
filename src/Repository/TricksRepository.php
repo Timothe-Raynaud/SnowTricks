@@ -111,7 +111,6 @@ class TricksRepository extends ServiceEntityRepository
         }
 
         $this->em->flush();
-        $this->filesystem->remove($imageTemporary.'/');
 
         return True;
     }

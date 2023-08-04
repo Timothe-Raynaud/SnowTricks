@@ -1,7 +1,7 @@
 parameters:
     app.site_name: 'Snowtricks'
     images_directory: '%kernel.project_dir%/public/uploads/images/'
-    images_temporary: '/var/tmp/'
+    images_temporary: '%kernel.project_dir%/public/tmp/'
 
 services:
     _defaults:
