@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity()
@@ -48,6 +50,7 @@ class Tricks
 
     /**
      * @ORM\OneToMany(targetEntity="Images", mappedBy="trick", cascade={"persist", "remove"})
+     * @Groups({"exclude_from_serialization"})
      */
     private ?Collection $images;
 

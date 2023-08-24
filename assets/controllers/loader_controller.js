@@ -1,5 +1,6 @@
 import {Controller} from '@hotwired/stimulus'
 
+/* stimulusFetch: 'lazy' */
 export default class extends Controller {
     static targets = ['tricksContainer', 'buttonDisplayMore']
     static values = {
@@ -45,22 +46,31 @@ export default class extends Controller {
 
         for (const trick of this.tricksByRowValue[i]) {
             tricksHtml += `
-                <a class="card border-0 col-xl-2 col-lg-3 col-md-5 col-10 mx-2 p-0 tricks-card" href="#${trick.slug}" 
-                data-bs-toggle="modal" data-bs-target="#tricksModal">
-                    <h2 class="card-header bg-primary text-uppercase">${trick.name}</h2>
-                    <div class="card-img-top">
-                        ${trick.image ?
+                <div class="card border-0 col-xl-2 col-lg-3 col-md-5 col-10 mx-2 p-0 tricks-card" data-controller="components--push-content"     
+                    data-components--push-content-path-value="/trick/detail"
+                    data-components--push-content-target-value="targetTrickModal"
+                    data-components--push-content-param-value="${trick.slug}"
+                >
+                    <a href="#te${trick.slug}" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#tricksModal"
+                    data-action="components--push-content#request"
+                    >
+                        <h2 class="card-header bg-primary text-uppercase">${trick.name}</h2>
+                        <div class="card-img-top">
+                            ${trick.image ?
                 `<img src="/uploads/images/tricks/${trick.image}" alt="${trick.image}" height="220px" width="100%">` :
                 `<img src="/uploads/images/tricks/default.jpg" alt="default" height="220px" width="100%">
-                        `}
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">${trick.description}</p>
-                    </div>
-                    <div class="card-footer bg-secondary">
-                        ${trick.type}
-                    </div>
-                </a>
+                            `}
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">${trick.description}</p>
+                        </div>
+                        <div class="card-footer bg-secondary">
+                            ${trick.type}
+                        </div>
+                    </a>
+                </div>
             `
         }
 

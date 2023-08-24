@@ -6,6 +6,7 @@ use App\Entity\Images;
 use App\Entity\Tricks;
 use App\Entity\Videos;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -113,6 +114,47 @@ class TricksRepository extends ServiceEntityRepository
         $this->em->flush();
 
         return True;
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function getTrickContentBySlug($slug) : ?array
+    {
+        $sql = "
+            SELECT t.trick_id
+                , t.description
+                , t.name
+                , t.slug
+                , tt.name AS type
+            FROM tricks t 
+            INNER JOIN types_tricks tt ON tt.type_trick_id = t.type_trick_id
+            WHERE slug = :slug
+        ";
+
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('trick_id', 'trickId', 'integer');
+        $rsm->addScalarResult('description', 'description');
+        $rsm->addScalarResult('name', 'name');
+        $rsm->addScalarResult('slug', 'slug');
+        $rsm->addScalarResult('type', 'type');
+
+        $query = $this->em->createNativeQuery($sql, $rsm)
+            ->setParameter(':slug', $slug);
+
+        return $query->getOneOrNullResult();
+    }
+
+    public function findTrickBySlugWithMedia($slug)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t', 'i', 'v')
+            ->leftJoin('t.images', 'i')
+            ->leftJoin('t.videos', 'v')
+            ->where('t.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 }

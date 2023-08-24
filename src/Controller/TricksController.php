@@ -4,12 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Tricks;
 use App\Form\Type\TricksFormType;
+use App\Repository\ImagesRepository;
 use App\Repository\TricksRepository;
+use App\Repository\VideosRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use function PHPUnit\Framework\throwException;
 
@@ -100,5 +104,26 @@ class TricksController extends AbstractController
         }
 
         return $this->json($newFilename);
+    }
+
+    /**
+     * @Route("/trick/detail", name="get_trick", methods={"POST"})
+     */
+    public function getTrick(Request $request, TricksRepository $tricksRepository): Response
+    {
+        $slug = $request->request->get('appendModule');
+        if ($slug){
+            $trick = $tricksRepository->findTrickBySlugWithMedia($slug);
+            if (!$trick) {
+                throw $this->createNotFoundException('Trick not found');
+            }
+
+            $html = $this->renderView('pages/tricks/_modal.html.twig', [
+                'trick' => $trick
+            ]);
+            return $this->json(['html' => $html]);
+        }
+
+        return $this->redirectToRoute('home');
     }
 }

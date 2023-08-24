@@ -1,0 +1,26 @@
+<div id="modal-content" class="modal-content">
+    <div class="modal-header">
+        <h5 id="trick-title" class="modal-title">{{ trick.name }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <div>
+            <div>
+                <img src="" alt="" id="trick-main-img">
+            </div>
+            <div id="trick-img">
+
+            </div>
+        </div>
+        <div id="trick-content">
+            {{ trick.description }}
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div id="trick-post">
+
+        </div>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+    </div>
+</div>
