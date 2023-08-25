@@ -4,30 +4,36 @@ namespace App\Controller;
 
 use App\Entity\Tricks;
 use App\Form\Type\TricksFormType;
-use App\Repository\ImagesRepository;
 use App\Repository\TricksRepository;
-use App\Repository\VideosRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use function PHPUnit\Framework\throwException;
 
 class TricksController extends AbstractController
 {
     /**
-     * @Route("/get_tricks", name="get_tricks", methods={"GET"})
+     * @Route("/get_tricks", name="get_tricks", methods={"POST"})
      */
-    public function getTricks(TricksRepository $tricksRepository): Response
+    public function getTricksTest(Request $request, TricksRepository $tricksRepository): Response
     {
-        $tricks = $tricksRepository->getAllTricksWithType();
-        $tricksByRow = array_chunk($tricks, 5);
+        if (!empty($request->request->get('loaderModule'))){
+            $tricks = $tricksRepository->getAllTricksWithType();
 
-        return $this->json($tricksByRow);
+            $html = [];
+            foreach($tricks as $trick){
+                $html[] = $this->renderView('pages/tricks/_card.html.twig', [
+                    'trick' => $trick
+                ]);
+            }
+            return $this->json($html);
+        }
+
+        return $this->redirectToRoute('home');
     }
 
     /**
@@ -107,11 +113,13 @@ class TricksController extends AbstractController
     }
 
     /**
-     * @Route("/trick/detail", name="get_trick", methods={"POST"})
+     * @Route("/trick/detail", name="get_trick_detail", methods={"POST"})
+     * @throws NonUniqueResultException
      */
     public function getTrick(Request $request, TricksRepository $tricksRepository): Response
     {
-        $slug = $request->request->get('appendModule');
+        $slug = $request->request->get('pushModule');
+
         if ($slug){
             $trick = $tricksRepository->findTrickBySlugWithMedia($slug);
             if (!$trick) {
@@ -121,7 +129,8 @@ class TricksController extends AbstractController
             $html = $this->renderView('pages/tricks/_modal.html.twig', [
                 'trick' => $trick
             ]);
-            return $this->json(['html' => $html]);
+
+            return $this->json($html);
         }
 
         return $this->redirectToRoute('home');

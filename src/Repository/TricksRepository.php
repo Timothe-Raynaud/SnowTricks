@@ -22,6 +22,9 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class TricksRepository extends ServiceEntityRepository
 {
+    private ParameterBagInterface $parameterBag;
+    private Filesystem $filesystem;
+
     public function __construct(ManagerRegistry $registry, Filesystem $filesystem, ParameterBagInterface $parameterBag)
     {
         parent::__construct($registry, Tricks::class);
@@ -146,6 +149,9 @@ class TricksRepository extends ServiceEntityRepository
         return $query->getOneOrNullResult();
     }
 
+    /**
+     * @throws NonUniqueResultException
+     */
     public function findTrickBySlugWithMedia($slug)
     {
         return $this->createQueryBuilder('t')
@@ -157,5 +163,4 @@ class TricksRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-
 }

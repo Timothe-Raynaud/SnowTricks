@@ -12,9 +12,14 @@
       .media-content {
         display: block;
         height: 400px;
+        width: 100%;
         margin: auto;
         object-fit: contain;
         object-position: center;
+      }
+
+      iframe {
+        border-radius: 0.375rem;
       }
     }
 
@@ -28,7 +33,11 @@
     height: 7rem;
     margin: 1rem;
     overflow: auto;
-    padding-bottom: 0.5rem;
+    padding-bottom: 1rem;
+
+    @media #{$media-mobile} {
+      display: none;
+    }
 
     .media-box {
       height: 100%;
@@ -41,7 +50,7 @@
       filter: grayscale(90%);
 
 
-      .false-play{
+      .false-play {
         position: absolute;
         font-size: 3rem;
         left: 50%;
@@ -64,7 +73,7 @@
       }
     }
 
-    .active{
+    .active {
       opacity: 1;
       filter: none;
       box-shadow: 1px 1px 5px rgba(15, 15, 15, 0.5);

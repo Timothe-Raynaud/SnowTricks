@@ -1,0 +1,27 @@
+<div class="card border-0 col-xl-2 col-lg-3 col-md-5 col-10 mx-2 p-0 tricks-card"
+     data-controller="components--push-content"
+     data-components--push-content-path-value="{{ path('get_trick_detail') }}"
+     data-components--push-content-target-value="targetTrickModal"
+     data-components--push-content-param-value="{{ trick.slug }}"
+>
+    <a href="#{{ trick.slug }}"
+       data-bs-toggle="modal"
+       data-bs-target="#tricksModal"
+       data-action="components--push-content#request"
+    >
+        <h2 class="card-header bg-primary text-capitalize">{{ trick.name }}</h2>
+        <div class="card-img-top">
+            {% if trick.image > 0  %}
+                <img src="{{ asset('uploads/images/tricks/' ~ trick.image) }}" alt="{{ trick.image }}" height="220px" width="100%">
+            {% else %}
+                <img src="{{ asset('uploads/images/tricks/default.jpg') }}" alt="default" height="220px" width="100%">
+            {% endif %}
+        </div>
+        <div class="card-body">
+            <p class="card-text text-black">{{ trick.description }}</p>
+        </div>
+        <div class="card-footer bg-secondary">
+            {{ trick.type }}
+        </div>
+    </a>
+</div>

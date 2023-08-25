@@ -22,11 +22,11 @@ export default class extends Controller {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: 'appendModule=' + param,
+            body: 'pushModule=' + param,
         })
             .then(response => response.json())
             .then(data => {
-                this.pushContent(data.html)
+                this.pushContent(data)
             });
     }
 }

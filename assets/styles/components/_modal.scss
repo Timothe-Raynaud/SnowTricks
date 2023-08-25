@@ -1,5 +1,26 @@
+@import "../utils/variables";
+
+
 @media (min-width: 576px) {
   .modal-dialog {
     max-width: 60%!important;
+
+  }
+}
+
+.modal-dialog {
+  .modal-content{
+    .modal-header{
+      background-color: $primary;
+
+      .modal-title{
+        color: white;
+        font-weight: 600;
+        font-size: 2.5rem;
+        margin-left: 1rem;
+        line-height: 1;
+        text-shadow: 1px 1px 5px rgba(20, 20, 20, 0.3);
+      }
+    }
   }
 }
