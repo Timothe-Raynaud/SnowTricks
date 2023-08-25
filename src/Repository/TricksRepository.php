@@ -66,6 +66,7 @@ class TricksRepository extends ServiceEntityRepository
                 FROM images i 
                 WHERE i.is_main = true
             ) subquery_image ON subquery_image.trick_id = t.trick_id
+            ORDER BY t.trick_id DESC
         ";
 
         $rsm = new ResultSetMapping();

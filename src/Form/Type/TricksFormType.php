@@ -54,10 +54,9 @@ class TricksFormType extends AbstractType
                 'disabled' => false,
             ])
             ->add('videos', CollectionType::class, [
-                'entry_type' => UrlType::class,
+                'entry_type' => TextType::class,
                 'allow_add' => true,
                 'delete_empty' => true,
-                'mapped' => false,
                 'required' => false,
             ])
         ;

@@ -11,6 +11,7 @@
 @import "components/forms";
 @import "components/flash";
 @import "components/embed";
+@import "components/media";
 @import "components/modal";
 
 /* Layout */
@@ -26,5 +27,6 @@
 /* Utils */
 @import "utils/mixins";
 @import "utils/variables";
+@import "utils/scrollbar";
 
 @import "~bootstrap/scss/bootstrap";

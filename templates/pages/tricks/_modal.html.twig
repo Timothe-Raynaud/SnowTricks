@@ -1,19 +1,80 @@
 <div id="modal-content" class="modal-content">
     <div class="modal-header">
-        <h5 id="trick-title" class="modal-title">{{ trick.name }}</h5>
+        <h5 id="trick-title" class="modal-title fs-1 text-primary text-uppercase fw-bold">{{ trick.name }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
-        <div>
-            <div>
-                <img src="" alt="" id="trick-main-img">
-            </div>
-            <div id="trick-img">
+        <div class="display-media" {{ stimulus_controller('media') }}>
+            <div class="media-header">
+                {% if (trick.images|length + trick.videos|length) > 0 %}
+                    {% set key = 1 %}
+                    {% for image in trick.images %}
+                        <div class="media-item {% if image.isMain == true %}active{% endif %}" id="media-{{ key }}">
+                            <img
+                                 class="media-content"
+                                 src="{{ asset('uploads/images/tricks/' ~ image.filename) }}"
+                                 alt="image {{ key }}">
+                        </div>
+                        {% set key = key + 1 %}
+                    {% endfor %}
+                    {% for video in trick.videos %}
+                        <div class="media-item {% if key == 0 %}active{% endif %}" id="media-{{ key }}">
+                            <iframe
+                                    class="media-content"
+                                    src="{{ video.url }}"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen>
 
+                            </iframe>
+                        </div>
+                        {% set key = key + 1 %}
+                    {% endfor %}
+
+                {% else %}
+                    <div class="media-item">
+                        <img class="media-content"
+                             src="{{ asset('uploads/images/tricks/default.jpg') }}" alt="image 1">
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="media-bar scrollbar" id="style-1">
+                {% set key = 1 %}
+                {% for image in trick.images %}
+                    <div class="media-box {% if image.isMain == true %}active{% endif %}"
+                         data-media-id-param="{{ key }}"
+                         data-action="click->media#select"
+                         id="media-box-{{ key }}"
+                    >
+                        <img
+                                class="media"
+                                src="{{ asset('uploads/images/tricks/' ~ image.filename) }}"
+                                alt="slide {{ key + 1 }}">
+                    </div>
+                    {% set key = key + 1 %}
+                {% endfor %}
+                {% for video in trick.videos %}
+                    <div class="media-box {% if key == 0 %}active{% endif %}"
+                         data-media-id-param="{{ key }}"
+                         data-action="click->media#select:prevent:stop"
+                         id="media-box-{{ key }}"
+                    >
+                        {% set idVideo = video.url|split('/')|last|split('?',-1) %}
+                        <img class="media"
+                                src="{{'https://img.youtube.com/vi/' ~ idVideo|last ~'/0.jpg'}}"
+                                alt="">
+                        <i class="fa-solid fa-play false-play"></i>
+                    </div>
+                    {% set key = key + 1 %}
+                {% endfor %}
             </div>
         </div>
-        <div id="trick-content">
-            {{ trick.description }}
+
+        <div id="trick-content" class="px-4 mt-4">
+            <h6 class="mb-2">Description :</h6>
+            <p>
+                {{ trick.description|nl2br }}
+            </p>
         </div>
     </div>
     <div class="modal-footer">
@@ -21,6 +82,5 @@
 
         </div>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
     </div>
 </div>
