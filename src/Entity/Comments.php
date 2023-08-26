@@ -2,16 +2,17 @@
 
 namespace App\Entity;
 
+use App\Trait\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="comments")
+ * @ORM\HasLifecycleCallbacks
  **/
 class Comments
 {
-    use TimestampableEntity;
+    use TimestampableTrait;
 
     /**
      * @ORM\Id()
@@ -37,25 +38,67 @@ class Comments
      */
     private User $user;
 
-    public function setId(int $comments_id): void
-    {
-        $this->comments_id = $comments_id;
-    }
-
-    public function getId(): int
+    /**
+     * @return int
+     */
+    public function getCommentsId(): int
     {
         return $this->comments_id;
     }
 
-    public function getcontent(): string
+    /**
+     * @param int $comments_id
+     */
+    public function setCommentsId(int $comments_id): void
+    {
+        $this->comments_id = $comments_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent(): string
     {
         return $this->content;
     }
 
-    public function setcontent(string $content): self
+    /**
+     * @param string $content
+     */
+    public function setContent(string $content): void
     {
         $this->content = $content;
+    }
 
-        return $this;
+    /**
+     * @return Tricks
+     */
+    public function getTrick(): Tricks
+    {
+        return $this->trick;
+    }
+
+    /**
+     * @param Tricks $trick
+     */
+    public function setTrick(Tricks $trick): void
+    {
+        $this->trick = $trick;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 }

@@ -1,9 +1,8 @@
 <div id="modal-content" class="modal-content">
-    <div class="modal-header">
-        <h5 id="trick-title" class="modal-title text-capitalize">{{ trick.name }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <div class="modal-body">
+{#    <div class="modal-header">#}
+{#        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
+{#    </div>#}
+    <div class="modal-body pb-0">
         <div class="display-media" {{ stimulus_controller('media') }}>
             <div class="media-header">
                 {% if (trick.images|length + trick.videos|length) > 0 %}
@@ -73,16 +72,47 @@
             {% endif %}
         </div>
 
+        <h5 id="trick-title" class="modal-title text-capitalize"><span>{{ trick.name }}</span></h5>
+
         <div id="trick-content" class="px-4 mt-4">
             <p>
                 {{ trick.description|nl2br }}
             </p>
         </div>
+
+        <div class="modal-infos">
+            <div>
+                <span>Créer le :</span> {{ trick.createdAt|date('d/m/Y') }}
+            </div>
+            {% if trick.updatedAt > trick.createdAt %}
+                <div>
+                    <span>Mis à jour le :</span> {{ trick.updatedAt|date('d/m/Y') }}
+                </div>
+            {% endif %}
+            <div>
+                <span>type :</span> {{ trick.type.name }}
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
         <div class="box">
             <div id="trick-post">
-
+                {% if comments is defined %}
+                    {% for comment in comments %}
+                        <div class="post-box">
+                            <div class="post-box__content">
+                                {{ comment.content }}
+                            </div>
+                            <div class="post-box__user">
+                                <span>
+                                    <b>Créer le :</b> {{ comment.createdAt|date('d/m/Y') }}
+                                    &ensp;
+                                    <b>Par :</b> {{ comment.user.username }}
+                                </span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
             <form id="comment-form" class="text-center"
                     {{ stimulus_controller('components/form') }}

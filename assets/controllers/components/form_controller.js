@@ -14,8 +14,7 @@ export default class extends Controller {
         const inputsArray = this.inputsTargets
         console.log(inputsArray)
         Array.prototype.forEach.call(inputsArray, function(inputArray) {
-            form.append(inputArray.name, inputArray.values)
-            console.log(inputArray.name, inputArray.values)
+            form.append(inputArray.name, inputArray.value)
         });
 
         fetch(this.pathValue, {
@@ -30,11 +29,11 @@ export default class extends Controller {
                 }
             })
             .then(data => {})
-            .catch(error => console.error(error))
             .finally(() => {
+
                 setTimeout(() => {
                     this.submitTarget.disabled = false
-                }, 2000)
+                }, 1000)
             })
     }
 }

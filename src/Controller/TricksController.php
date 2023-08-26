@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Tricks;
 use App\Form\Type\TricksFormType;
+use App\Repository\CommentsRepository;
 use App\Repository\TricksRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,7 +20,7 @@ class TricksController extends AbstractController
     /**
      * @Route("/get_tricks", name="get_tricks", methods={"POST"})
      */
-    public function getTricksTest(Request $request, TricksRepository $tricksRepository): Response
+    public function getTricks(Request $request, TricksRepository $tricksRepository): Response
     {
         if (!empty($request->request->get('loaderModule'))){
             $tricks = $tricksRepository->getAllTricksWithType();
@@ -116,7 +117,7 @@ class TricksController extends AbstractController
      * @Route("/trick/detail", name="get_trick_detail_fetch", methods={"POST"})
      * @throws NonUniqueResultException
      */
-    public function getTrickFetch(Request $request, TricksRepository $tricksRepository): Response
+    public function getTrickFetch(Request $request, TricksRepository $tricksRepository, CommentsRepository $commentsRepository): Response
     {
         $slug = $request->request->get('pushModule');
 
@@ -125,9 +126,11 @@ class TricksController extends AbstractController
             if (!$trick) {
                 throw $this->createNotFoundException('Trick not found');
             }
+            $comments = $commentsRepository->findBy(['trick' => $trick]);
 
             $html = $this->renderView('pages/tricks/_modal.html.twig', [
-                'trick' => $trick
+                'trick' => $trick,
+                'comments' => $comments
             ]);
 
             return $this->json($html);

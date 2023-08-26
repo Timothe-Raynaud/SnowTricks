@@ -50,7 +50,6 @@ export default class extends Controller {
             this.loadButtonTarget.classList.add('d-none')
         }
 
-            console.log(this.elementAnchorValue)
         if (this.elementAnchorValue){
             if (this.anchorTriggerValue <= endIndex){
                 let anchor = document.getElementById(this.elementAnchorValue)

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\CommentManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +16,11 @@ class CommentsController extends AbstractController
     /**
      * @Route("/form", name="form", methods={"POST"})
      */
-    public function index(Request $request): Response
+    public function index(Request $request, CommentManager $commentManager): Response
     {
+        $form = $request->request->all();
+        $result = $commentManager->addComment($form, $this->getUser());
 
-        dd($request->request);
-        return $this->json('test');
+        return $this->json($result);
     }
 }

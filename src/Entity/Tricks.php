@@ -2,20 +2,21 @@
 
 namespace App\Entity;
 
+use App\Trait\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="tricks")
+ * @ORM\HasLifecycleCallbacks
  **/
 class Tricks
 {
-    use TimestampableEntity;
+    use TimestampableTrait;
 
     public function __construct()
     {
