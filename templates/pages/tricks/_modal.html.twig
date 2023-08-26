@@ -80,9 +80,30 @@
         </div>
     </div>
     <div class="modal-footer">
-        <div id="trick-post">
+        <div class="box">
+            <div id="trick-post">
 
+            </div>
+            <form id="comment-form" class="text-center"
+                    {{ stimulus_controller('components/form') }}
+                    data-components--form-path-value="{{ path('comments_form') }}"
+                    action="javascript:void(0);"
+            >
+                <label for="content-comment-form" class="text-right"><small>Laisser un commentaire :</small></label>
+                <textarea id="content-comment-form"
+                        name="content-comment-form"
+                        rows="3"
+                        maxlength="500"
+                        required
+                        class="form-control"
+                        data-components--form-target="inputs"
+                ></textarea>
+                <input type="hidden" name="trick" value="{{ trick.slug }}" data-components--form-target="inputs">
+                <input type="submit" value="Envoyer" class="btn btn-primary mt-2"
+                       data-components--form-target="submit"
+                       data-action="click->components--form#send"
+                >
+            </form>
         </div>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
     </div>
 </div>

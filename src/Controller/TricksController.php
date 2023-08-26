@@ -113,10 +113,10 @@ class TricksController extends AbstractController
     }
 
     /**
-     * @Route("/trick/detail", name="get_trick_detail", methods={"POST"})
+     * @Route("/trick/detail", name="get_trick_detail_fetch", methods={"POST"})
      * @throws NonUniqueResultException
      */
-    public function getTrick(Request $request, TricksRepository $tricksRepository): Response
+    public function getTrickFetch(Request $request, TricksRepository $tricksRepository): Response
     {
         $slug = $request->request->get('pushModule');
 
@@ -134,5 +134,13 @@ class TricksController extends AbstractController
         }
 
         return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/detail/{slug}", name="get_trick_detail", methods={"GET"})
+     */
+    public function getTrick(String $slug): Response
+    {
+        return $this->redirectToRoute('home' , []);
     }
 }

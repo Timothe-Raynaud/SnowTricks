@@ -29,6 +29,7 @@
             <div data-anchor-target="path" class="container-fluid row justify-content-center"
                     {{ stimulus_controller('components/loader') }}
                  data-components--loader-path-value="{{ path('get_tricks') }}"
+                 data-components--loader-element-anchor-value="tricks-arrow-anchor-up"
             >
 
                 <div id="tricks-container"
@@ -60,4 +61,10 @@
         </div>
     </div>
 
+    <script>
+        const tricksModal = document.getElementById('tricksModal')
+        tricksModal.addEventListener('hide.bs.modal', function (event) {
+            history.replaceState({}, "", "/");
+        })
+    </script>
 {% endblock %}

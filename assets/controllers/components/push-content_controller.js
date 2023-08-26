@@ -4,6 +4,7 @@ import {Controller} from '@hotwired/stimulus'
 export default class extends Controller {
     static values = {
         path: String,
+        url: String,
         param: String,
         target: String,
     }
@@ -26,6 +27,9 @@ export default class extends Controller {
         })
             .then(response => response.json())
             .then(data => {
+                if (this.urlValue){
+                    history.pushState({}, "", this.urlValue);
+                }
                 this.pushContent(data)
             });
     }

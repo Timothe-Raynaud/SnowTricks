@@ -4,14 +4,16 @@ import {Controller} from '@hotwired/stimulus'
 export default class extends Controller {
     static targets = [
         'loadButton',
-        'container'
+        'container',
     ]
 
     static values = {
         path: String,
         elementHtml: Array,
-        elementsPerLoad: { type: Number, default: 5},
+        elementAnchor: String,
         firstLoad: { type : Number, default: 10},
+        anchorTrigger: { type: Number, default: 15},
+        elementsPerLoad: { type: Number, default: 5},
         currentElementsIndex: { type: Number, default: 0},
     }
 
@@ -46,6 +48,14 @@ export default class extends Controller {
 
         if (this.currentElementsIndexValue >= this.elementHtmlValue.length) {
             this.loadButtonTarget.classList.add('d-none')
+        }
+
+            console.log(this.elementAnchorValue)
+        if (this.elementAnchorValue){
+            if (this.anchorTriggerValue <= endIndex){
+                let anchor = document.getElementById(this.elementAnchorValue)
+                anchor.classList.remove('d-none')
+            }
         }
     }
 }

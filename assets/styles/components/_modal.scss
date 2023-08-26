@@ -3,23 +3,43 @@
 
 @media (min-width: 576px) {
   .modal-dialog {
-    max-width: 60%!important;
+    max-width: 70% !important;
 
   }
 }
 
 .modal-dialog {
-  .modal-content{
-    .modal-header{
+
+  .modal-content {
+    border-radius: 0.7rem;
+    margin-bottom: 2rem;
+
+    .modal-header {
       background-color: $primary;
 
-      .modal-title{
+      .modal-title {
         color: white;
         font-weight: 600;
         font-size: 2.5rem;
         margin-left: 1rem;
         line-height: 1;
         text-shadow: 1px 1px 5px rgba(20, 20, 20, 0.3);
+      }
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: center;
+
+      .box {
+        width: 50%;
+
+        @media #{$media-desktop} {
+          width: 70%;
+        }
+        @media #{$media-mobile} {
+          width: 90%;
+        }
       }
     }
   }
