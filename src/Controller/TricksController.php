@@ -126,11 +126,9 @@ class TricksController extends AbstractController
             if (!$trick) {
                 throw $this->createNotFoundException('Trick not found');
             }
-            $comments = $commentsRepository->findBy(['trick' => $trick]);
 
             $html = $this->renderView('pages/tricks/_modal.html.twig', [
                 'trick' => $trick,
-                'comments' => $comments
             ]);
 
             return $this->json($html);

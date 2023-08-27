@@ -96,23 +96,21 @@
     </div>
     <div class="modal-footer">
         <div class="box">
-            <div id="trick-post">
-                {% if comments is defined %}
-                    {% for comment in comments %}
-                        <div class="post-box">
-                            <div class="post-box__content">
-                                {{ comment.content }}
-                            </div>
-                            <div class="post-box__user">
-                                <span>
-                                    <b>Créer le :</b> {{ comment.createdAt|date('d/m/Y') }}
-                                    &ensp;
-                                    <b>Par :</b> {{ comment.user.username }}
-                                </span>
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% endif %}
+            <div id="trick-post"
+                {{ stimulus_controller('components/loader') }}
+                data-components--loader-path-value="{{ path('comments_get_comments-fetch', {'slug': trick.slug}) }}"
+                data-components--loader-first-load-value="5"
+            >
+                <div data-components--loader-target="container">
+
+                </div>
+
+                <div id="load-more" class="" data-components--loader-target="loadButton">
+                    <a href="javascript:void(0)" data-action="click->components--loader#load">
+                        <span>Afficher plus</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </a>
+                </div>
             </div>
             {% if app.user is defined %}
                 <form id="comment-form" class="text-center"
