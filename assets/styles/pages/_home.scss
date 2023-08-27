@@ -4,7 +4,6 @@
   position: relative;
 
   #catch-phrase {
-
     -webkit-animation-name: fadeInOpacity;
     animation-name: fadeInOpacity;
     -webkit-animation-iteration-count: 1;
@@ -63,27 +62,29 @@
   -1px -1px 10px rgba(10, 10, 10, 0.4);
   z-index: 1;
   height: 270px!important;
+  border-radius: 0.7rem!important;
 
   a{
     height: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    position: relative;
+    border-radius: 0.7rem;
+    background-color: rgba(0, 0, 0, 0.55);
 
-    .card-header {
-      text-transform: capitalize;
+    .card-body {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      color: white;
       text-align: center;
-      color: #f0eee6;
-      border: none;
-      background-color: rgba(0, 0, 0, 0.4);
-    }
+      text-transform: capitalize;
+      transition: all 1000ms;
 
-    .card-footer {
-      text-align: center;
-      text-transform: capitalize;
-      color: #f0eee6;
-      border: none;
-      background-color: rgba(0, 0, 0, 0.4);
+      .card-title{
+        border-bottom: 1px solid white;
+      }
     }
   }
 
@@ -93,12 +94,15 @@
     transform:scale(1.05);
     z-index: 5;
 
-    .card-header{
+    .card-body{
+      top: 18%;
 
-    }
-
-    .card-footer{
-
+      .card-title{
+        border: none;
+      }
+      .card-type{
+        display: none;
+      }
     }
   }
 }

@@ -22,10 +22,9 @@
        data-bs-target="#tricksModal"
        data-action="components--push-content#request"
     >
-        <h2 class="card-header">{{ trick.name }}</h2>
-        <div class="card-body"></div>
-        <div class="card-footer">
-            {{ trick.type }}
+        <div class="card-body">
+            <h2 class="card-title">{{ trick.name }}</h2>
+            <div class="card-type">{{ trick.type }}</div>
         </div>
     </a>
 </div>
