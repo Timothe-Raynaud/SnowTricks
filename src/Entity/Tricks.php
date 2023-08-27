@@ -2,16 +2,22 @@
 
 namespace App\Entity;
 
+use App\Trait\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="tricks")
+ * @ORM\HasLifecycleCallbacks
  **/
 class Tricks
 {
+    use TimestampableTrait;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -31,6 +37,11 @@ class Tricks
     private string $name;
 
     /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private string $slug;
+
+    /**
      * @ORM\Column(type="string", length=3000)
      */
     private string $description;
@@ -43,6 +54,7 @@ class Tricks
 
     /**
      * @ORM\OneToMany(targetEntity="Images", mappedBy="trick", cascade={"persist", "remove"})
+     * @Groups({"exclude_from_serialization"})
      */
     private ?Collection $images;
 
@@ -74,6 +86,22 @@ class Tricks
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 
     public function getDescription(): ?string

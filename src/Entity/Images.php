@@ -20,8 +20,8 @@ class Images
     private ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tricks", inversedBy="images")
-     * @ORM\JoinColumn(name="trick_id", referencedColumnName="trick_id", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Tricks", inversedBy="images", cascade={"persist"})
+     * @ORM\JoinColumn(name="trick_id", referencedColumnName="trick_id", nullable=false)
      */
     private ?Tricks $trick;
 
@@ -77,7 +77,7 @@ class Images
     /**
      * @return bool
      */
-    public function isMain(): bool
+    public function getIsMain(): bool
     {
         return $this->isMain;
     }

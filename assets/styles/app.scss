@@ -1,6 +1,6 @@
-@import "base/_reset.scss";
+@import "base/reset";
 
-@import "~@fortawesome/fontawesome-free/css/all.css";
+@import "~@fortawesome/fontawesome-free/css/all";
 
 /* Base */
 @import "base/typography";
@@ -11,6 +11,8 @@
 @import "components/forms";
 @import "components/flash";
 @import "components/embed";
+@import "components/media";
+@import "components/modal";
 
 /* Layout */
 @import "layout/header";
@@ -25,5 +27,6 @@
 /* Utils */
 @import "utils/mixins";
 @import "utils/variables";
+@import "utils/scrollbar";
 
 @import "~bootstrap/scss/bootstrap";

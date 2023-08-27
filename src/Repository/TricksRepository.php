@@ -6,6 +6,7 @@ use App\Entity\Images;
 use App\Entity\Tricks;
 use App\Entity\Videos;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -21,6 +22,9 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class TricksRepository extends ServiceEntityRepository
 {
+    private ParameterBagInterface $parameterBag;
+    private Filesystem $filesystem;
+
     public function __construct(ManagerRegistry $registry, Filesystem $filesystem, ParameterBagInterface $parameterBag)
     {
         parent::__construct($registry, Tricks::class);
@@ -54,6 +58,7 @@ class TricksRepository extends ServiceEntityRepository
             SELECT t.trick_id
                 , t.description
                 , t.name
+                , t.slug
                 , tt.name AS type
                 , subquery_image.image 
             FROM tricks t 
@@ -64,12 +69,14 @@ class TricksRepository extends ServiceEntityRepository
                 FROM images i 
                 WHERE i.is_main = true
             ) subquery_image ON subquery_image.trick_id = t.trick_id
+            ORDER BY t.trick_id DESC
         ";
 
         $rsm = new ResultSetMapping();
         $rsm->addScalarResult('trick_id', 'trickId', 'integer');
         $rsm->addScalarResult('description', 'description');
         $rsm->addScalarResult('name', 'name');
+        $rsm->addScalarResult('slug', 'slug');
         $rsm->addScalarResult('type', 'type');
         $rsm->addScalarResult('image', 'image');
 
@@ -83,7 +90,8 @@ class TricksRepository extends ServiceEntityRepository
         $newTrick = new Tricks();
         $newTrick->setType($trick->getType())
             ->setName($trick->getName())
-            ->setDescription($trick->getDescription());
+            ->setDescription($trick->getDescription())
+            ->setSlug(strtolower(str_replace(' ', '-', $trick->getName())));
 
         $this->em->persist($newTrick);
         $this->em->flush();
@@ -108,9 +116,51 @@ class TricksRepository extends ServiceEntityRepository
         }
 
         $this->em->flush();
-        $this->filesystem->remove($imageTemporary.'/');
 
         return True;
     }
 
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function getTrickContentBySlug($slug) : ?array
+    {
+        $sql = "
+            SELECT t.trick_id
+                , t.description
+                , t.name
+                , t.slug
+                , tt.name AS type
+            FROM tricks t 
+            INNER JOIN types_tricks tt ON tt.type_trick_id = t.type_trick_id
+            WHERE slug = :slug
+        ";
+
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('trick_id', 'trickId', 'integer');
+        $rsm->addScalarResult('description', 'description');
+        $rsm->addScalarResult('name', 'name');
+        $rsm->addScalarResult('slug', 'slug');
+        $rsm->addScalarResult('type', 'type');
+
+        $query = $this->em->createNativeQuery($sql, $rsm)
+            ->setParameter(':slug', $slug);
+
+        return $query->getOneOrNullResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findTrickBySlugWithMedia($slug)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t', 'i', 'v')
+            ->leftJoin('t.images', 'i')
+            ->leftJoin('t.videos', 'v')
+            ->where('t.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -13,12 +14,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
  **/
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use TimestampableEntity;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
      */
-    private ?int $id = null;
+    private ?int $user_id = null;
 
     /**
      * @ORM\Column(type="string", unique=true)
@@ -46,7 +49,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->user_id;
     }
 
     /**

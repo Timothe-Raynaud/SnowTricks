@@ -29,7 +29,7 @@ export default class extends Controller {
         }).then(data => {
             formInputLabel.classList.add('d-none')
             formFilename.value = data
-            displayBox.setAttribute('src', './uploads/tmp/' + data)
+            displayBox.setAttribute('src', '/tmp/' + data)
             box.classList.remove('d-none')
         });
     }

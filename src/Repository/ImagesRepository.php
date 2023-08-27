@@ -4,6 +4,9 @@ namespace App\Repository;
 
 use App\Entity\Images;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +22,8 @@ class ImagesRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Images::class);
+
+        $this->em = $this->getEntityManager();
     }
 
     public function save(Images $entity, bool $flush = false): void
@@ -37,5 +42,27 @@ class ImagesRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function getImageByTrickId($trickId) : ?array
+    {
+        $sql = "
+            SELECT i.filename
+                , i.is_main
+            FROM images i 
+            WHERE trick_id = :trickId
+        ";
+
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('filename', 'filename');
+        $rsm->addScalarResult('is_main', 'isMain');
+
+        $query = $this->em->createNativeQuery($sql, $rsm)
+            ->setParameter(':trickId', $trickId);
+
+        return $query->getResult();
     }
 }

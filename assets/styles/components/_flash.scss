@@ -1,4 +1,6 @@
 .flash{
+  z-index: 2000;
+
   &-container{
     position: fixed;
     top: 10px;
@@ -18,12 +20,45 @@
   }
 
   &-success{
+    border: 1px solid rgba(100, 100, 100, 0.5);
     background-color: #198754;
-    border: 1px solid black;
   }
 
   &-danger{
+    border: 1px solid rgba(100, 100, 100, 0.5);
     background-color: #bb2124;
-    border: 1px solid black;
+  }
+}
+
+.custom-toast{
+  position: fixed;
+  z-index: 2000;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%);
+
+  #toast-container{
+    padding: 0.2rem 1.5rem;
+    border-radius: 4.7rem;
+
+    #toast-content{
+      margin: 0;
+      display: flex;
+      justify-content: space-between;
+      padding: 2px 10px 2px 20px;
+      font-size: 1em;
+      color: white;
+      border-radius: 15px;
+    }
+  }
+
+  .success{
+    background-color: #198754;
+    border: 1px solid rgba(100, 100, 100, 0.6);
+  }
+
+  .error{
+    background-color: #bb2124;
+    border: 1px solid rgba(100, 100, 100, 0.6);
   }
 }

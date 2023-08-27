@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Tricks;
 use App\Form\Type\TricksFormType;
+use App\Repository\CommentsRepository;
 use App\Repository\TricksRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,14 +18,23 @@ use function PHPUnit\Framework\throwException;
 class TricksController extends AbstractController
 {
     /**
-     * @Route("/get_tricks", name="get_tricks", methods={"GET"})
+     * @Route("/get_tricks", name="get_tricks", methods={"POST"})
      */
-    public function getTricks(TricksRepository $tricksRepository): Response
+    public function getTricks(Request $request, TricksRepository $tricksRepository): Response
     {
-        $tricks = $tricksRepository->getAllTricksWithType();
-        $tricksByRow = array_chunk($tricks, 5);
+        if (!empty($request->request->get('loaderModule'))){
+            $tricks = $tricksRepository->getAllTricksWithType();
 
-        return $this->json($tricksByRow);
+            $html = [];
+            foreach($tricks as $trick){
+                $html[] = $this->renderView('pages/tricks/_card.html.twig', [
+                    'trick' => $trick
+                ]);
+            }
+            return $this->json($html);
+        }
+
+        return $this->redirectToRoute('home');
     }
 
     /**
@@ -31,6 +42,9 @@ class TricksController extends AbstractController
      */
     public function addTricks(Request $request, TricksRepository $tricksRepository): Response
     {
+        if(!$this->getUser()) {
+            return $this->redirectToRoute('user_login');
+        }
         $tricks = new Tricks();
 
         $form = $this->createForm(TricksFormType::class, $tricks);
@@ -97,5 +111,61 @@ class TricksController extends AbstractController
         }
 
         return $this->json($newFilename);
+    }
+
+    /**
+     * @Route("/trick/detail", name="get_trick_detail_fetch", methods={"POST"})
+     * @throws NonUniqueResultException
+     */
+    public function getTrickFetch(Request $request, TricksRepository $tricksRepository, CommentsRepository $commentsRepository): Response
+    {
+        $slug = $request->request->get('pushModule');
+
+        if ($slug){
+            $trick = $tricksRepository->findTrickBySlugWithMedia($slug);
+            if (!$trick) {
+                throw $this->createNotFoundException('Trick not found');
+            }
+
+            $html = $this->renderView('pages/tricks/_modal.html.twig', [
+                'trick' => $trick,
+            ]);
+
+            return $this->json($html);
+        }
+
+        return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/detail/{slug}", name="get_trick_detail", methods={"GET"})
+     */
+    public function getTrick(String $slug): Response
+    {
+        return $this->redirectToRoute('home' , []);
+    }
+
+    /**
+     * @Route("/trick/delete/{slug}", name="delete_trick", methods={"GET"})
+     */
+    public function deleteTrick(String $slug, TricksRepository $tricksRepository, CommentsRepository $commentsRepository): Response
+    {
+        $trick = $tricksRepository->findOneBy(['slug' => $slug]);
+        if ($trick === null){
+            $this->addFlash('error', 'Un problème est survenue lors de la suppression du trick.');
+            return $this->redirectToRoute('home' , []);
+        }
+
+        $comments = $commentsRepository->findBy(['trick' => $trick]);
+
+        foreach ($comments as $comment){
+            $commentsRepository->remove($comment, true);
+        }
+
+        $tricksRepository->remove($trick, true);
+
+        $this->addFlash('success', 'Le trick a bien été supprimé.');
+
+        return $this->redirectToRoute('home' , []);
     }
 }

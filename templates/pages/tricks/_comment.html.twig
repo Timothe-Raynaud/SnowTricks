@@ -1,0 +1,14 @@
+{% if comment is defined %}
+    <div class="post-box">
+        <div class="post-box__content">
+            {{ comment.content }}
+        </div>
+        <div class="post-box__user">
+            <span>
+                <b>Créer le :</b> {{ comment.createdAt|date('d/m/Y') }}
+                &ensp;
+                <b>Par :</b> {{ comment.user.username }}
+            </span>
+        </div>
+    </div>
+{% endif %}
