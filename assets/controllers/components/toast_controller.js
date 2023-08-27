@@ -1,14 +1,20 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
+    static values = {
+        type: String,
+        message: String,
+    }
 
     displayToast() {
+        let toast = document.getElementById('toast')
+
         setTimeout(() => {
-            this.dismiss();
+            this.dismiss(toast);
         }, 5000);
 
-        this.element.addEventListener("mouseenter", this.handleMouseEnter.bind(this));
-        this.element.addEventListener("mouseleave", this.handleMouseLeave.bind(this));
+        toast.addEventListener("mouseenter", this.handleMouseEnter.bind(this));
+        toast.addEventListener("mouseleave", this.handleMouseLeave.bind(this));
     }
 
     handleMouseEnter() {
@@ -21,14 +27,9 @@ export default class extends Controller {
         }, 1000);
     }
 
-    dismiss() {
-        if (!this.element.matches(':hover')){
-            this.element.remove();
+    dismiss(toast) {
+        if (!toast.matches(':hover')){
+            toast.remove();
         }
-    }
-
-    close(event){
-        let element = event.currentTarget;
-        element.parentNode.remove()
     }
 }

@@ -3,6 +3,7 @@
 
 {% block body %}
     {{ macros.render_flash_messages() }}
+    {{ macros.render_toast() }}
 
     {% block header %}
         {% include 'layout/_header.html.twig' %}
