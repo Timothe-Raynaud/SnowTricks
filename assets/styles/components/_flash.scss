@@ -20,13 +20,13 @@
   }
 
   &-success{
+    border: 1px solid rgba(100, 100, 100, 0.5);
     background-color: #198754;
-    border: 1px solid black;
   }
 
   &-danger{
+    border: 1px solid rgba(100, 100, 100, 0.5);
     background-color: #bb2124;
-    border: 1px solid black;
   }
 }
 
@@ -40,7 +40,6 @@
   #toast-container{
     padding: 0.2rem 1.5rem;
     border-radius: 4.7rem;
-    border: 1px solid rgba(100, 100, 100, 0.5);
 
     #toast-content{
       margin: 0;
@@ -55,11 +54,11 @@
 
   .success{
     background-color: #198754;
-    border: 1px solid black;
+    border: 1px solid rgba(100, 100, 100, 0.6);
   }
 
   .error{
     background-color: #bb2124;
-    border: 1px solid black;
+    border: 1px solid rgba(100, 100, 100, 0.6);
   }
 }

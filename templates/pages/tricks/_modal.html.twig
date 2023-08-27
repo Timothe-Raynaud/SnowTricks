@@ -105,14 +105,14 @@
 
                 </div>
 
-                <div id="load-more" class="" data-components--loader-target="loadButton">
+                <div id="load-more" data-components--loader-target="loadButton">
                     <a href="javascript:void(0)" data-action="click->components--loader#load">
                         <span>Afficher plus</span>
                         <i class="fa-solid fa-chevron-down"></i>
                     </a>
                 </div>
             </div>
-            {% if app.user is defined %}
+            {% if app.user is not null %}
                 <form id="comment-form" class="text-center"
                         {{ stimulus_controller('components/form') }}
                         data-components--form-path-value="{{ path('comments_form') }}"

@@ -61,13 +61,14 @@
   box-shadow: 1px 1px 10px rgba(10, 10, 10, 0.4),
   -1px -1px 10px rgba(10, 10, 10, 0.4);
   z-index: 1;
-  height: 270px!important;
-  border-radius: 0.7rem!important;
+  height: 270px !important;
+  border-radius: 0.7rem !important;
+  position: relative;
 
-  a{
+  .card-section {
+    position: relative;
     height: 100%;
     display: flex;
-    position: relative;
     border-radius: 0.7rem;
     background-color: rgba(0, 0, 0, 0.55);
 
@@ -82,25 +83,52 @@
       text-transform: capitalize;
       transition: all 1000ms;
 
-      .card-title{
+      .card-title {
         border-bottom: 1px solid white;
+      }
+    }
+
+  }
+
+  .card-action {
+    position: absolute;
+    bottom: -30px;
+    right: 18px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem;
+    border-radius: 0 0 0.5rem 0.5rem;
+    background-color: rgba(0, 0, 0, 0.55);
+
+    a {
+      color: white;
+      display: block;
+      padding: 0.7rem;
+      font-size: 1rem;
+
+      &:hover {
+        color: #888888;
+        cursor: pointer;
       }
     }
   }
 
+
   &:hover {
     box-shadow: 1px 1px 15px rgba(10, 10, 10, 0.5),
     1px 1px 15px rgba(10, 10, 10, 0.5);
-    transform:scale(1.05);
+    transform: scale(1.05);
     z-index: 5;
 
-    .card-body{
+    .card-body {
       top: 18%;
 
-      .card-title{
+      .card-title {
         border: none;
       }
-      .card-type{
+
+      .card-type {
         display: none;
       }
     }

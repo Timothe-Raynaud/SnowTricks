@@ -144,4 +144,28 @@ class TricksController extends AbstractController
     {
         return $this->redirectToRoute('home' , []);
     }
+
+    /**
+     * @Route("/trick/delete/{slug}", name="delete_trick", methods={"GET"})
+     */
+    public function deleteTrick(String $slug, TricksRepository $tricksRepository, CommentsRepository $commentsRepository): Response
+    {
+        $trick = $tricksRepository->findOneBy(['slug' => $slug]);
+        if ($trick === null){
+            $this->addFlash('error', 'Un problème est survenue lors de la suppression du trick.');
+            return $this->redirectToRoute('home' , []);
+        }
+
+        $comments = $commentsRepository->findBy(['trick' => $trick]);
+
+        foreach ($comments as $comment){
+            $commentsRepository->remove($comment, true);
+        }
+
+        $tricksRepository->remove($trick, true);
+
+        $this->addFlash('success', 'Le trick a bien été supprimé.');
+
+        return $this->redirectToRoute('home' , []);
+    }
 }

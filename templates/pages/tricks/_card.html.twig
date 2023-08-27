@@ -16,15 +16,26 @@
          background-size: cover;
      "
 >
-    <a id="{{ trick.slug }}"
-       href="#{{ trick.slug }}"
+    <div class="card-section"
+        id="{{ trick.slug }}"
        data-bs-toggle="modal"
        data-bs-target="#tricksModal"
-       data-action="components--push-content#request"
+       data-action="click->components--push-content#request"
     >
         <div class="card-body">
             <h2 class="card-title">{{ trick.name }}</h2>
             <div class="card-type">{{ trick.type }}</div>
         </div>
-    </a>
+
+    </div>
+    {% if app.user is not null %}
+        <div class="card-action">
+            <a href="">
+                <i class="fa-solid fa-pencil"></i>
+            </a>
+            <a href="{{ path('delete_trick', {'slug': trick.slug}) }}">
+                <i class="fa-solid fa-trash-can"></i>
+            </a>
+        </div>
+    {% endif %}
 </div>
