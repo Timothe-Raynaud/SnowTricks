@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Trait\TimestampableTrait;
+use App\Traits\TimestampableTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

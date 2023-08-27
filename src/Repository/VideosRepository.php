@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * @extends ServiceEntityRepository<Videos>
@@ -43,7 +44,7 @@ class VideosRepository extends ServiceEntityRepository
         }
     }
 
-    public function getVideosByTrickId($trickId) : ?array
+    public function getVideosByTrickId(int $trickId) : ?array
     {
         $sql = "
             SELECT i.url

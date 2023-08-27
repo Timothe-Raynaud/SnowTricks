@@ -9,7 +9,7 @@ use App\Repository\CommentsRepository;
 use App\Repository\TricksRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Trait\FlashTrait;
+use App\Traits\FlashTrait;
 
 class CommentManager
 {

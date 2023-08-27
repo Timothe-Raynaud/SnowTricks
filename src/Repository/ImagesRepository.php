@@ -8,6 +8,7 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * @extends ServiceEntityRepository<Images>
@@ -47,7 +48,7 @@ class ImagesRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function getImageByTrickId($trickId) : ?array
+    public function getImageByTrickId(int $trickId) : ?array
     {
         $sql = "
             SELECT i.filename

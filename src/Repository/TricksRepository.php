@@ -123,7 +123,7 @@ class TricksRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function getTrickContentBySlug($slug) : ?array
+    public function getTrickContentBySlug(string $slug) : ?array
     {
         $sql = "
             SELECT t.trick_id
@@ -152,7 +152,7 @@ class TricksRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findTrickBySlugWithMedia($slug)
+    public function findTrickBySlugWithMedia(string $slug) : Tricks
     {
         return $this->createQueryBuilder('t')
             ->select('t', 'i', 'v')
