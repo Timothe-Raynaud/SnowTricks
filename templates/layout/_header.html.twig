@@ -1,35 +1,5 @@
-<header id="header" class="px-4">
-    <div class="d-sm-none d-block">
-        <div id="hamburger" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu">
-            <i class="fa-solid fa-bars"></i>
-        </div>
-
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
-            <div class="offcanvas-header justify-content-end text-end">
-                <button type="button" class="btn-close text-reset fs-2" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <div id="logo-canvas" class="w-50 m-auto">
-                    <img src="{{ asset('images/pages/logo.jpg') }}" class="img-fluid h-100" alt="logo">
-                </div>
-                <div class="mt-3">
-                    <ul id="nav-canvas" class="d-flex flex-column align-items-center">
-                        <li><a href="{{ path('home') }}">Home</a></li>
-                        <li><a href="{{ path('add_tricks') }}">Tricks</a></li>
-                        {% if app.user %}
-                            <li><a href="{{ path('user_logout') }}">Se deconnecter</a></li>
-                        {% else %}
-                            <li><a href="{{ path('user_login') }}">Sign in</a></li>
-                            <li><a href="{{ path('user_register') }}">Sign up</a></li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container-fluid d-sm-flex d-none justify-content-between align-items-center">
+<header id="header" class="header px-4">
+    <div class="header__container">
         <div id="logo" class="h-100">
             <img src="{{ asset('images/pages/logo.jpg') }}" class="img-fluid h-100" alt="logo">
         </div>
@@ -46,5 +16,36 @@
     </div>
 </header>
 
-
+<header class="header-mobile">
+    <ul class="nav">
+        <li>
+            <a href="{{ path('home') }}" class="{% if app.request.get('_route') == 'home' %}active{% endif %}">
+                <i class="fa-solid fa-house"></i>
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('add_tricks') }}" class="{% if app.request.get('_route') == 'add_tricks' %}active{% endif %}">
+                <i class="fa-solid fa-tag"></i>
+            </a>
+        </li>
+        {% if app.user %}
+            <li>
+                <a href="{{ path('user_logout') }}" class="{% if app.request.get('_route') == 'user_logout' %}active{% endif %}">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                </a>
+            </li>
+        {% else %}
+            <li>
+                <a href="{{ path('user_login') }}" class="{% if app.request.get('_route') == 'user_login' %}active{% endif %}">
+                    <i class="fa-solid fa-user-large"></i>
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('user_register') }}" class="{% if app.request.get('_route') == 'user_register' %}active{% endif %}">
+                    <i class="fa-solid fa-person-circle-plus"></i>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</header>
 
