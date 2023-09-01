@@ -11,50 +11,66 @@ export default class extends Controller {
         path: String,
         elementHtml: Array,
         elementAnchor: String,
-        firstLoad: { type : Number, default: 10},
-        anchorTrigger: { type: Number, default: 15},
+        recurrence: { type: Number, default: 0},
+        lastIndex: { type: Number, default: 0},
+        initialLoad: { type : Number, default: 10},
+        anchorTrigger: { type: Number, default: 2},
         elementsPerLoad: { type: Number, default: 5},
-        currentElementsIndex: { type: Number, default: 0},
     }
 
     connect() {
-        const endIndex = this.currentElementsIndexValue + this.firstLoadValue
+        let bodyContent =  JSON.stringify({
+            'elementNumber': (this.initialLoadValue + 1),
+            'startingId': null,
+        })
 
+        this.request(bodyContent)
+    }
+
+    loadMore(){
+        let bodyContent =  JSON.stringify({
+            'elementNumber': (this.elementsPerLoadValue + 1),
+            'startingId': this.lastIndexValue,
+        })
+
+        this.request(bodyContent)
+    }
+
+    loadMoreElements() {
+        for (let i = 0; (i + 1) < this.elementHtmlValue.length; i++) {
+            this.containerTarget.innerHTML += this.elementHtmlValue[i]
+        }
+
+        if (this.elementHtmlValue.length <= this.initialLoadValue && this.recurrenceValue === 1) {
+            this.loadButtonTarget.classList.add('d-none')
+        }
+
+        if (this.elementHtmlValue.length <= this.elementsPerLoadValue && this.recurrenceValue > 1) {
+            this.loadButtonTarget.classList.add('d-none')
+        }
+
+        if (this.elementAnchorValue){
+            if (this.anchorTriggerValue === this.recurrenceValue ){
+                let anchor = document.getElementById(this.elementAnchorValue)
+                anchor.classList.remove('d-none')
+            }
+        }
+    }
+
+    request(bodyContent){
         fetch(this.pathValue, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: 'loaderModule=1',
+            body: bodyContent,
         })
             .then(response => response.json())
             .then(data => {
-                this.elementHtmlValue = data
-                this.loadMoreElements(endIndex)
+                this.elementHtmlValue = data.html
+                this.lastIndexValue = data.lastIndex
+                this.recurrenceValue = this.recurrenceValue + 1
+                this.loadMoreElements()
             })
-    }
-
-    load(){
-        const endIndex = this.currentElementsIndexValue + this.elementsPerLoadValue
-        this.loadMoreElements(endIndex)
-    }
-
-    loadMoreElements(endIndex) {
-        for (let i = this.currentElementsIndexValue; i < endIndex && i < this.elementHtmlValue.length; i++) {
-            this.containerTarget.innerHTML += this.elementHtmlValue[i]
-        }
-
-        this.currentElementsIndexValue = endIndex
-
-        if (this.currentElementsIndexValue >= this.elementHtmlValue.length) {
-            this.loadButtonTarget.classList.add('d-none')
-        }
-
-        if (this.elementAnchorValue){
-            if (this.anchorTriggerValue <= endIndex){
-                let anchor = document.getElementById(this.elementAnchorValue)
-                anchor.classList.remove('d-none')
-            }
-        }
     }
 }

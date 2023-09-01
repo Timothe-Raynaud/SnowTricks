@@ -22,16 +22,28 @@ class TricksController extends AbstractController
      */
     public function getTricks(Request $request, TricksRepository $tricksRepository): Response
     {
-        if (!empty($request->request->get('loaderModule'))){
-            $tricks = $tricksRepository->getAllTricksWithType();
+
+        $requestContent = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+
+        if (!empty($requestContent['elementNumber'])) {
+            $limit = $requestContent['elementNumber'];
+
+            $startingId = null;
+            if (!empty($requestContent['startingId'])) {
+                $startingId = $requestContent['startingId'];
+            }
+
+            $tricks = $tricksRepository->getTricksWithType($limit, $startingId);
 
             $html = [];
-            foreach($tricks as $trick){
+            $lastIndex = 0;
+            foreach ($tricks as $trick) {
                 $html[] = $this->renderView('pages/tricks/_card.html.twig', [
                     'trick' => $trick
                 ]);
+                $lastIndex = $trick['trickId'];
             }
-            return $this->json($html);
+            return $this->json(['html' => $html, 'lastIndex' => $lastIndex]);
         }
 
         return $this->redirectToRoute('home');
@@ -42,7 +54,7 @@ class TricksController extends AbstractController
      */
     public function addTricks(Request $request, TricksRepository $tricksRepository): Response
     {
-        if(!$this->getUser()) {
+        if (!$this->getUser()) {
             return $this->redirectToRoute('user_login');
         }
         $tricks = new Tricks();
@@ -121,7 +133,7 @@ class TricksController extends AbstractController
     {
         $slug = $request->request->get('pushModule');
 
-        if ($slug){
+        if ($slug) {
             $trick = $tricksRepository->findTrickBySlugWithMedia($slug);
             if (!$trick) {
                 throw $this->createNotFoundException('Trick not found');
@@ -140,25 +152,25 @@ class TricksController extends AbstractController
     /**
      * @Route("/detail/{slug}", name="get_trick_detail", methods={"GET"})
      */
-    public function getTrick(String $slug): Response
+    public function getTrick(string $slug): Response
     {
-        return $this->redirectToRoute('home' , []);
+        return $this->redirectToRoute('home', []);
     }
 
     /**
      * @Route("/trick/delete/{slug}", name="delete_trick", methods={"GET"})
      */
-    public function deleteTrick(String $slug, TricksRepository $tricksRepository, CommentsRepository $commentsRepository): Response
+    public function deleteTrick(string $slug, TricksRepository $tricksRepository, CommentsRepository $commentsRepository): Response
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
-        if ($trick === null){
+        if ($trick === null) {
             $this->addFlash('error', 'Un problème est survenue lors de la suppression du trick.');
-            return $this->redirectToRoute('home' , []);
+            return $this->redirectToRoute('home', []);
         }
 
         $comments = $commentsRepository->findBy(['trick' => $trick]);
 
-        foreach ($comments as $comment){
+        foreach ($comments as $comment) {
             $commentsRepository->remove($comment, true);
         }
 
@@ -166,6 +178,6 @@ class TricksController extends AbstractController
 
         $this->addFlash('success', 'Le trick a bien été supprimé.');
 
-        return $this->redirectToRoute('home' , []);
+        return $this->redirectToRoute('home', []);
     }
 }

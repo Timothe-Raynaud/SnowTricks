@@ -99,14 +99,14 @@
             <div id="trick-post"
                 {{ stimulus_controller('components/loader') }}
                 data-components--loader-path-value="{{ path('comments_get_comments-fetch', {'slug': trick.slug}) }}"
-                data-components--loader-first-load-value="5"
+                data-components--loader-initial-load-value="5"
             >
                 <div data-components--loader-target="container">
 
                 </div>
 
                 <div id="load-more" data-components--loader-target="loadButton">
-                    <a href="javascript:void(0)" data-action="click->components--loader#load">
+                    <a href="javascript:void(0)" data-action="click->components--loader#loadMore">
                         <span>Afficher plus</span>
                         <i class="fa-solid fa-chevron-down"></i>
                     </a>

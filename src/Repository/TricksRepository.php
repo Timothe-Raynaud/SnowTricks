@@ -52,8 +52,13 @@ class TricksRepository extends ServiceEntityRepository
         }
     }
 
-    public function getAllTricksWithType() : array
+    public function getTricksWithType(int $limit, ?int $startingId) : array
     {
+        $where = '';
+        if ($startingId !== null){
+            $where = 'AND t.trick_id <= :startingId';
+        }
+
         $sql = "
             SELECT t.trick_id
                 , t.description
@@ -69,7 +74,10 @@ class TricksRepository extends ServiceEntityRepository
                 FROM images i 
                 WHERE i.is_main = true
             ) subquery_image ON subquery_image.trick_id = t.trick_id
+            WHERE 1=1
+            {$where}
             ORDER BY t.trick_id DESC
+            LIMIT :limit
         ";
 
         $rsm = new ResultSetMapping();
@@ -80,7 +88,11 @@ class TricksRepository extends ServiceEntityRepository
         $rsm->addScalarResult('type', 'type');
         $rsm->addScalarResult('image', 'image');
 
-        return $this->em->createNativeQuery($sql, $rsm)->getResult();
+        $query = $this->em->createNativeQuery($sql, $rsm)
+            ->setParameter(':startingId', $startingId)
+            ->setParameter(':limit', $limit);
+
+        return $query->getResult();
     }
 
     public function addNewFromForm(Tricks $trick) : bool
