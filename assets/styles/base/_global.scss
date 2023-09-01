@@ -9,10 +9,10 @@ body{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: #e3e2e2!important;
+  background: #e3e2e2;
   position: relative;
 
   @media #{$media-mobile} {
-    padding-bottom: 100px;
+    padding-bottom: 2.2rem;
   }
 }

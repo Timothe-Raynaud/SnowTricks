@@ -9,22 +9,20 @@
                 Vous êtes déjà connecté.
             </div>
         {% else %}
-            <div class="col-lg-3 col-md-5 col-sm-8 col-10">
+            <div class="col-lg-2 col-md-5 col-sm-8 col-10 form-box">
                 <form action="{{ path('user_login') }}" method="post">
-                    <label for="username" class="form-label">Username :</label>
-                    <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control"/>
 
-                    <label for="password" class="form-label">Password:</label>
-                    <input type="password" id="password" name="_password" class="form-control"/>
+                    <input type="text" id="username" name="_username" value="{{ last_username }}" class="custom-input" placeholder="Username"/>
+                    <input type="password" id="password" name="_password" class="custom-input" placeholder="Password" />
 
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                    <div class="text-center mt-3">
-                        <button type="submit" class="btn btn-primary w-100">Connexion</button>
+                    <div class="text-center mt-4">
+                        <button type="submit" class="button button-secondary">Connexion</button>
                     </div>
 
                     <div class="text-center mt-3">
-                        <a href="{{ path('app_forgot_password_request') }}">Mot de passe oubliée ?</a>
+                        <a href="{{ path('app_forgot_password_request') }}" class="text-decoration-none text-secondary"><small>Mot de passe oubliée ?</small></a>
                     </div>
                 </form>
             </div>

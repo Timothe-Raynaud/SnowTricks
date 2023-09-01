@@ -4,13 +4,13 @@
 
 {% block main %}
     <main class="d-flex justify-content-center align-items-center flex-grow-1">
-        <div class="col-lg-3 col-md-5 col-sm-8 col-10">
+        <div class="col-lg-3 col-md-5 col-sm-8 col-10 form-box">
             <h3 class="text-center border-bottom mb-4">Nouveau mot de passe</h3>
 
             {{ form_start(resetForm) }}
                 {{ form_row(resetForm.plainPassword) }}
             <div class="text-center">
-                <button class="btn btn-primary">Modifier</button>
+                <button class="button button-secondary">Modifier</button>
             </div>
             {{ form_end(resetForm) }}
         </div>

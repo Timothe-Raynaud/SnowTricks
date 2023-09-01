@@ -20,19 +20,17 @@ class RegisterFormType extends AbstractType
     {
         $builder
             ->add('username', TextType::class, [
-                'label_attr' => [
-                    'class' => 'form-label mt-2'
-                ],
+                'label' => false,
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'custom-input',
+                    'placeholder' => 'Username',
                 ],
             ])
             ->add('email', EmailType::class, [
-                'label_attr' => [
-                    'class' => 'form-label mt-2'
-                ],
+                'label' => false,
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'custom-input',
+                    'placeholder' => 'Email',
                 ],
             ])
             ->add('agreeTerms', CheckboxType::class, [
@@ -51,12 +49,11 @@ class RegisterFormType extends AbstractType
             ])
             ->add('plainPassword', PasswordType::class, [
                 'mapped' => false,
-                'label_attr' => [
-                    'class' => 'form-label mt-2'
-                ],
+                'label' => false,
                 'attr' => [
                     'autocomplete' => 'new-password',
-                    'class' => 'form-control'
+                    'class' => 'custom-input',
+                    'placeholder' => 'Password',
                 ],
                 'constraints' => [
                     new NotBlank([

@@ -3,8 +3,11 @@ $gray: #E9EAEC;
 $blue-gray: #E7F2F8;
 $dark-blue: #333652;
 
-$primary: #354551;
-$secondary: #534545;
+$primary: #7495a5;
+$secondary: #7175ab;
+
+$primary-gradient: linear-gradient(183deg, rgba(116,149,165,1) 0%, rgba(83,98,113,1) 100%);
+$secondary-gradient: linear-gradient(7deg, rgba(67,69,93,1) 0%, rgba(113,117,171,1) 100%);
 
 $media-desktop: "only screen and (max-width : 1024px)";
 $media-tablet: "only screen and (max-width : 768px)";

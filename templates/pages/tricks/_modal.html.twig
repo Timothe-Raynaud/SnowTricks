@@ -39,7 +39,7 @@
             </div>
 
             {% if (trick.images|length + trick.videos|length) > 0 %}
-                <div class="media-bar scrollbar" id="style-1">
+                <div class="media-bar scrollbar rounded-custom-scrollbar">
                     {% set key = 1 %}
                     {% for image in trick.images %}
                         <div class="media-box {% if image.isMain == true %}active{% endif %}"

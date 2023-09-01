@@ -20,7 +20,7 @@ class ChangePasswordFormType extends AbstractType
                 'options' => [
                     'attr' => [
                         'autocomplete' => 'Nouveau mot de passe',
-                        'class' => 'form-control mb-3'
+                        'class' => 'input-custom mb-3'
                     ],
                 ],
                 'first_options' => [

@@ -1,5 +1,6 @@
 @import "base/reset";
 
+@import "~bootstrap/scss/bootstrap";
 @import "~@fortawesome/fontawesome-free/css/all";
 
 /* Base */
@@ -30,4 +31,3 @@
 @import "utils/variables";
 @import "utils/scrollbar";
 
-@import "~bootstrap/scss/bootstrap";
