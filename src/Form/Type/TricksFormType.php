@@ -21,29 +21,26 @@ class TricksFormType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label_attr' => [
-                    'class' => 'form-label mt-2'
-                ],
+                'label' => false,
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'custom-input',
+                    'placeholder' => 'name'
                 ],
             ])
             ->add('description', TextareaType::class, [
-                'label_attr' => [
-                    'class' => 'form-label mt-2'
-                ],
+                'label' => false,
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'custom-input textarea',
+                    'placeholder' => 'Description',
+                    'rows' => '8'
                 ],
             ])
             ->add('type', EntityType::class, [
                 'class' => TypesTricks::class,
                 'choice_label' => 'name',
-                'label_attr' => [
-                    'class' => 'form-label mt-2'
-                ],
+                'label' => false,
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'custom-input'
                 ],
             ])
             ->add('images', CollectionType::class, [

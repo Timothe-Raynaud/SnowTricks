@@ -1,0 +1,103 @@
+<div id="modal-content" class="modal-content">
+    <div class="modal-body pb-0">
+        {{ form_start(trickForm) }}
+            <div class="d-flex">
+                <div class="flex-grow-1 me-2">
+                    {{ form_row(trickForm.name) }}
+                </div>
+                <div class="flex-grow-1 ms-2">
+                    {{ form_row(trickForm.type) }}
+                </div>
+            </div>
+            {{ form_row(trickForm.description) }}
+
+            <div class="row">
+                {#     Images collection       #}
+                <div {{ stimulus_controller('components/form-collection') }}
+                        data-components--form-collection-index-value="{{ trickForm.images|length > 0 ? trickForm.images|last.vars.name + 1 : 0 }}"
+                        data-components--form-collection-prototype-value="
+                                <div class='d-flex position-relative' data-controller='pre-upload'>
+
+                                <label class='label-file' data-pre-upload-target='formInputLabel'>
+                                    <input type='file'
+                                            class='input-file'
+                                            id='input_image___name__'
+                                            name='image___name__'
+                                            data-action='input->pre-upload#upload'
+                                            accept='image/png, image/jpeg'
+                                            data-pre-upload-target='formInput'
+                                    >
+                                    Choisir une image
+                                </label>
+
+                                <div class='d-none image-preview-box' data-pre-upload-target='box'>
+                                    <img src='' alt='preview-image-__name__' class='img-fluid' data-pre-upload-target='preview'>
+                                    <a class='delete-image-upload' data-action='click->pre-upload#delete'><i class='fa-solid fa-circle-xmark'></i></a>
+                                </div>
+                                {{ form_widget(trickForm.images.vars.prototype , { 'attr' : {'class': 'd-none', 'data-pre-upload-target': 'formFilename'} })|e('html_attr') }}
+
+                                </div>
+                            "
+                        class="text-center col-sm-6 col-12"
+                >
+                    <button {{ stimulus_action('components/form-collection', 'addCollectionElement') }}
+                            {{ stimulus_target('components/form-collection', 'addButton') }}
+                            type="button"
+                            class="button button-secondary mt-3">
+                        Ajouter une image
+                    </button>
+
+                    <ul {{ stimulus_target('components/form-collection', 'collectionContainer') }}
+                            class="upload_images"></ul>
+                </div>
+
+                {#     Videos collection       #}
+                <div {{ stimulus_controller('components/form-collection') }}
+                        data-components--form-collection-index-value="{{ trickForm.videos|length > 0 ? trickForm.videos|last.vars.name + 1 : 0 }}"
+                        data-components--form-collection-prototype-value="
+                                    <div class='d-flex flex-column'
+                                        data-controller='preview-video'>
+                                            {{ form_widget(trickForm.videos.vars.prototype, {
+                            'attr':{
+                                'data-action': 'input->preview-video#preview'
+                            }
+                        })|e('html_attr') }}
+                                            <iframe data-preview-video-target='embed'
+                                            src=''
+                                            width='250'
+                                            height='150'
+                                            allowfullscreen
+                                            class='embed-video'></iframe>
+                                    </div>
+                                "
+                        class="text-center col-sm-6 col-12"
+                >
+
+                    <button {{ stimulus_action('components/form-collection', 'addCollectionElement') }}
+                            {{ stimulus_target('components/form-collection', 'addButton') }}
+                            type="button"
+                            class="button button-secondary mt-3">
+                        Ajouter une video
+                    </button>
+
+                    <div class="text-center mt-2 text-muted">Copier une Url embed du site de votre choix pour
+                        ajouter
+                        une video.
+                    </div>
+
+                    <ul {{ stimulus_target('components/form-collection', 'collectionContainer') }}
+                            class="upload_videos"
+                    ></ul>
+
+                </div>
+            </div>
+
+        <div class="text-center my-3">
+            <button type="submit" class="button button-primary btn-add-tricks">
+                Enregistrer
+            </button>
+        </div>
+
+        {{ form_end(trickForm, {'render_rest': false}) }}
+    </div>
+</div>

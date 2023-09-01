@@ -47,7 +47,7 @@
     background-color: rgba(0, 0, 0, 0.55);
     transition: all 600ms;
 
-    a {
+    a, div {
       display: none;
       color: white;
       padding: 0.7rem;
@@ -83,7 +83,7 @@
       bottom: -30px;
       height: 30px;
 
-      a{
+      a, div{
         display: block;
       }
     }

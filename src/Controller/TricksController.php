@@ -180,4 +180,35 @@ class TricksController extends AbstractController
 
         return $this->redirectToRoute('home', []);
     }
+
+    /**
+     * @Route("/updated/trick", name="get_update_trick_update_html", methods={"GET", "POST"})
+     * @throws NonUniqueResultException
+     */
+    public function getUpdateTrickFetch(Request $request, TricksRepository $tricksRepository): Response
+    {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('user_login');
+        }
+
+        $slug = $request->request->get('pushModule');
+
+        if ($slug) {
+            $trick = $tricksRepository->findTrickBySlugWithMedia($slug);
+
+            if (!$trick) {
+                throw $this->createNotFoundException('Trick not found');
+            }
+
+            $form = $this->createForm(TricksFormType::class, $trick);
+
+            $html = $this->renderView('pages/tricks/_update.html.twig', [
+                'trickForm' => $form->createView(),
+            ]);
+
+            return $this->json($html);
+        }
+
+        return $this->redirectToRoute('home');
+    }
 }

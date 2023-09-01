@@ -4,21 +4,27 @@
 
 {% block main %}
     <main class="d-flex justify-content-center align-items-center flex-grow-1 mb-sm-0 mb-4">
-        <div class="container">
+        <div class="container form-box">
             {% if app.user %}
                 {{ form_start(trickForm) }}
                 {{ form_row(trickForm._token) }}
 
-                <div class="d-flex flex-sm-row flex-column justify-content-sm-between justify-content-center border-bottom pb-2">
+                <div class="d-flex flex-sm-row flex-column justify-content-sm-between justify-content-center pb-2">
                     <h3>Ajout d'un trick</h3>
-                    <button type="submit" class="btn btn-primary shadow-lg btn-add-tricks">
+                    <button type="submit" class="button button-primary btn-add-tricks">
                         Enregistrer
                     </button>
                 </div>
 
-                {{ form_row(trickForm.name) }}
+                <div class="d-flex">
+                    <div class="flex-grow-1 me-2">
+                        {{ form_row(trickForm.name) }}
+                    </div>
+                    <div class="flex-grow-1 ms-2">
+                        {{ form_row(trickForm.type) }}
+                    </div>
+                </div>
                 {{ form_row(trickForm.description) }}
-                {{ form_row(trickForm.type) }}
 
                 <div class="row">
                     {#     Images collection       #}
@@ -52,7 +58,7 @@
                         <button {{ stimulus_action('components/form-collection', 'addCollectionElement') }}
                                 {{ stimulus_target('components/form-collection', 'addButton') }}
                                 type="button"
-                                class="btn btn-secondary shadow mt-3">
+                                class="button button-secondary mt-3">
                             Ajouter une image
                         </button>
 
@@ -85,7 +91,7 @@
                         <button {{ stimulus_action('components/form-collection', 'addCollectionElement') }}
                                 {{ stimulus_target('components/form-collection', 'addButton') }}
                                 type="button"
-                                class="btn btn-secondary shadow mt-3">
+                                class="button button-secondary mt-3">
                             Ajouter une video
                         </button>
 
