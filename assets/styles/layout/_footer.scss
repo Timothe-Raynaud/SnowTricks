@@ -1,0 +1,16 @@
+@import "../utils/variables";
+
+
+footer{
+  padding: 1rem 2rem;
+
+  div{
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: #555555;
+  }
+
+  @media #{$media-mobile} {
+    padding: 2.1rem 2rem;
+  }
+}

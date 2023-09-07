@@ -26,6 +26,13 @@
     border-bottom: 2px solid $primary;
     box-shadow: 0 15px 10px -15px #111;
   }
+
+  option{
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1;
+    color: #555555;
+  }
 }
 
 .textarea {

@@ -13,7 +13,6 @@
                          background-size: cover;
                          background-position: top left;
                          background-repeat: no-repeat;
-                         height: 90vh;
                          ">
                 <div id="catch-phrase" class="container-fluid">
                     <h3 class="w-50 text-center border-top border-bottom border-1 border-white py-4 fs-4 text-white">
@@ -63,7 +62,7 @@
 
     <script>
         const tricksModal = document.getElementById('tricksModal')
-        tricksModal.addEventListener('hide.bs.modal', function (event) {
+        tricksModal.addEventListener('hide.bs.modal', function () {
             history.replaceState({}, "", "/");
         })
     </script>

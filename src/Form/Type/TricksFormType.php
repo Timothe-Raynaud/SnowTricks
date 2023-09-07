@@ -4,16 +4,14 @@ namespace App\Form\Type;
 
 use App\Entity\Tricks;
 use App\Entity\TypesTricks;
-use Symfony\Component\Validator\Constraints\File;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
 
 class TricksFormType extends AbstractType
 {
@@ -43,18 +41,11 @@ class TricksFormType extends AbstractType
                     'class' => 'custom-input'
                 ],
             ])
-            ->add('images', CollectionType::class, [
-                'entry_type' => TextType::class,
-                'allow_add' => true,
-                'delete_empty' => true,
-                'required' => false,
-                'disabled' => false,
+            ->add('images', LiveCollectionType::class, [
+                'entry_type' => ImagesType::class,
             ])
-            ->add('videos', CollectionType::class, [
-                'entry_type' => TextType::class,
-                'allow_add' => true,
-                'delete_empty' => true,
-                'required' => false,
+            ->add('videos', LiveCollectionType::class, [
+                'entry_type' => VideosType::class,
             ])
         ;
 
