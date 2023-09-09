@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Table(name="tricks")
  * @ORM\HasLifecycleCallbacks
  **/
-class Tricks
+class Trick
 {
     use TimestampableTrait;
 
@@ -47,19 +47,19 @@ class Tricks
     private string $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TypesTricks")
+     * @ORM\ManyToOne(targetEntity="TypeTricks")
      * @ORM\JoinColumn(name="type_trick_id", referencedColumnName="type_trick_id")
      */
-    private TypesTricks $type;
+    private TypeTricks $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="Images", mappedBy="trick", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="trick", cascade={"persist", "remove"})
      * @Groups({"exclude_from_serialization"})
      */
     private ?Collection $images;
 
     /**
-     * @ORM\OneToMany(targetEntity="Videos", mappedBy="trick", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Video", mappedBy="trick", cascade={"persist", "remove"})
      */
     private ?Collection $videos;
 
@@ -96,12 +96,9 @@ class Tricks
         return $this->slug;
     }
 
-    /**
-     * @param string $slug
-     */
-    public function setSlug(string $slug): void
+    public function setSlug(): void
     {
-        $this->slug = $slug;
+        $this->slug = strtolower(str_replace(' ', '-', $this->name));
     }
 
     public function getDescription(): ?string
@@ -116,12 +113,12 @@ class Tricks
         return $this;
     }
 
-    public function getType(): ?TypesTricks
+    public function getType(): ?TypeTricks
     {
         return $this->type;
     }
 
-    public function setType(TypesTricks $type): self
+    public function setType(TypeTricks $type): self
     {
         $this->type = $type;
 
@@ -144,17 +141,17 @@ class Tricks
         return $this->images;
     }
 
-    public function addImage(Images $image): self
+    public function addImage(Image $image): self
     {
         if (!$this->images->contains($image)) {
-            $this->images[] = $image;
+            $this->images->add($image);
             $image->setTrick($this);
         }
 
         return $this;
     }
 
-    public function removeImage(Images $image): self
+    public function removeImage(Image $image): self
     {
         if ($this->images->contains($image)) {
             $this->images->removeElement($image);
@@ -175,7 +172,7 @@ class Tricks
         return $this->videos;
     }
 
-    public function addVideo(Videos $video): self
+    public function addVideo(Video $video): self
     {
         if (!$this->videos->contains($video)) {
             $this->videos[] = $video;
@@ -185,7 +182,7 @@ class Tricks
         return $this;
     }
 
-    public function removeVideo(Videos $video): self
+    public function removeVideo(Video $video): self
     {
         if ($this->videos->contains($video)) {
             $this->videos->removeElement($video);

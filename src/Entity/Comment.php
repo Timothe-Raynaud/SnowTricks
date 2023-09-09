@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="comments")
  * @ORM\HasLifecycleCallbacks
  **/
-class Comments
+class Comment
 {
     use TimestampableTrait;
 
@@ -27,10 +27,10 @@ class Comments
     private string $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Tricks")
+     * @ORM\ManyToOne(targetEntity="Trick")
      * @ORM\JoinColumn(name="trick_id", referencedColumnName="trick_id")
      */
-    private Tricks $trick;
+    private Trick $trick;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
@@ -71,17 +71,17 @@ class Comments
     }
 
     /**
-     * @return Tricks
+     * @return Trick
      */
-    public function getTrick(): Tricks
+    public function getTrick(): Trick
     {
         return $this->trick;
     }
 
     /**
-     * @param Tricks $trick
+     * @param Trick $trick
      */
-    public function setTrick(Tricks $trick): void
+    public function setTrick(Trick $trick): void
     {
         $this->trick = $trick;
     }

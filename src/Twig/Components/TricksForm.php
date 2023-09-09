@@ -2,10 +2,8 @@
 
 namespace App\Twig\Components;
 
-use App\Entity\Tricks;
-use App\Form\Type\TricksFormType;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Response;
+use App\Entity\Trick;
+use App\Form\Type\TricksType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
@@ -23,12 +21,12 @@ class TricksForm extends AbstractController
     use DefaultActionTrait;
 
     #[LiveProp]
-    public ?Tricks $trick = null;
+    public ?Trick $trick = null;
 
     protected function instantiateForm(): FormInterface
     {
         return $this->createForm(
-            TricksFormType::class,
+            TricksType::class,
             $this->trick
         );
     }
@@ -36,7 +34,6 @@ class TricksForm extends AbstractController
     #[LiveAction]
     public function addImage(): void
     {
-        echo 'test';
         $this->formValues['images'][] = [];
     }
 
@@ -44,20 +41,5 @@ class TricksForm extends AbstractController
     public function removeImage(#[LiveArg] int $index): void
     {
         unset($this->formValues['images'][$index]);
-    }
-
-    #[LiveAction]
-    public function save(EntityManagerInterface $entityManager) : Response
-    {
-        $this->submitForm();
-
-        $trick = $this->getForm()->getData();
-
-        $entityManager->persist($trick);
-        $entityManager->flush();
-
-        $this->addFlash('success', 'Post saved!');
-
-        return $this->redirectToRoute('home', []);
     }
 }

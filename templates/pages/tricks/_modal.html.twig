@@ -8,7 +8,7 @@
                 {% if (trick.images|length + trick.videos|length) > 0 %}
                     {% set key = 1 %}
                     {% for image in trick.images %}
-                        <div class="media-item {% if image.isMain == true %}active{% endif %}" id="media-{{ key }}">
+                        <div class="media-item {% if key == 1 %}active{% endif %}" id="media-{{ key }}">
                             <img
                                  class="media-content"
                                  src="{{ asset('uploads/images/tricks/' ~ image.filename) }}"
@@ -17,7 +17,7 @@
                         {% set key = key + 1 %}
                     {% endfor %}
                     {% for video in trick.videos %}
-                        <div class="media-item {% if key == 0 %}active{% endif %}" id="media-{{ key }}">
+                        <div class="media-item {% if key == 1 %}active{% endif %}" id="media-{{ key }}">
                             <iframe
                                     width="100%"
                                     class="media-content"
@@ -42,7 +42,7 @@
                 <div class="media-bar scrollbar rounded-custom-scrollbar">
                     {% set key = 1 %}
                     {% for image in trick.images %}
-                        <div class="media-box {% if image.isMain == true %}active{% endif %}"
+                        <div class="media-box {% if key == 1 %}active{% endif %}"
                              data-media-id-param="{{ key }}"
                              data-action="click->media#select"
                              id="media-box-{{ key }}"
@@ -55,7 +55,7 @@
                         {% set key = key + 1 %}
                     {% endfor %}
                     {% for video in trick.videos %}
-                        <div class="media-box {% if key == 0 %}active{% endif %}"
+                        <div class="media-box {% if key == 1 %}active{% endif %}"
                              data-media-id-param="{{ key }}"
                              data-action="click->media#select:prevent:stop"
                              id="media-box-{{ key }}"

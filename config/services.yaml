@@ -1,7 +1,7 @@
 parameters:
     app.site_name: 'Snowtricks'
-    images_directory: '%kernel.project_dir%/public/uploads/images/'
-    images_temporary: '%kernel.project_dir%/public/tmp/'
+    upload_directory: '%kernel.project_dir%/public/uploads/'
+    image_directory: '%upload_directory%images/tricks/'
 
 services:
     _defaults:
@@ -14,4 +14,3 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-

@@ -12,7 +12,7 @@
             {{ form_row(trickForm.description) }}
 
             <div class="row">
-                {#     Images collection       #}
+                {#     Image collection       #}
                 <div {{ stimulus_controller('components/form-collection') }}
                         data-components--form-collection-index-value="{{ trickForm.images|length > 0 ? trickForm.images|last.vars.name + 1 : 0 }}"
                         data-components--form-collection-prototype-value="
@@ -51,7 +51,7 @@
                             class="upload_images"></ul>
                 </div>
 
-                {#     Videos collection       #}
+                {#     Video collection       #}
                 <div {{ stimulus_controller('components/form-collection') }}
                         data-components--form-collection-index-value="{{ trickForm.videos|length > 0 ? trickForm.videos|last.vars.name + 1 : 0 }}"
                         data-components--form-collection-prototype-value="

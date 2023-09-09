@@ -26,13 +26,10 @@
     border-bottom: 2px solid $primary;
     box-shadow: 0 15px 10px -15px #111;
   }
+}
 
-  option{
-    font-size: 1rem;
-    font-weight: 300;
-    line-height: 1;
-    color: #555555;
-  }
+select{
+  padding: 0.14rem 0.7rem!important;
 }
 
 .textarea {
@@ -42,4 +39,11 @@
   &:focus {
     box-shadow: 0 2px 16px rgba(50, 50, 50, 0.5);
   }
+}
+
+.embed-video{
+  background-color: rgb(0 0 0 / 58%);
+  box-shadow: 3px 3px 15px #6b6a6a, -3px -3px 15px #ffffff;
+  border-radius: 0.375rem;
+  margin: 0 1rem;
 }

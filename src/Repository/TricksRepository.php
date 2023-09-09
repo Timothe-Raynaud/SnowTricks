@@ -2,9 +2,9 @@
 
 namespace App\Repository;
 
-use App\Entity\Images;
-use App\Entity\Tricks;
-use App\Entity\Videos;
+use App\Entity\Image;
+use App\Entity\Trick;
+use App\Entity\Video;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\ResultSetMapping;
@@ -13,12 +13,12 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * @extends ServiceEntityRepository<Tricks>
+ * @extends ServiceEntityRepository<Trick>
  *
- * @method Tricks|null find($id, $lockMode = null, $lockVersion = null)
- * @method Tricks|null findOneBy(array $criteria, array $orderBy = null)
- * @method Tricks[]    findAll()
- * @method Tricks[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Trick|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Trick|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Trick[]    findAll()
+ * @method Trick[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class TricksRepository extends ServiceEntityRepository
 {
@@ -27,14 +27,14 @@ class TricksRepository extends ServiceEntityRepository
 
     public function __construct(ManagerRegistry $registry, Filesystem $filesystem, ParameterBagInterface $parameterBag)
     {
-        parent::__construct($registry, Tricks::class);
+        parent::__construct($registry, Trick::class);
 
         $this->em = $this->getEntityManager();
         $this->filesystem = $filesystem;
         $this->parameterBag = $parameterBag;
     }
 
-    public function save(Tricks $entity, bool $flush = false): void
+    public function save(Trick $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -43,7 +43,7 @@ class TricksRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Tricks $entity, bool $flush = false): void
+    public function remove(Trick $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -71,10 +71,11 @@ class TricksRepository extends ServiceEntityRepository
             LEFT JOIN (
                 SELECT i.filename as image
                     , i.trick_id
-                FROM images i 
-                WHERE i.is_main = true
+                FROM images i
+                ORDER BY i.id ASC
+                LIMIT 1
             ) subquery_image ON subquery_image.trick_id = t.trick_id
-            WHERE 1=1
+            WHERE 1
             {$where}
             ORDER BY t.trick_id DESC
             LIMIT :limit
@@ -93,43 +94,6 @@ class TricksRepository extends ServiceEntityRepository
             ->setParameter(':limit', $limit);
 
         return $query->getResult();
-    }
-
-    public function addNewFromForm(Tricks $trick) : bool
-    {
-        $imageTemporary = $this->parameterBag->get('images_temporary');
-        $imageDirectory = $this->parameterBag->get('images_directory');
-        $newTrick = new Tricks();
-        $newTrick->setType($trick->getType())
-            ->setName($trick->getName())
-            ->setDescription($trick->getDescription())
-            ->setSlug(strtolower(str_replace(' ', '-', $trick->getName())));
-
-        $this->em->persist($newTrick);
-        $this->em->flush();
-
-        $isMain = True;
-        foreach ($trick->getImages() as $image){
-            $newImage = new Images();
-            $newImage->setFilename($image);
-            $newImage->setTrick($newTrick);
-            $newImage->setIsMain($isMain);
-            $this->em->persist($newImage);
-            $isMain = False;
-
-            $this->filesystem->rename($imageTemporary.$image, $imageDirectory. '/tricks/' .$image);
-        }
-
-        foreach ($trick->getVideos() as $video){
-            $newVideo = new Videos();
-            $newVideo->setUrl($video);
-            $newVideo->setTrick($newTrick);
-            $this->em->persist($newVideo);
-        }
-
-        $this->em->flush();
-
-        return True;
     }
 
     /**
@@ -164,7 +128,7 @@ class TricksRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findTrickBySlugWithMedia(string $slug) : Tricks
+    public function findTrickBySlugWithMedia(string $slug) : Trick
     {
         return $this->createQueryBuilder('t')
             ->select('t', 'i', 'v')

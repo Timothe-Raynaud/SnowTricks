@@ -2,8 +2,8 @@
 
 namespace App\Model;
 
-use App\Entity\Comments;
-use App\Entity\Tricks;
+use App\Entity\Comment;
+use App\Entity\Trick;
 use App\Entity\User;
 use App\Repository\CommentsRepository;
 use App\Repository\TricksRepository;
@@ -36,8 +36,8 @@ class CommentManager
         $slug = $form['trick'];
         if ($slug){
            $trick = $this->tricksRepository->findOneBy(['slug' => $slug]);
-           if ($trick instanceof Tricks){
-               $comments = new Comments();
+           if ($trick instanceof Trick){
+               $comments = new Comment();
 
                $comments->setUser($user);
                $comments->setContent($content);

@@ -3,13 +3,13 @@
 namespace App\Tests\Entity;
 
 use PHPUnit\Framework\TestCase;
-use App\Entity\TypesTricks;
+use App\Entity\TypeTricks;
 
 class TypesTricksTest extends TestCase
 {
     public function testTypesTricks()
     {
-        $typeTrick = new TypesTricks();
+        $typeTrick = new TypeTricks();
         $typeTrick->setName('TestType');
         $typeTrick->setId(10000);
 

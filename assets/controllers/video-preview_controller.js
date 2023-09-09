@@ -8,8 +8,8 @@ export default class extends Controller {
     {
         let input = event.currentTarget
         let urlValue = input.value
+        console.log(urlValue)
         let embed = this.embedTarget
         embed.setAttribute('src', urlValue)
     }
-
 }

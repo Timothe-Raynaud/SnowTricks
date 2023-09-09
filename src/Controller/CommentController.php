@@ -14,7 +14,7 @@ use function PHPUnit\Framework\throwException;
 /**
  * @Route("/comments", name="comments_")
  */
-class CommentsController extends AbstractController
+class CommentController extends AbstractController
 {
     /**
      * @Route("/form", name="form", methods={"POST"})

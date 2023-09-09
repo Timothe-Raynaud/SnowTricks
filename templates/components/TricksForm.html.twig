@@ -1,11 +1,10 @@
 <div {{ attributes }}>
     {{ form_start(form, {
-        attr: {
-            'data-action': 'live#action',
-            'data-action-name': 'prevent|save'
-        }
+        trick: trick,
+        form: form
     }) }}
 
+    {{ form_row(form._token) }}
     <div class="d-flex flex-sm-row flex-column justify-content-sm-between justify-content-center pb-2">
         <h3>Ajout d'un trick</h3>
         <button type="submit" class="button button-primary btn-add-tricks">
@@ -23,7 +22,7 @@
     </div>
     {{ form_row(form.description) }}
 
-    <div class="row">
+    <div class="upload">
         <div class="upload-images">
             {% for key, imageForm in form.images %}
 
@@ -31,28 +30,41 @@
                     {{ form_widget(imageForm, { attr: {class: 'file-input', 'data-image-preview-target': 'boxToHide'}}) }}
                     {{ form_row(imageForm.vars.button_delete, { label: 'X', attr:
                         {
-                            class: 'delete-image-upload',
+                            class: 'delete delete-image-upload',
                             'data-image-preview-target': 'deleteButton',
                             'data-item-id-param': key
                         } }) }}
                     <img src='' alt='preview-image' class='preview-image'
                          data-image-preview-target='previewImage' style="display: none;">
                 </div>
-
             {% endfor %}
-            {{ form_widget(form.images.vars.button_add, { label: '+ Add image', attr:{class: 'button button-secondary my-3'} }) }}
+            {{ form_widget(form.images.vars.button_add, { label: '+ Add image', attr: {class: 'button button-secondary my-3'} }) }}
         </div>
-        <div class="">
-            {% for key, videoForm in form.videos %}
-                <div style="display: flex;">
-                    {{ form_row(videoForm.vars.button_delete, { label: 'X', attr: { class: 'button button-primary' } }) }}
 
-                    {{ form_widget(videoForm) }}
-                </div>
-            {% endfor %}
-            {{ form_widget(form.videos.vars.button_add, { label: '+ Add video', attr:{class: 'button button-secondary'} }) }}
-        </div>
+{#        <div class="upload-videos">#}
+{#            {% for key, videoForm in form.videos %}#}
+{#                <div class="upload-videos__row" {{ stimulus_controller('video-preview') }}>#}
+{#                    {{ form_widget(videoForm) }}#}
+
+{#                    <iframe data-video-preview-target="embed"#}
+{#                        id="video_{{ key }}"#}
+{#                        src=""#}
+{#                        width="200"#}
+{#                        height="120"#}
+{#                        allowfullscreen#}
+{#                        class="embed-video"></iframe>#}
+
+{#                    {{ form_row(videoForm.vars.button_delete, { label: 'X', attr:#}
+{#                        {#}
+{#                            class: 'delete delete-video-upload',#}
+{#                            'data-video-preview-target': 'deleteButton',#}
+{#                            'data-item-id-param': key#}
+{#                        }#}
+{#                    }) }}#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#            {{ form_widget(form.videos.vars.button_add, { label: '+ Add video', attr: {class: 'button button-secondary my-3'} }) }}#}
+{#        </div>#}
     </div>
     {{ form_end(form, {'render_rest': false}) }}
 </div>
-

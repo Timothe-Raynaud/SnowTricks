@@ -2,7 +2,7 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Videos;
+use App\Entity\Video;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,7 +17,8 @@ class VideosType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Set embed link',
-                    'class' => 'custom-input'
+                    'class' => 'custom-input',
+                    'data-action'=> 'input->video-preview#preview'
                 ],
                 'mapped' => false,
                 'required' => false,
@@ -27,7 +28,7 @@ class VideosType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Videos::class,
+            'data_class' => Video::class,
         ]);
     }
 }

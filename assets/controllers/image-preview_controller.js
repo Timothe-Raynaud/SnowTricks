@@ -23,7 +23,7 @@ export default class extends Controller {
             reader.addEventListener('load', function () {
                 previewImage.src = reader.result;
                 previewImage.style.display = 'block';
-                boxToHide.style.display = 'none';
+                // boxToHide.style.display = 'none';
                 deleteButton.setAttribute('data-action', 'click->image-preview#delete')
             });
 

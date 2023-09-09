@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="videos")
  **/
-class Videos
+class Video
 {
     /**
      * @ORM\Id()
@@ -19,10 +19,10 @@ class Videos
     private ?int $id = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Tricks", inversedBy="videos", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Trick", inversedBy="videos", cascade={"persist"})
      * @ORM\JoinColumn(name="trick_id", referencedColumnName="trick_id", nullable=true)
      */
-    private ?Tricks $trick;
+    private ?Trick $trick;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -46,17 +46,17 @@ class Videos
     }
 
     /**
-     * @return Tricks
+     * @return Trick
      */
-    public function getTrick(): Tricks
+    public function getTrick(): Trick
     {
         return $this->trick;
     }
 
     /**
-     * @param Tricks|null $trick
+     * @param Trick|null $trick
      */
-    public function setTrick(?Tricks $trick): void
+    public function setTrick(?Trick $trick): void
     {
         $this->trick = $trick;
     }

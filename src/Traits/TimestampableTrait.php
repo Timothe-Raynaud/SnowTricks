@@ -7,53 +7,52 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait TimestampableTrait
 {
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
 
     /**
-     * @var datetime $createdAt
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(type="datetime")
      */
-    private DateTime $createdAt;
+    private $updatedAt;
 
-    /**
-     * @var datetime $updatedAt
-     * @ORM\Column(name="updated_at", type="datetime")
-     */
-    private DateTime $updatedAt;
-
-
-    /**
-     * @return datetime
-     */
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param datetime $createdAt
-     */
-    public function setCreatedAt(DateTime $createdAt = new DateTime('now')): static
+    public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
-
         return $this;
     }
 
-    /**
-     * @return datetime
-     */
-    public function getUpdatedAt(): DateTime
+    public function getUpdatedAt(): ?DateTime
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @param datetime $updatedAt
-     */
-    public function setUpdatedAt(DateTime $updatedAt = new DateTime('now')): static
+    public function setUpdatedAt(DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
-
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function onPrePersist(): void
+    {
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function onPreUpdate(): void
+    {
+        $this->updatedAt = new DateTime();
     }
 }

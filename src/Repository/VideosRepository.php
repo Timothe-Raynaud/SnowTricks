@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Videos;
+use App\Entity\Video;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\ResultSetMapping;
@@ -10,23 +10,23 @@ use Doctrine\Persistence\ManagerRegistry;
 use phpDocumentor\Reflection\Types\Integer;
 
 /**
- * @extends ServiceEntityRepository<Videos>
+ * @extends ServiceEntityRepository<Video>
  *
- * @method Videos|null find($id, $lockMode = null, $lockVersion = null)
- * @method Videos|null findOneBy(array $criteria, array $orderBy = null)
- * @method Videos[]    findAll()
- * @method Videos[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Video|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Video|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Video[]    findAll()
+ * @method Video[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class VideosRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Videos::class);
+        parent::__construct($registry, Video::class);
 
         $this->em = $this->getEntityManager();
     }
 
-    public function save(Videos $entity, bool $flush = false): void
+    public function save(Video $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -35,7 +35,7 @@ class VideosRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Videos $entity, bool $flush = false): void
+    public function remove(Video $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
