@@ -3,6 +3,7 @@ twig:
 
     globals :
         siteName : '%app.site_name%'
+        trickImageUrl : '%trick_image_directory_url%'
 
 when@test:
     twig:

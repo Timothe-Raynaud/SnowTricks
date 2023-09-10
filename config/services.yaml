@@ -1,7 +1,8 @@
 parameters:
     app.site_name: 'Snowtricks'
     upload_directory: '%kernel.project_dir%/public/uploads/'
-    image_directory: '%upload_directory%images/tricks/'
+    trick_image_directory: '%upload_directory%images/tricks/'
+    trick_image_directory_url: 'uploads/images/tricks/'
 
 services:
     _defaults:

@@ -1,0 +1,133 @@
+@import "../utils/variables";
+
+.upload {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  @media #{$media-mobile} {
+    display: block;
+  }
+
+  .upload-images {
+    margin: auto;
+    text-align: center;
+    grid-column: 1;
+
+    &__row {
+      margin: 0.5rem 0;
+      @media #{$media-mobile} {
+        margin: 0.5rem auto;
+      }
+      text-align: left;
+      width: 200px;
+      position: relative;
+
+      .file-input {
+        > div {
+          margin: 10px 0;
+          display: inline-block;
+          position: relative;
+          width: 8rem;
+        }
+
+        &__label {
+          background: #353735;
+          padding: 8px 15px;
+          border-radius: 1.3rem;
+          width: 8rem;
+          text-align: center;
+          box-shadow: 3px 3px 15px #6b6a6a, -3px -3px 15px #ffffff;
+          color: white;
+          font-weight: 500;
+          cursor: pointer;
+
+          &:hover {
+            box-shadow: 0 3px 10px #393838;
+            opacity: 0.9;
+          }
+        }
+
+        &__trigger {
+          display: none;
+        }
+      }
+
+      .preview-image {
+        display: none;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        filter: grayscale(0.5);
+        border-radius: 0.7rem;
+        box-shadow: 3px 3px 15px #6b6a6a, -3px -3px 15px #ffffff;
+
+        &:hover {
+          filter: grayscale(0.8);
+          box-shadow: 0 3px 10px #393838;
+        }
+      }
+
+    }
+  }
+
+  .upload-videos {
+    text-align: center;
+    grid-column: 2/3;
+
+    &__row {
+      display: flex;
+      justify-content: center;
+      align-items: end;
+      margin-top: 1rem;
+
+      .custom-input {
+        border-bottom: 1px solid #393838;
+
+        &:focus {
+          border-bottom: 2px solid #393838;
+        }
+      }
+
+      > div {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  div:has(>.delete-video-upload) {
+    align-self: baseline;
+  }
+
+  .delete {
+    background: #353735;
+    color: white;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 0.5rem 0.9rem;
+    box-shadow: 3px 3px 15px #6b6a6a;
+    font-weight: 600;
+    z-index: 10;
+
+    &-image-upload {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    &:hover {
+      font-weight: 700;
+      box-shadow: 0 3px 10px #393838;
+      cursor: pointer;
+      opacity: 0.9;
+    }
+  }
+}
+
+.btn-add-tricks {
+  @media #{$media-mobile} {
+    position: fixed;
+    bottom: 15vh;
+    right: 15%;
+    left: 15%;
+  }
+}

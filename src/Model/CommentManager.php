@@ -42,8 +42,6 @@ class CommentManager
                $comments->setUser($user);
                $comments->setContent($content);
                $comments->setTrick($trick);
-               $comments->setCreatedAt();
-               $comments->setUpdatedAt();
 
                $this->entityManager->persist($comments);
                $this->entityManager->flush($comments);

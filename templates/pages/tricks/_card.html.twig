@@ -7,9 +7,9 @@
      style="
          background-image: url(
         {% if trick.image > 0  %}
-             {{ asset('uploads/images/tricks/' ~ trick.image) }}
+             {{ asset(trickImageUrl ~ trick.image) }}
          {% else %}
-             {{ asset('uploads/images/tricks/default.jpg') }}
+             {{ asset(trickImageUrl ~ 'default.jpg') }}
          {% endif %});
          background-position: center;
          background-repeat: no-repeat;

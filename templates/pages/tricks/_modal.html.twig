@@ -1,7 +1,4 @@
 <div id="modal-content" class="modal-content">
-{#    <div class="modal-header">#}
-{#        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
-{#    </div>#}
     <div class="modal-body pb-0">
         <div class="display-media" {{ stimulus_controller('media') }}>
             <div class="media-header">
@@ -33,7 +30,7 @@
                 {% else %}
                     <div class="media-item active">
                         <img class="media-content"
-                             src="{{ asset('uploads/images/tricks/default.jpg') }}" alt="image 1">
+                             src="{{ asset(trickImageUrl ~ 'default.jpg') }}" alt="image 1">
                     </div>
                 {% endif %}
             </div>
@@ -49,7 +46,7 @@
                         >
                             <img
                                     class="media"
-                                    src="{{ asset('uploads/images/tricks/' ~ image.filename) }}"
+                                    src="{{ asset(trickImageUrl ~ image.filename) }}"
                                     alt="slide {{ key + 1 }}">
                         </div>
                         {% set key = key + 1 %}

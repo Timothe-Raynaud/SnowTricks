@@ -1,13 +1,27 @@
 import {Controller} from "@hotwired/stimulus";
 
-/* stimulusFetch: 'lazy' */
+
 export default class extends Controller {
     static targets = [
+        'box',
+        'inputFilename',
         'boxToHide',
-        "previewImage",
-        "deleteButton",
+        'previewImage',
+        'deleteButton',
     ]
 
+    connect() {
+        const inputFilename = this.inputFilenameTarget;
+        let previewImage = this.previewImageTarget
+        let deleteButton = this.deleteButtonTarget
+        let boxToHide = this.boxToHideTarget
+
+        if (inputFilename.value !== '') {
+            previewImage.style.display = 'block';
+            boxToHide.style.display = 'none';
+            deleteButton.setAttribute('data-action', 'click->image-preview#delete')
+        }
+    }
 
     upload(event) {
         let previewImage = this.previewImageTarget
@@ -23,7 +37,7 @@ export default class extends Controller {
             reader.addEventListener('load', function () {
                 previewImage.src = reader.result;
                 previewImage.style.display = 'block';
-                // boxToHide.style.display = 'none';
+                boxToHide.style.display = 'none';
                 deleteButton.setAttribute('data-action', 'click->image-preview#delete')
             });
 
@@ -34,10 +48,8 @@ export default class extends Controller {
         }
     }
 
-    delete(){
-        if (this.previewImageTarget){
-            let previewImage = this.previewImageTarget
-            previewImage.remove()
-        }
+    delete() {
+        let box = this.boxTarget
+        box.remove()
     }
 }

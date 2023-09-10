@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Trick;
 use App\Form\Handler\TricksHandler;
 use App\Form\Type\TricksType;
+use App\Model\CommentManager;
 use App\Repository\CommentsRepository;
 use App\Repository\TricksRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -54,6 +55,10 @@ class TrickController extends AbstractController
      */
     public function addTricks(Request $request,EntityManagerInterface $entity, TricksHandler $tricksHandler, ParameterBagInterface $parameterBag, ?Trick $trick = null): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('user_login');
+        }
+
         if (!$trick){
             $trick = new Trick();
         }
@@ -147,12 +152,24 @@ class TrickController extends AbstractController
             $form = $this->createForm(TricksType::class, $trick);
 
             $html = $this->renderView('pages/tricks/_update.html.twig', [
-                'trickForm' => $form->createView(),
+                'form' => $form->createView(),
+                'trick' => $trick
             ]);
 
             return $this->json($html);
         }
 
         return $this->redirectToRoute('home');
+    }
+
+    /**
+     * @Route("/form/update", name="form_update_fetch", methods={"POST"})
+     */
+    public function updateTrickFetch(Request $request, CommentManager $commentManager): Response
+    {
+        $form = $request->request->all();
+        $result = $commentManager->addComment($form, $this->getUser());
+
+        return $this->json($result);
     }
 }

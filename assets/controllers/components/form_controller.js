@@ -11,7 +11,7 @@ export default class extends Controller {
         toastContent: {type: String, default: 'toast-content'},
     }
 
-    send(event) {
+    send() {
         this.submitTarget.disabled = true
         let toast = document.getElementById(this.toastBoxValue)
         let toastContainer = document.getElementById(this.toastContainerValue)
@@ -35,10 +35,9 @@ export default class extends Controller {
                 }
             })
             .then(data => {
-                if (this.optionValue === 'hideInputs'){
+                if (data.type ==='success' && this.optionValue === 'hideInputs'){
                     this.formTarget.remove()
                 }
-                console.log(data.type, data.message)
 
                 toastContainer.classList.add(data.type)
                 toast.classList.remove('d-none')
@@ -46,7 +45,7 @@ export default class extends Controller {
 
                 setTimeout(() => {
                     this.dismiss();
-                }, 5000);
+                }, 4000);
 
                 toast.addEventListener("mouseenter", this.handleMouseEnter.bind(this));
                 toast.addEventListener("mouseleave", this.handleMouseLeave.bind(this));
@@ -72,7 +71,7 @@ export default class extends Controller {
         let toast = document.getElementById(this.toastBoxValue)
 
         if (!toast.matches(':hover')){
-            toast.remove();
+            toast.classList.add('d-none');
         }
     }
 }

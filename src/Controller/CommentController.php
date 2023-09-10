@@ -19,7 +19,7 @@ class CommentController extends AbstractController
     /**
      * @Route("/form", name="form", methods={"POST"})
      */
-    public function index(Request $request, CommentManager $commentManager): Response
+    public function addComment(Request $request, CommentManager $commentManager): Response
     {
         $form = $request->request->all();
         $result = $commentManager->addComment($form, $this->getUser());
@@ -34,7 +34,7 @@ class CommentController extends AbstractController
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
         if ($trick === null){
-            throwException('Une erreur est survenue');
+            throw $this->createNotFoundException('Une erreur est survenue');
         }
 
         $requestContent = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);

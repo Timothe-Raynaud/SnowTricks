@@ -22,45 +22,46 @@ class TricksHandler
         $this->session = $session;
     }
 
-    public function handle(Request $request, FormInterface $form ): bool
+    public function handle(Request $request, FormInterface $form): bool
     {
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $form = $this->imageHandle($form);
-            if ($form === null){
+            if ($form === null) {
                 return false;
             }
 
             $trick = $form->getData();
             $trick->setSlug();
 
-            dd($trick, $this->entity->persist($trick), $this->entity->flush());
-            try{
+            try {
                 $this->entity->persist($trick);
                 $this->entity->flush();
-            } catch (\Exception){
+            } catch (\Exception) {
                 $this->session->getFlashBag()->add('error', 'Une erreur est survenu lors de l\'enregistrement du formulaire.');
                 return false;
             }
+            $this->session->getFlashBag()->add('success', 'Le tricks à bien été enregistré.');
             return true;
         }
 
         return false;
     }
 
-    public function imageHandle(FormInterface $form) : ?FormInterface
+    public function imageHandle(FormInterface $form): ?FormInterface
     {
         foreach ($form['images'] as $imageForm) {
             if ($imageForm->has('file') && $fileData = $imageForm->get('file')->getData()) {
+
                 $originalFilename = pathinfo($fileData->getClientOriginalName(), PATHINFO_FILENAME);
 
-                $filename = $originalFilename.'-'.uniqid('', true).'.'.$fileData->guessExtension();
+                $filename = $originalFilename . '-' . uniqid('', true) . '.' . $fileData->guessExtension();
 
                 try {
                     $fileData->move(
-                        $this->parameter->get('image_directory'),
+                        $this->parameter->get('trick_image_directory'),
                         $filename
                     );
                 } catch (FileException $e) {
