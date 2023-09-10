@@ -43,6 +43,7 @@ class ImageType extends AbstractType
             ->add('filename', TextType::class, [
                 'label' => false,
                 'mapped' => true,
+                'required' => false,
                 'attr' => [
                     'class' => 'd-none',
                     'data-image-preview-target' => 'inputFilename'

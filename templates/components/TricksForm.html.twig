@@ -1,13 +1,21 @@
 <div {{ attributes }}>
     {{ form_start(form, {
         trick: trick,
-        form: form
+        form: form,
+        attr: {
+        'data-controller': 'components--form',
+        'data-components--form-path-value':  path('trick_form_fetch'),
+        'data-components--form-target': "form",
+        'action': 'javascript:void(0)'
+        }
     }) }}
 
     {{ form_row(form._token) }}
     <div class="d-flex flex-sm-row flex-column justify-content-sm-between justify-content-center pb-2">
         <h3>Ajout d'un trick</h3>
-        <button type="submit" class="button button-primary btn-add-tricks">
+        <button type="submit" class="button button-primary btn-add-tricks"
+                data-components--form-target="submit"
+                data-action="click->components--form#send">
             Enregistrer
         </button>
     </div>

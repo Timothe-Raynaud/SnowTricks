@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
-    static targets = ['submit', 'inputs', 'form']
+    static targets = ['submit', 'form']
     static values = {
         path: String,
         option: String,
@@ -17,11 +17,7 @@ export default class extends Controller {
         let toastContainer = document.getElementById(this.toastContainerValue)
         let toastContent = document.getElementById(this.toastContentValue)
 
-        const form = new FormData()
-        const inputsArray = this.inputsTargets
-        Array.prototype.forEach.call(inputsArray, function(inputArray) {
-            form.append(inputArray.name, inputArray.value)
-        });
+        const form = new FormData(this.formTarget)
 
         fetch(this.pathValue, {
             method: 'POST',

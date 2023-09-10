@@ -53,20 +53,14 @@ class TrickController extends AbstractController
     /**
      * @Route("/add-tricks", name="add_tricks", methods={"GET", "POST"})
      */
-    public function addTricks(Request $request,EntityManagerInterface $entity, TricksHandler $tricksHandler, ParameterBagInterface $parameterBag, ?Trick $trick = null): Response
+    public function addTricks(): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('user_login');
         }
 
-        if (!$trick){
-            $trick = new Trick();
-        }
+        $trick = new Trick();
         $form = $this->createForm(TricksType::class, $trick);
-
-        if ($tricksHandler->handle($request, $form)){
-            return $this->redirectToRoute('home'); // Modify as needed
-        }
 
         return $this->render('pages/tricks/new_trick.html.twig', [
             'form' => $form,
@@ -163,13 +157,12 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/form/update", name="form_update_fetch", methods={"POST"})
+     * @Route("/form/update", name="trick_form_fetch", methods={"POST"})
      */
-    public function updateTrickFetch(Request $request, CommentManager $commentManager): Response
+    public function trickFormFetch(Request $request, TricksHandler $tricksHandler): ?Response
     {
-        $form = $request->request->all();
-        $result = $commentManager->addComment($form, $this->getUser());
-
-        return $this->json($result);
+        $trick = new Trick();
+        $form = $this->createForm(TricksType::class, $trick);
+        return $this->json($tricksHandler->handle($request, $form));
     }
 }
