@@ -5,7 +5,7 @@ export default class extends Controller {
     static targets = ['submit', 'form']
     static values = {
         path: String,
-        option: String,
+        option: Object,
         toastBox: {type: String, default: 'toast'},
         toastContainer: {type: String, default: 'toast-container'},
         toastContent: {type: String, default: 'toast-content'},
@@ -16,10 +16,15 @@ export default class extends Controller {
         let toast = document.getElementById(this.toastBoxValue)
         let toastContainer = document.getElementById(this.toastContainerValue)
         let toastContent = document.getElementById(this.toastContentValue)
+        let id = ''
 
         const form = new FormData(this.formTarget)
 
-        fetch(this.pathValue, {
+        if ('id' in this.optionValue){
+             id = '/' + this.optionValue.id
+        }
+
+        fetch(this.pathValue + id, {
             method: 'POST',
             body: form
         })
@@ -31,13 +36,21 @@ export default class extends Controller {
                 }
             })
             .then(data => {
-                if (data.type ==='success' && this.optionValue === 'hideInputs'){
+                // Hide the input box if option is set
+                if ('hideInputs' in this.optionValue && data.type ==='success'){
                     this.formTarget.remove()
                 }
 
-                toastContainer.classList.add(data.type)
+                if ('redirectUrl' in this.optionValue && data.type === 'success'){
+                    data.message = data.message + "<br> Vous allez être rediriger vers la page d'acceuil."
+                    setTimeout(() => {
+                        window.location.href = this.optionValue.redirectUrl
+                    }, 3000)
+                }
+
+                toastContainer.className = data.type
                 toast.classList.remove('d-none')
-                toastContent.innerText = data.message
+                toastContent.innerHTML = data.message
 
                 setTimeout(() => {
                     this.dismiss();

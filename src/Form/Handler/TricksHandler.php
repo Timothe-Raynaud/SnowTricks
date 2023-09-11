@@ -2,6 +2,8 @@
 
 namespace App\Form\Handler;
 
+use App\Entity\Trick;
+use App\Repository\TricksRepository;
 use App\Traits\FlashTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
@@ -17,35 +19,39 @@ class TricksHandler
     private EntityManagerInterface $entity;
     private ParameterBagInterface $parameter;
     private SessionInterface $session;
+    private TricksRepository $tricksRepository;
 
-    public function __construct(EntityManagerInterface $entity, ParameterBagInterface $parameter, SessionInterface $session)
+    public function __construct(EntityManagerInterface $entity, ParameterBagInterface $parameter, SessionInterface $session, TricksRepository $tricksRepository)
     {
         $this->parameter = $parameter;
         $this->entity = $entity;
         $this->session = $session;
+        $this->tricksRepository = $tricksRepository;
     }
 
     public function handle(Request $request, FormInterface $form): array
     {
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($form === null) {
-                return $this->renderMessage('error', "Le formulaire semble vide");
-            }
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $form = $this->imageHandle($form);
 
             $trick = $form->getData();
             $trick->setSlug();
 
-            try {
+            if (!$this->entity->contains($trick)){
+                if ($this->tricksRepository->findBy(['slug' => $trick->getSlug()]) instanceof Trick){
+                    return $this->renderMessage('error', 'Un trick avec ce nom existe déjà.');
+                }
                 $this->entity->persist($trick);
-                $this->entity->flush();
-            } catch (\Exception) {
-                return $this->renderMessage('error', "Une erreur est survenu lors de l\'enregistrement du formulaire.");
             }
-            return $this->renderMessage('success', 'Le tricks à bien été enregistré.');
+
+            try {
+                $this->entity->flush();
+                return $this->renderMessage('success', 'Le tricks à bien été enregistré.');
+            } catch (\Exception $e) {
+            }
         }
 
         return $this->renderMessage('error', "Une erreur est survenu lors de l\'enregistrement du formulaire.");
@@ -54,6 +60,12 @@ class TricksHandler
     public function imageHandle(FormInterface $form): ?FormInterface
     {
         foreach ($form['images'] as $imageForm) {
+            // Test if filename exist. If is case there is no file to download.
+            if ($imageForm->has('filename') && ($imageForm->get('filename')->getData() !== null)){
+                continue;
+            }
+
+            // If file exist, move to own directory.
             if ($imageForm->has('file') && $fileData = $imageForm->get('file')->getData()) {
 
                 $originalFilename = pathinfo($fileData->getClientOriginalName(), PATHINFO_FILENAME);

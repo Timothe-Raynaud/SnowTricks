@@ -40,14 +40,14 @@ class Trick
     #[ORM\JoinColumn(name: "type_trick_id", referencedColumnName: "type_trick_id")]
     private TypeTricks $type;
 
-    #[ORM\OneToMany(targetEntity: "Image", mappedBy: "trick", cascade: ["persist", "remove"])]
+    #[ORM\OneToMany(mappedBy: "trick", targetEntity: "Image", cascade: ["persist", "remove"], orphanRemoval: true)]
     #[Groups(["exclude_from_serialization"])]
     private ?Collection $images;
 
-    #[ORM\OneToMany(targetEntity: "Video", mappedBy: "trick", cascade: ["persist", "remove"])]
+    #[ORM\OneToMany(mappedBy: "trick", targetEntity: "Video", cascade: ["persist", "remove"], orphanRemoval: true)]
     private ?Collection $videos;
 
-    #[ORM\OneToMany(targetEntity: "Comment", mappedBy: "trick", cascade: ["persist", "remove"])]
+    #[ORM\OneToMany(mappedBy: "trick", targetEntity: "Comment", cascade: ["persist", "remove"], orphanRemoval: true)]
     private ?Collection $comments;
 
     public function setId(?int $trick_id): void

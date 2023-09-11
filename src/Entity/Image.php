@@ -3,11 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: "images")]
+#[ORM\HasLifecycleCallbacks]
 class Image
 {
     #[ORM\Id]
@@ -63,5 +65,16 @@ class Image
     {
         $this->file = $file;
         return $this;
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function removeImageFile()
+    {
+        $filePath = '/uploads/images/tricks/' . $this->getFilename();
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
     }
 }

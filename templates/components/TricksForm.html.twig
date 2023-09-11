@@ -5,6 +5,7 @@
         attr: {
         'data-controller': 'components--form',
         'data-components--form-path-value':  path('trick_form_fetch'),
+        'data-components--form-option-value': '{"redirectUrl": "/", "id": "' ~ (trick.id is defined ? trick.id : '') ~ '"}',
         'data-components--form-target': "form",
         'action': 'javascript:void(0)'
         }

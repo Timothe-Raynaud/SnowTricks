@@ -140,10 +140,10 @@ class TrickController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
-    #[Route(path: '/form/update', name: 'trick_form_fetch', methods: ['POST'])]
-    public function trickFormFetch(Request $request, TricksHandler $tricksHandler): ?Response
+    #[Route(path: '/form/update/{id}', name: 'trick_form_fetch', defaults: ["id" => null], methods: ['POST'])]
+    public function trickFormFetch(Request $request, TricksHandler $tricksHandler, TricksRepository $tricksRepository, ?int $id): ?Response
     {
-        $trick = new Trick();
+        $trick = $id ? $tricksRepository->find($id) : new Trick();
         $form = $this->createForm(TricksType::class, $trick);
         return $this->json($tricksHandler->handle($request, $form));
     }
