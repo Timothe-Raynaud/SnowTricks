@@ -128,12 +128,13 @@ class TricksRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findTrickBySlugWithMedia(string $slug) : Trick
+    public function findTrickBySlugWithMedia(string $slug) : ?Trick
     {
         return $this->createQueryBuilder('t')
-            ->select('t', 'i', 'v')
+            ->select('t', 'i', 'v', 'c')
             ->leftJoin('t.images', 'i')
             ->leftJoin('t.videos', 'v')
+            ->leftJoin('t.comments', 'c')
             ->where('t.slug = :slug')
             ->setParameter('slug', $slug)
             ->getQuery()

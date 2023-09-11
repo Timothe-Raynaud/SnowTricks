@@ -5,22 +5,18 @@ namespace App\Controller;
 use App\Entity\Trick;
 use App\Form\Handler\TricksHandler;
 use App\Form\Type\TricksType;
-use App\Model\CommentManager;
 use App\Repository\CommentsRepository;
 use App\Repository\TricksRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class TrickController extends AbstractController
 {
-    /**
-     * @Route("/get_tricks", name="get_tricks", methods={"POST"})
-     */
+    #[Route(path: '/get_tricks', name: 'get_tricks', methods: ['POST'])]
     public function getTricks(Request $request, TricksRepository $tricksRepository): Response
     {
 
@@ -50,9 +46,7 @@ class TrickController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
-    /**
-     * @Route("/add-tricks", name="add_tricks", methods={"GET", "POST"})
-     */
+    #[Route(path: '/add-tricks', name: 'add_tricks', methods: ['GET', 'POST'])]
     public function addTricks(): Response
     {
         if (!$this->getUser()) {
@@ -68,10 +62,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/trick/detail", name="get_trick_detail_fetch", methods={"POST"})
-     * @throws NonUniqueResultException
-     */
+    #[Route(path: '/trick/detail', name: 'get_trick_detail_fetch', methods: ['POST'])]
     public function getTrickFetch(Request $request, TricksRepository $tricksRepository, CommentsRepository $commentsRepository): Response
     {
         $slug = $request->request->get('pushModule');
@@ -92,17 +83,13 @@ class TrickController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
-    /**
-     * @Route("/detail/{slug}", name="get_trick_detail", methods={"GET"})
-     */
-    public function getTrick(string $slug): Response
+    #[Route(path: '/detail/{slug}', name: 'redirect_detail_to_home', methods: ['GET'])]
+    public function redirectDetailToHome(string $slug): Response
     {
         return $this->redirectToRoute('home', []);
     }
 
-    /**
-     * @Route("/trick/delete/{slug}", name="delete_trick", methods={"GET"})
-     */
+    #[Route(path: '/trick/delete/{slug}', name: 'delete_trick', methods: ['GET'])]
     public function deleteTrick(string $slug, TricksRepository $tricksRepository, CommentsRepository $commentsRepository): Response
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
@@ -124,10 +111,7 @@ class TrickController extends AbstractController
         return $this->redirectToRoute('home', []);
     }
 
-    /**
-     * @Route("/updated/trick", name="get_update_trick_update_html", methods={"GET", "POST"})
-     * @throws NonUniqueResultException
-     */
+    #[Route(path: '/updated/trick', name: 'get_update_trick_update_html', methods: ['GET', 'POST'])]
     public function getUpdateTrickFetch(Request $request, TricksRepository $tricksRepository): Response
     {
         if (!$this->getUser()) {
@@ -156,9 +140,7 @@ class TrickController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
-    /**
-     * @Route("/form/update", name="trick_form_fetch", methods={"POST"})
-     */
+    #[Route(path: '/form/update', name: 'trick_form_fetch', methods: ['POST'])]
     public function trickFormFetch(Request $request, TricksHandler $tricksHandler): ?Response
     {
         $trick = new Trick();

@@ -9,11 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 
-/**
- * @ORM\Entity()
- * @ORM\Table(name="tricks")
- * @ORM\HasLifecycleCallbacks
- **/
+#[ORM\Entity]
+#[ORM\Table(name: "tricks")]
+#[ORM\HasLifecycleCallbacks]
 class Trick
 {
     use TimestampableTrait;
@@ -24,48 +22,34 @@ class Trick
         $this->videos = new ArrayCollection();
     }
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(type: "integer")]
     private ?int $trick_id = null;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
+    #[ORM\Column(type: "string", length: 100)]
     private string $name;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
+    #[ORM\Column(type: "string", length: 100)]
     private string $slug;
 
-    /**
-     * @ORM\Column(type="string", length=3000)
-     */
+    #[ORM\Column(type: "string", length: 3000)]
     private string $description;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="TypeTricks")
-     * @ORM\JoinColumn(name="type_trick_id", referencedColumnName="type_trick_id")
-     */
+    #[ORM\ManyToOne(targetEntity: "TypeTricks")]
+    #[ORM\JoinColumn(name: "type_trick_id", referencedColumnName: "type_trick_id")]
     private TypeTricks $type;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Image", mappedBy="trick", cascade={"persist", "remove"})
-     * @Groups({"exclude_from_serialization"})
-     */
+    #[ORM\OneToMany(targetEntity: "Image", mappedBy: "trick", cascade: ["persist", "remove"])]
+    #[Groups(["exclude_from_serialization"])]
     private ?Collection $images;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Video", mappedBy="trick", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToMany(targetEntity: "Video", mappedBy: "trick", cascade: ["persist", "remove"])]
     private ?Collection $videos;
 
-    /**
-     * @param int|null $trick_id
-     */
+    #[ORM\OneToMany(targetEntity: "Comment", mappedBy: "trick", cascade: ["persist", "remove"])]
+    private ?Collection $comments;
+
     public function setId(?int $trick_id): void
     {
         $this->trick_id = $trick_id;
@@ -88,9 +72,6 @@ class Trick
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getSlug(): string
     {
         return $this->slug;
@@ -125,17 +106,11 @@ class Trick
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getTrickId(): ?int
     {
         return $this->trick_id;
     }
 
-    /**
-     * @return Collection
-     */
     public function getImages(): Collection
     {
         return $this->images;
@@ -155,7 +130,7 @@ class Trick
     {
         if ($this->images->contains($image)) {
             $this->images->removeElement($image);
-            // set the owning side to null (unless already changed)
+
             if ($image->getTrick() === $this) {
                 $image->setTrick(null);
             }
@@ -186,7 +161,7 @@ class Trick
     {
         if ($this->videos->contains($video)) {
             $this->videos->removeElement($video);
-            // set the owning side to null (unless already changed)
+
             if ($video->getTrick() === $this) {
                 $video->setTrick(null);
             }

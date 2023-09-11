@@ -14,9 +14,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class UserController extends AbstractController
 {
-    /**
-     * @Route("/login", name="user_login", methods={"GET", "POST"})
-     */
+    #[Route(path: '/login', name: 'user_login', methods: ['GET', 'POST'])]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if($this->getUser()) {
@@ -32,17 +30,13 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/logout", name="user_logout", methods={"GET"})
-     */
+    #[Route(path: '/logout', name: 'user_logout', methods: ['GET'])]
     public function logout(): void
     {
         throw new \Exception('Don\'t forget to activate logout in security.yaml');
     }
 
-    /**
-     * @Route("/inscription", name="user_register", methods={"POST", "GET"})
-     */
+    #[Route(path: '/inscription', name: 'user_register', methods: ['POST', 'GET'])]
     public function register(Request $request, UserManager $userManager): Response
     {
         if($this->getUser()) {
@@ -77,9 +71,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/verify", name="user_verify_email", methods={"GET"})
-     */
+    #[Route(path: '/verify', name: 'user_verify_email', methods: ['GET'])]
     public function verifyUserEmail(Request $request, UserRepository $userRepository): Response
     {
         $id = $request->query->get('id');

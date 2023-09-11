@@ -21,9 +21,7 @@ use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
-/**
- * @Route("/reset-password")
- */
+#[Route('/reset-password')]
 class ResetPasswordController extends AbstractController
 {
     use ResetPasswordControllerTrait;
@@ -32,10 +30,7 @@ class ResetPasswordController extends AbstractController
     {
     }
 
-    /**
-     * @Route("", name="app_forgot_password_request", methods={"GET", "POST"})
-     * @throws TransportExceptionInterface
-     */
+    #[Route('', name: 'app_forgot_password_request', methods: ['GET', 'POST'])]
     public function request(Request $request, MailerInterface $mailer, TranslatorInterface $translator): Response
     {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
@@ -54,9 +49,7 @@ class ResetPasswordController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/check-email", name="app_check_email", methods={"GET", "POST"})
-     */
+    #[Route('/check-email', name: 'app_check_email', methods: ['GET', 'POST'])]
     public function checkEmail(): Response
     {
         $this->addFlash('success', 'Un mail de réinitialisation vient d\'être envoyé.');
@@ -65,10 +58,7 @@ class ResetPasswordController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/reset/{token}", name="app_reset_password", methods={"GET", "POST"})
-     * Validates and process the reset URL that the user clicked in their email.
-     */
+    #[Route('/reset/{token}', name: 'app_reset_password', methods: ['GET', 'POST'])]
     public function reset(Request $request, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator, string $token = null): Response
     {
         if ($token) {

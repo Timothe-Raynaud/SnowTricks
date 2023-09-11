@@ -11,7 +11,6 @@ use Symfony\Component\Mailer\MailerInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 class MailerController extends AbstractController
 {
     private VerifyEmailHelperInterface $verifyEmailHelper;
@@ -23,10 +22,7 @@ class MailerController extends AbstractController
         $this->mailer = $mailer;
     }
 
-    /**
-     * @Route("/confirmation", name="email_confirmation_user", methods={"GET", "POST"})
-     * @throws TransportExceptionInterface
-     */
+    #[Route('/confirmation', name: 'email_confirmation_user', methods: ['GET', 'POST'])]
     public function sendConfirmationMailUser(User $user): void
     {
         $signatureComponents = $this->verifyEmailHelper->generateSignature(
@@ -44,5 +40,4 @@ class MailerController extends AbstractController
 
         $this->mailer->send($email);
     }
-
 }

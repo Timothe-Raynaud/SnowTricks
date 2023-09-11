@@ -8,43 +8,31 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @ORM\Entity()
- * @ORM\Table(name="user")
- **/
+#[ORM\Entity]
+#[ORM\Table(name: "user")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use TimestampableEntity;
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(type: "integer")]
     private ?int $user_id = null;
 
-    /**
-     * @ORM\Column(type="string", unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=50)
-     */
+    #[ORM\Column(type: "string", unique: true)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 50)]
     private string $username;
 
-    /**
-     * @ORM\Column(type="string", unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=200)
-     */
+    #[ORM\Column(type: "string", unique: true)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 200)]
     private string $email;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: "string", length: 255)]
     private string $password;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     */
+    #[ORM\Column(type: "boolean", nullable: false)]
     private $isVerified = false;
 
     public function getId(): ?int
@@ -52,65 +40,41 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->user_id;
     }
 
-    /**
-     * @return string
-     */
     public function getUsername(): string
     {
         return $this->username;
     }
 
-    /**
-     * @param string $username
-     */
     public function setUsername(string $username): void
     {
         $this->username = $username;
     }
 
-    /**
-     * @return string
-     */
     public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     */
     public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    /**
-     * @return string
-     */
     public function getPassword(): string
     {
         return $this->password;
     }
 
-    /**
-     * @param string $password
-     */
     public function setPassword(string $password): void
     {
         $this->password = $password;
     }
 
-    /**
-     * @return bool
-     */
-    public function getIsVerified()
+    public function getIsVerified() : bool
     {
         return $this->isVerified;
     }
 
-    /**
-     * @param bool $isVerified
-     */
     public function setIsVerified($isVerified): void
     {
         $this->isVerified = $isVerified;

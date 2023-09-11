@@ -9,16 +9,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function PHPUnit\Framework\throwException;
 
-/**
- * @Route("/comments", name="comments_")
- */
+#[Route('/comments', name: 'comments_')]
 class CommentController extends AbstractController
 {
-    /**
-     * @Route("/form", name="form", methods={"POST"})
-     */
+    #[Route('/form', name: 'form', methods: ['POST'])]
     public function addComment(Request $request, CommentManager $commentManager): Response
     {
         $form = $request->request->all();
@@ -27,10 +22,8 @@ class CommentController extends AbstractController
         return $this->json($result);
     }
 
-    /**
-     * @Route("/get-comments-fetch/{slug}", name="get_comments-fetch", methods={"POST"})
-     */
-    public function getCommentsFetch(String $slug, Request $request, CommentsRepository $commentsRepository, TricksRepository $tricksRepository): Response
+    #[Route('/get-comments-fetch/{slug}', name: 'get_comments-fetch', methods: ['POST'])]
+    public function getCommentsFetch(string $slug, Request $request, CommentsRepository $commentsRepository, TricksRepository $tricksRepository): Response
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
         if ($trick === null){

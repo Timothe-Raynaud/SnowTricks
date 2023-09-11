@@ -4,22 +4,16 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity()
- * @ORM\Table(name="types_tricks")
- **/
+#[ORM\Entity]
+#[ORM\Table(name: "types_tricks")]
 class TypeTricks
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
+    #[ORM\Column(type: "integer")]
     private ?int $type_trick_id = null;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
+    #[ORM\Column(type: "string", length: 100)]
     private string $name;
 
     public function setId(?int $type_trick_id): void
