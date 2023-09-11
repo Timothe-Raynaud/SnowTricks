@@ -41,6 +41,10 @@ export default class extends Controller {
             this.containerTarget.innerHTML += this.elementHtmlValue[i]
         }
 
+        if (this.elementHtmlValue.length === 1){
+            this.containerTarget.innerHTML += this.elementHtmlValue[0]
+        }
+
         if (this.elementHtmlValue.length <= this.initialLoadValue && this.recurrenceValue === 1) {
             this.loadButtonTarget.classList.add('d-none')
         }

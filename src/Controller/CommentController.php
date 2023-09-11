@@ -42,16 +42,15 @@ class CommentController extends AbstractController
 
             $comments = $commentsRepository->getCommentsByTrick($trick->getTrickId(), $limit, $startingId);
 
-            $html = [];
-            $lastIndex = 0;
+            $response = [];
             foreach($comments as $comment){
-                $html[] = $this->renderView('pages/tricks/_comment.html.twig', [
+                $response['html'][] = $this->renderView('pages/tricks/_comment.html.twig', [
                     'comment' => $comment
                 ]);
-                $lastIndex = $comment['commentId'];
+                $response['lastIndex'] = $comment['commentId'];
             }
 
-            return $this->json(['html' => $html, 'lastIndex' => $lastIndex]);
+            return $this->json($response);
         }
 
         return $this->redirectToRoute('home');

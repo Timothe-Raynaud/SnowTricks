@@ -22,16 +22,12 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class TricksRepository extends ServiceEntityRepository
 {
-    private ParameterBagInterface $parameterBag;
-    private Filesystem $filesystem;
 
-    public function __construct(ManagerRegistry $registry, Filesystem $filesystem, ParameterBagInterface $parameterBag)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Trick::class);
 
         $this->em = $this->getEntityManager();
-        $this->filesystem = $filesystem;
-        $this->parameterBag = $parameterBag;
     }
 
     public function save(Trick $entity, bool $flush = false): void
@@ -72,7 +68,7 @@ class TricksRepository extends ServiceEntityRepository
                 SELECT i.filename as image
                     , i.trick_id
                 FROM images i
-                ORDER BY i.id ASC
+                ORDER BY i.id
                 LIMIT 1
             ) subquery_image ON subquery_image.trick_id = t.trick_id
             WHERE 1
@@ -131,10 +127,9 @@ class TricksRepository extends ServiceEntityRepository
     public function findTrickBySlugWithMedia(string $slug) : ?Trick
     {
         return $this->createQueryBuilder('t')
-            ->select('t', 'i', 'v', 'c')
+            ->select('t', 'i', 'v')
             ->leftJoin('t.images', 'i')
             ->leftJoin('t.videos', 'v')
-            ->leftJoin('t.comments', 'c')
             ->where('t.slug = :slug')
             ->setParameter('slug', $slug)
             ->getQuery()

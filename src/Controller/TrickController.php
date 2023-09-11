@@ -32,15 +32,15 @@ class TrickController extends AbstractController
 
             $tricks = $tricksRepository->getTricksWithType($limit, $startingId);
 
-            $html = [];
-            $lastIndex = 0;
+            $response = [];
             foreach ($tricks as $trick) {
-                $html[] = $this->renderView('pages/tricks/_card.html.twig', [
+                $response['html'][] = $this->renderView('pages/tricks/_card.html.twig', [
                     'trick' => $trick
                 ]);
-                $lastIndex = $trick['trickId'];
+                $response['lastIndex'] = $trick['trickId'];
             }
-            return $this->json(['html' => $html, 'lastIndex' => $lastIndex]);
+
+            return $this->json($response);
         }
 
         return $this->redirectToRoute('home');
