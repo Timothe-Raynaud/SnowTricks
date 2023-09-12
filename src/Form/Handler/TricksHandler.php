@@ -51,10 +51,11 @@ class TricksHandler
                 $this->entity->flush();
                 return $this->renderMessage('success', 'Le tricks à bien été enregistré.');
             } catch (\Exception $e) {
+                dd($e);
             }
         }
 
-        return $this->renderMessage('error', "Une erreur est survenu lors de l\'enregistrement du formulaire.");
+        return $this->renderMessage('error', 'Une erreur est survenu lors de l\'enregistrement du formulaire.');
     }
 
     public function imageHandle(FormInterface $form): ?FormInterface

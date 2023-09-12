@@ -48,7 +48,7 @@ class CommentsHandler
             }
         }
 
-        return $this->renderMessage('error', "Une erreur est survenu lors de l\'enregistrement du formulaire.");
+        return $this->renderMessage('error', 'Une erreur est survenu lors de l\'enregistrement du formulaire.');
     }
 
 }
