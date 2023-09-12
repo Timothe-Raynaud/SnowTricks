@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\Handler\UserHandler;
 use App\Form\Type\RegisterType;
-use App\Model\UserManager;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +37,7 @@ class UserController extends AbstractController
     }
 
     #[Route(path: '/inscription', name: 'user_register', methods: ['POST', 'GET'])]
-    public function register(Request $request, UserManager $userManager): Response
+    public function register(Request $request, UserHandler $userHandler): Response
     {
         if($this->getUser()) {
             return $this->redirectToRoute('home');
@@ -45,25 +45,15 @@ class UserController extends AbstractController
 
         $user = new User();
         $form = $this->createForm(RegisterType::class, $user);
-        $form->handleRequest($request);
+        $result = $userHandler->handle($request, $form);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $username = $form->get('username')->getData();
-            $email = $form->get('email')->getData();
-            $password = $form->get('plainPassword')->getData();
-
-            $message = $userManager->registration($username, $email, $password, $user);
-
-            if ($message === null){
-                $this->addFlash('success', 'Un email de confirmation vent d\'être envoyé sur votre adresse email');
+        if ($result){
+            if ($result['type'] === 'success'){
+                $this->addFlash($result['type'], $result['message']);
                 return $this->redirectToRoute('home');
             }
 
-            $this->addFlash('error', $message);
-        }
-
-        foreach ($form->getErrors(true, true) as $error) {
-            $this->addFlash('error', $error->getMessage());
+            $this->addFlash($result['type'], $result['message']);
         }
 
         return $this->render('pages/user/register.html.twig', [

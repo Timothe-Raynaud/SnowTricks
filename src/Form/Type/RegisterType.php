@@ -47,8 +47,8 @@ class RegisterType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('plainPassword', PasswordType::class, [
-                'mapped' => false,
+            ->add('password', PasswordType::class, [
+                'mapped' => true,
                 'label' => false,
                 'attr' => [
                     'autocomplete' => 'new-password',

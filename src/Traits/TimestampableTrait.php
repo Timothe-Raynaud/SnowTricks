@@ -8,13 +8,13 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 trait TimestampableTrait
 {
-    #[ORM\Column(type: "datetime")]
-    private $createdAt;
+    #[ORM\Column(type: "datetime", nullable: false)]
+    private DateTime $createdAt;
 
-    #[ORM\Column(type: "datetime")]
-    private $updatedAt;
+    #[ORM\Column(type: "datetime", nullable: false)]
+    private DateTime $updatedAt;
 
-    public function getCreatedAt(): ?DateTime
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
@@ -25,7 +25,7 @@ trait TimestampableTrait
         return $this;
     }
 
-    public function getUpdatedAt(): ?DateTime
+    public function getUpdatedAt(): DateTime
     {
         return $this->updatedAt;
     }
