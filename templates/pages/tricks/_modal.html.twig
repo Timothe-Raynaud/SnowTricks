@@ -98,9 +98,7 @@
                 data-components--loader-path-value="{{ path('comments_get_comments-fetch', {'slug': trick.slug}) }}"
                 data-components--loader-initial-load-value="5"
             >
-                <div data-components--loader-target="container">
-
-                </div>
+                <div data-components--loader-target="container"></div>
 
                 <div id="load-more" data-components--loader-target="loadButton">
                     <a href="javascript:void(0)" data-action="click->components--loader#loadMore">
@@ -110,27 +108,21 @@
                 </div>
             </div>
             {% if app.user is not null %}
-                <form id="comment-form" class="text-center"
-                        {{ stimulus_controller('components/form') }}
-                        data-components--form-path-value="{{ path('comments_form') }}"
-                        data-components--form-option-value='{"hideInputs": true}'
-                        data-components--form-target="form"
-                        action="javascript:void(0);"
-                >
-                    <label for="content-comment-form" class="text-right"><small>Laisser un commentaire :</small></label>
-                    <textarea id="content-comment-form"
-                            name="content-comment-form"
-                            rows="3"
-                            maxlength="500"
-                            required
-                            class="form-control"
-                    ></textarea>
-                    <input type="hidden" name="trick" value="{{ trick.slug }}">
-                    <input type="submit" value="Envoyer" class="button button-primary mt-3"
-                           data-components--form-target="submit"
-                           data-action="click->components--form#send"
-                    >
-                </form>
+                {{ form_start(form, {
+                    attr : {
+                        'id': 'comment-form',
+                        'class': 'text-center',
+                        'data-controller': 'components--form',
+                        'data-components--form-path-value': path('comments_form', {'id' : trick.id}) ,
+                        'data-components--form-option-value': '{"hideInputs": true}',
+                        'data-components--form-target': 'form',
+                        'data-action': 'components--form#send',
+                        'action': 'javascript:void(0)',
+                    }
+                }) }}
+                    {{ form_row(form.content) }}
+                    {{ form_row(form.submit, {attr : {'data-components--form-target' : 'submit'}}) }}
+                {{ form_end(form) }}
             {% endif %}
         </div>
     </div>

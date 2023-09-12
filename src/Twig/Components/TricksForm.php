@@ -42,4 +42,16 @@ class TricksForm extends AbstractController
     {
         unset($this->formValues['images'][$index]);
     }
+
+    #[LiveAction]
+    public function addVideo(): void
+    {
+        $this->formValues['videos'][] = [];
+    }
+
+    #[LiveAction]
+    public function removeVideo(#[LiveArg] int $index): void
+    {
+        unset($this->formValues['videos'][$index]);
+    }
 }

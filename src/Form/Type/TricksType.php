@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\UX\LiveComponent\Form\Type\LiveCollectionType;
 
 class TricksType extends AbstractType
@@ -23,6 +24,7 @@ class TricksType extends AbstractType
                     'class' => 'custom-input',
                     'placeholder' => 'name'
                 ],
+                'required' => true,
             ])
             ->add('description', TextareaType::class, [
                 'label' => false,
@@ -30,6 +32,12 @@ class TricksType extends AbstractType
                     'class' => 'custom-input textarea',
                     'placeholder' => 'Description',
                     'rows' => '8'
+                ],
+                'constraints' => [
+                    new Length([
+                        'min' => 10,
+                        'minMessage' => 'Le texte doit contenir au moins {{ limit }} caractères',
+                    ]),
                 ],
             ])
             ->add('type', EntityType::class, [
@@ -39,13 +47,14 @@ class TricksType extends AbstractType
                 'attr' => [
                     'class' => 'custom-input'
                 ],
+                'required' => true,
             ])
             ->add('images', LiveCollectionType::class, [
                 'entry_type' => ImageType::class,
             ])
-//            ->add('videos', LiveCollectionType::class, [
-//                'entry_type' => VideosType::class,
-//            ])
+            ->add('videos', LiveCollectionType::class, [
+                'entry_type' => VideosType::class,
+            ])
         ;
 
     }

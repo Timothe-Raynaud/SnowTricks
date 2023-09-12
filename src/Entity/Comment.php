@@ -15,7 +15,7 @@ class Comment
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "AUTO")]
     #[ORM\Column(type: "integer")]
-    private int $comments_id;
+    private int $comment_id;
 
     #[ORM\Column(type: "string", length: 500)]
     private string $content;
@@ -25,17 +25,17 @@ class Comment
     private Trick $trick;
 
     #[ORM\ManyToOne(targetEntity: "User")]
-    #[ORM\JoinColumn(name: "user_id", referencedColumnName: "user_id")]
+    #[ORM\JoinColumn(name: "user_id", referencedColumnName: "user_id", nullable: false)]
     private User $user;
 
-    public function getCommentsId(): int
+    public function getCommentId(): int
     {
-        return $this->comments_id;
+        return $this->comment_id;
     }
 
-    public function setCommentsId(int $comments_id): void
+    public function setCommentId(int $comment_id): void
     {
-        $this->comments_id = $comments_id;
+        $this->comment_id = $comment_id;
     }
 
     public function getContent(): string

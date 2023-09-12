@@ -41,7 +41,7 @@ class TricksHandler
             $trick->setSlug();
 
             if (!$this->entity->contains($trick)){
-                if ($this->tricksRepository->findBy(['slug' => $trick->getSlug()]) instanceof Trick){
+                if ($this->tricksRepository->findOneBy(['slug' => $trick->getSlug()]) instanceof Trick){
                     return $this->renderMessage('error', 'Un trick avec ce nom existe déjà.');
                 }
                 $this->entity->persist($trick);

@@ -44,38 +44,20 @@ class CommentsRepository extends ServiceEntityRepository
 
     public function getCommentsByTrick(int $trickId, int $limit, ?int $startingId) : array
     {
-        $where = '';
-        if ($startingId !== null){
-            $where = 'AND c.comments_id <= :startingId';
+        $queryBuilder = $this->createQueryBuilder('c')
+        ->select('c.comment_id, c.content, c.createdAt, c.updatedAt, u.username')
+        ->innerJoin('c.user', 'u')
+        ->where('c.trick = :trickId')
+        ->orderBy('c.comment_id', 'DESC')
+            ->setParameter('trickId', $trickId)
+            ->setMaxResults($limit);
+
+        if ($startingId !== null) {
+            $queryBuilder->andWhere('c.commentId <= :startingId')
+                ->setParameter('startingId', $startingId);
         }
 
-        $sql = "
-            SELECT c.comments_id
-                , c.content
-                , c.created_at
-                , c.updated_at
-                , u.username
-            FROM comments c 
-            INNER JOIN user u ON u.user_id = c.user_id
-            WHERE c.trick_id = :trickId
-            {$where}
-            ORDER BY c.comments_id DESC
-            LIMIT :limit
-        ";
-
-        $rsm = new ResultSetMapping();
-        $rsm->addScalarResult('comments_id', 'commentId', 'integer');
-        $rsm->addScalarResult('content', 'content');
-        $rsm->addScalarResult('created_at', 'createdAt');
-        $rsm->addScalarResult('updated_at', 'updatedAt');
-        $rsm->addScalarResult('username', 'username');
-
-        $query = $this->em->createNativeQuery($sql, $rsm)
-            ->setParameter(':startingId', $startingId)
-            ->setParameter(':trickId', $trickId)
-            ->setParameter(':limit', $limit);
-
-        return $query->getResult();
+        return $queryBuilder->getQuery()->getResult();
     }
 
 }

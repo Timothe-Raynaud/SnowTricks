@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
-use App\Model\CommentManager;
+use App\Entity\Comment;
+use App\Form\Handler\CommentsHandler;
+use App\Form\Type\CommentType;
 use App\Repository\CommentsRepository;
 use App\Repository\TricksRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,15 +15,18 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/comments', name: 'comments_')]
 class CommentController extends AbstractController
 {
-    #[Route('/form', name: 'form', methods: ['POST'])]
-    public function addComment(Request $request, CommentManager $commentManager): Response
+    #[Route('/form/{id}', name: 'form', methods: ['POST'])]
+    public function addComment(Request $request, int $id, CommentsHandler $commentsHandler): Response
     {
-        $form = $request->request->all();
-        $result = $commentManager->addComment($form, $this->getUser());
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
 
-        return $this->json($result);
+        return $this->json($commentsHandler->handle($request, $form, $id));
     }
 
+    /**
+     * @throws \JsonException
+     */
     #[Route('/get-comments-fetch/{slug}', name: 'get_comments-fetch', methods: ['POST'])]
     public function getCommentsFetch(string $slug, Request $request, CommentsRepository $commentsRepository, TricksRepository $tricksRepository): Response
     {
@@ -47,7 +52,7 @@ class CommentController extends AbstractController
                 $response['html'][] = $this->renderView('pages/tricks/_comment.html.twig', [
                     'comment' => $comment
                 ]);
-                $response['lastIndex'] = $comment['commentId'];
+                $response['lastIndex'] = $comment['comment_id'];
             }
 
             return $this->json($response);

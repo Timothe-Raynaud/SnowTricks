@@ -65,6 +65,13 @@
         @media #{$media-mobile} {
           width: 90%;
         }
+
+        .comment-label{
+          font-weight: 300;
+          margin-top: 1rem;
+          font-size: 0.9rem;
+          font-style: italic;
+        }
       }
 
       #trick-post{

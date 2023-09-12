@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Form\Handler\TricksHandler;
+use App\Form\Type\CommentType;
 use App\Form\Type\TricksType;
 use App\Repository\CommentsRepository;
 use App\Repository\TricksRepository;
@@ -16,6 +18,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TrickController extends AbstractController
 {
+    /**
+     * @throws \JsonException
+     */
     #[Route(path: '/get_tricks', name: 'get_tricks', methods: ['POST'])]
     public function getTricks(Request $request, TricksRepository $tricksRepository): Response
     {
@@ -62,6 +67,9 @@ class TrickController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws NonUniqueResultException
+     */
     #[Route(path: '/trick/detail', name: 'get_trick_detail_fetch', methods: ['POST'])]
     public function getTrickFetch(Request $request, TricksRepository $tricksRepository, CommentsRepository $commentsRepository): Response
     {
@@ -73,9 +81,14 @@ class TrickController extends AbstractController
                 throw $this->createNotFoundException('Trick not found');
             }
 
+            $comment = new Comment();
+            $form = $this->createForm(CommentType::class, $comment);
+
             $html = $this->renderView('pages/tricks/_modal.html.twig', [
                 'trick' => $trick,
+                'form' => $form->createView(),
             ]);
+
 
             return $this->json($html);
         }
@@ -90,27 +103,23 @@ class TrickController extends AbstractController
     }
 
     #[Route(path: '/trick/delete/{slug}', name: 'delete_trick', methods: ['GET'])]
-    public function deleteTrick(string $slug, TricksRepository $tricksRepository, CommentsRepository $commentsRepository): Response
+    public function deleteTrick(string $slug, TricksRepository $tricksRepository): Response
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
-        if ($trick === null) {
-            $this->addFlash('error', 'Un problème est survenue lors de la suppression du trick.');
+        if ($trick instanceof Trick) {
+            $tricksRepository->remove($trick, true);
+            $this->addFlash('success', 'Le trick a bien été supprimé.');
             return $this->redirectToRoute('home', []);
         }
 
-        $comments = $commentsRepository->findBy(['trick' => $trick]);
-
-        foreach ($comments as $comment) {
-            $commentsRepository->remove($comment, true);
-        }
-
-        $tricksRepository->remove($trick, true);
-
-        $this->addFlash('success', 'Le trick a bien été supprimé.');
+        $this->addFlash('error', 'Un problème est survenue lors de la suppression du trick.');
 
         return $this->redirectToRoute('home', []);
     }
 
+    /**
+     * @throws NonUniqueResultException
+     */
     #[Route(path: '/updated/trick', name: 'get_update_trick_update_html', methods: ['GET', 'POST'])]
     public function getUpdateTrickFetch(Request $request, TricksRepository $tricksRepository): Response
     {
@@ -145,6 +154,7 @@ class TrickController extends AbstractController
     {
         $trick = $id ? $tricksRepository->find($id) : new Trick();
         $form = $this->createForm(TricksType::class, $trick);
+
         return $this->json($tricksHandler->handle($request, $form));
     }
 }

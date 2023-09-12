@@ -16,15 +16,10 @@ export default class extends Controller {
         let toast = document.getElementById(this.toastBoxValue)
         let toastContainer = document.getElementById(this.toastContainerValue)
         let toastContent = document.getElementById(this.toastContentValue)
-        let id = ''
 
         const form = new FormData(this.formTarget)
 
-        if ('id' in this.optionValue){
-             id = '/' + this.optionValue.id
-        }
-
-        fetch(this.pathValue + id, {
+        fetch(this.pathValue, {
             method: 'POST',
             body: form
         })

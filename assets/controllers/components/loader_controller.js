@@ -11,15 +11,15 @@ export default class extends Controller {
         path: String,
         elementHtml: Array,
         elementAnchor: String,
-        recurrence: { type: Number, default: 0},
-        lastIndex: { type: Number, default: 0},
-        initialLoad: { type : Number, default: 10},
-        anchorTrigger: { type: Number, default: 2},
-        elementsPerLoad: { type: Number, default: 5},
+        recurrence: {type: Number, default: 0},
+        lastIndex: {type: Number, default: 0},
+        initialLoad: {type: Number, default: 10},
+        anchorTrigger: {type: Number, default: 2},
+        elementsPerLoad: {type: Number, default: 5},
     }
 
     connect() {
-        let bodyContent =  JSON.stringify({
+        let bodyContent = JSON.stringify({
             'elementNumber': (this.initialLoadValue + 1),
             'startingId': null,
         })
@@ -27,8 +27,8 @@ export default class extends Controller {
         this.request(bodyContent)
     }
 
-    loadMore(){
-        let bodyContent =  JSON.stringify({
+    loadMore() {
+        let bodyContent = JSON.stringify({
             'elementNumber': (this.elementsPerLoadValue + 1),
             'startingId': this.lastIndexValue,
         })
@@ -37,31 +37,28 @@ export default class extends Controller {
     }
 
     loadMoreElements() {
-        for (let i = 0; (i + 1) < this.elementHtmlValue.length; i++) {
+        // Load all element if there is no more element, else load all element less one
+        let elementPerLoad = this.recurrenceValue = 1 ? this.initialLoadValue : this.elementsPerLoadValue
+        for (let i = 0; (this.elementHtmlValue.length <= elementPerLoad ? i : (i + 1)) < this.elementHtmlValue.length; i++) {
             this.containerTarget.innerHTML += this.elementHtmlValue[i]
         }
 
-        if (this.elementHtmlValue.length === 1){
-            this.containerTarget.innerHTML += this.elementHtmlValue[0]
-        }
-
-        if (this.elementHtmlValue.length <= this.initialLoadValue && this.recurrenceValue === 1) {
+        // If all is load, remove load button
+        if ((this.elementHtmlValue.length <= this.initialLoadValue && this.recurrenceValue === 1)
+            || (this.elementHtmlValue.length <= this.elementsPerLoadValue && this.recurrenceValue > 1)) {
             this.loadButtonTarget.classList.add('d-none')
         }
 
-        if (this.elementHtmlValue.length <= this.elementsPerLoadValue && this.recurrenceValue > 1) {
-            this.loadButtonTarget.classList.add('d-none')
-        }
-
-        if (this.elementAnchorValue){
-            if (this.anchorTriggerValue === this.recurrenceValue ){
+        //
+        if (this.elementAnchorValue) {
+            if (this.anchorTriggerValue === this.recurrenceValue) {
                 let anchor = document.getElementById(this.elementAnchorValue)
                 anchor.classList.remove('d-none')
             }
         }
     }
 
-    request(bodyContent){
+    request(bodyContent) {
         fetch(this.pathValue, {
             method: 'POST',
             headers: {

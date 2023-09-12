@@ -2,15 +2,12 @@
 
 namespace App\Repository;
 
-use App\Entity\Image;
 use App\Entity\Trick;
-use App\Entity\Video;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * @extends ServiceEntityRepository<Trick>
@@ -22,6 +19,8 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class TricksRepository extends ServiceEntityRepository
 {
+
+    private EntityManagerInterface $em;
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -90,35 +89,6 @@ class TricksRepository extends ServiceEntityRepository
             ->setParameter(':limit', $limit);
 
         return $query->getResult();
-    }
-
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function getTrickContentBySlug(string $slug) : ?array
-    {
-        $sql = "
-            SELECT t.trick_id
-                , t.description
-                , t.name
-                , t.slug
-                , tt.name AS type
-            FROM tricks t 
-            INNER JOIN types_tricks tt ON tt.type_trick_id = t.type_trick_id
-            WHERE slug = :slug
-        ";
-
-        $rsm = new ResultSetMapping();
-        $rsm->addScalarResult('trick_id', 'trickId', 'integer');
-        $rsm->addScalarResult('description', 'description');
-        $rsm->addScalarResult('name', 'name');
-        $rsm->addScalarResult('slug', 'slug');
-        $rsm->addScalarResult('type', 'type');
-
-        $query = $this->em->createNativeQuery($sql, $rsm)
-            ->setParameter(':slug', $slug);
-
-        return $query->getOneOrNullResult();
     }
 
     /**
