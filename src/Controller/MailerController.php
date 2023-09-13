@@ -35,7 +35,7 @@ class MailerController extends AbstractController
         $email = new TemplatedEmail();
         $email->from('send@example.com');
         $email->to($user->getEmail());
-        $email->htmlTemplate('email/user/confirmation_email.html.twig');
+        $email->htmlTemplate('app/pages/security/email/confirmation_email.html.twig');
         $email->context(['signedUrl' => $signatureComponents->getSignedUrl()]);
 
         $this->mailer->send($email);

@@ -66,10 +66,9 @@ class UserController extends AbstractController
     {
         $id = $request->query->get('id');
         $user = $userRepository->findOneBy(['user_id' => $id]);
-
         if ($user instanceof User){
             $user->setIsVerified(true);
-            $userRepository->save($user);
+            $userRepository->update($user);
             $this->addFlash('success', "Votre mail à bien été confirmer.");
 
             return $this->redirectToRoute('user_login');
