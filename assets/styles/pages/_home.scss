@@ -1,143 +1,190 @@
 @import '../utils/_variables.scss';
 
-#banner-home {
-  position: relative;
-  height: 90vh;
+.home{
+  flex-grow: 1;
 
-  &::before{
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -2;
-
-    background-image:url('../../../public/images/pages/home/banner-home.jpg');
-    background-size: cover;
-    background-position: top left;
-    background-repeat: no-repeat;
-
-    -webkit-animation-name: scaleAnimation;
-    animation-name: scaleAnimation;
-    -webkit-animation-duration: 1.5s;
-    animation-duration: 1.5s;
-    animation-timing-function: ease-out;
-  }
-
-  &__filter{
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: -1;
-
-    -webkit-animation-name: filterFadeInOpacity;
-    animation-name: filterFadeInOpacity;
-    -webkit-animation-iteration-count: 1;
-    animation-iteration-count: 1;
-    -webkit-animation-timing-function: ease-out;
-    animation-timing-function: ease-out;
-    -webkit-animation-duration: 1.5s;
-    animation-duration: 1.5s;
-  }
-
-  #catch-phrase {
-    -webkit-animation-name: fadeInOpacity;
-    animation-name: fadeInOpacity;
-    -webkit-animation-iteration-count: 1;
-    animation-iteration-count: 1;
-    -webkit-animation-timing-function: ease-in-out;
-    animation-timing-function: ease-in-out;
-    -webkit-animation-duration: 2s;
-    animation-duration: 2s;
-    -webkit-animation-delay: 0.3s;
-    animation-delay: 0.3s;
-    -webkit-animation-fill-mode: forwards;
-    animation-fill-mode: forwards;
-
-    opacity: 0;
-    z-index: 2;
+  #banner-home {
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 -20px 10px -20px black inset,
-      0 20px 10px -20px black inset;
+    height: 90vh;
+
+    &::before{
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -2;
+
+      background-image:url('../../../public/images/pages/home/banner-home.jpg');
+      background-position: center;
+      background-size: cover;
+      filter: blur(0%);
+      background-repeat: no-repeat;
+
+      -webkit-animation-name: scaleAnimation;
+      animation-name: scaleAnimation;
+      -webkit-animation-duration: 1s;
+      animation-duration: 1s;
+      -webkit-animation-timing-function: linear;
+      animation-timing-function: linear;
+      -webkit-animation-fill-mode: forwards;
+      animation-fill-mode: forwards;
+    }
+
+    &__filter{
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: -1;
+
+      -webkit-animation-name: filterFadeInOpacity;
+      animation-name: filterFadeInOpacity;
+      -webkit-animation-iteration-count: 1;
+      animation-iteration-count: 1;
+      -webkit-animation-timing-function: linear;
+      animation-timing-function: linear;
+      -webkit-animation-duration: 1.5s;
+      animation-duration: 1.5s;
+    }
+
+    #catch-phrase {
+      -webkit-animation-name: fadeInOpacity;
+      animation-name: fadeInOpacity;
+      -webkit-animation-iteration-count: 1;
+      animation-iteration-count: 1;
+      -webkit-animation-timing-function: ease-in-out;
+      animation-timing-function: ease-in-out;
+      -webkit-animation-duration: 2s;
+      animation-duration: 2s;
+      -webkit-animation-delay: 0.3s;
+      animation-delay: 0.3s;
+      -webkit-animation-fill-mode: forwards;
+      animation-fill-mode: forwards;
+
+      opacity: 0;
+      z-index: 2;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 -20px 10px -20px black inset,
+        0 20px 10px -20px black inset;
+    }
+
+    #tricks-arrow-anchor-down {
+      a {
+        z-index: 20;
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        padding: 5px 20px;
+        background-color: rgba(0, 0, 0, 0.15);
+        font-size: 2em;
+        border-radius: 10px;
+        color: white;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.3);
+          color: lightgray;
+        }
+      }
+    }
+
   }
 
-  #tricks-arrow-anchor-down {
+  #tricks-arrow-anchor-up {
     a {
-      z-index: 20;
       position: absolute;
-      bottom: 20px;
+      bottom: 1em;
       right: 20px;
       padding: 5px 20px;
-      background-color: rgba(0, 0, 0, 0.15);
+      background-color: rgba(0, 0, 0, 0.4);
       font-size: 2em;
       border-radius: 10px;
       color: white;
 
       &:hover {
-        background-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0, 0, 0, 0.6);
         color: lightgray;
       }
     }
   }
 
-}
+  &__content{
+    width: 100%;
+    z-index: 10;
+    background: #e3e2e2;
 
-#tricks-arrow-anchor-up {
-  a {
-    position: absolute;
-    bottom: 1em;
-    right: 20px;
-    padding: 5px 20px;
-    background-color: rgba(0, 0, 0, 0.4);
-    font-size: 2em;
-    border-radius: 10px;
-    color: white;
+    #tricks-container {
+      z-index: 1;
+      margin: 2rem auto;
+      width: 90%;
+      display: grid;
+      align-items: center;
+      justify-content: center;
+      column-gap: 1rem;
+      row-gap: 3rem;
+      grid-template-columns: repeat(5, 1fr);
 
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.6);
-      color: lightgray;
-    }
-  }
-}
+      @media #{$media-large-desktop} {
+        grid-template-columns: repeat(4, 1fr);
+      }
 
-#load-more {
-  border-top: 1px solid #bbbbbb;
-  text-align: center;
+      @media #{$media-desktop} {
+        grid-template-columns: repeat(3, 1fr);
+      }
 
-  a {
-    color: black;
-    text-decoration: none;
+      @media #{$media-tablet} {
+        grid-template-columns: repeat(2, 1fr);
+      }
 
-    span {
-      display: block;
-      margin-top: 0.7em;
-      line-height: 0.5em;
-    }
+      @media #{$media-mobile} {
+        grid-template-columns: repeat(1, 1fr);
+      }
 
-    i {
-      font-size: 1em;
-    }
 
-    &:hover {
-      color: $primary;
+      .tricks-card{
+        border: none;
+        grid-column: auto;
 
-      i {
-        font-size: 1.3em;
+        a {
+          text-decoration: none;
+        }
       }
     }
-  }
-}
 
-#tricks-container {
-  a {
-    text-decoration: none;
+    #load-more {
+      border-top: 1px solid #bbbbbb;
+      text-align: center;
+      margin: auto;
+
+      a {
+        color: black;
+        text-decoration: none;
+
+        span {
+          display: block;
+          margin-top: 0.7em;
+          line-height: 0.5em;
+        }
+
+        i {
+          font-size: 1em;
+        }
+
+        &:hover {
+          color: $primary;
+
+          i {
+            font-size: 1.3em;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -162,41 +209,37 @@
 @-webkit-keyframes filterFadeInOpacity {
   0% {
     opacity: 0.6;
-    transform: scale(1.1);
 
   }
   100% {
     opacity: 1;
-    transform: scale(1);
   }
 }
 
 @keyframes filterFadeInOpacity {
   0% {
     opacity: 0.6;
-    transform: scale(1.1);
 
   }
   100% {
     opacity: 1;
-    transform: scale(1);
   }
 }
 
 @-webkit-keyframes scaleAnimation {
   0% {
-    transform: scale(1.1);
+    filter: blur(2px);
   }
   100% {
-    transform: scale(1);
+    filter: blur(0);
   }
 }
 
 @keyframes scaleAnimation {
   0% {
-    transform: scale(1.1);
+    filter: blur(2px);
   }
   100% {
-    transform: scale(1);
+    filter: blur(0);
   }
 }

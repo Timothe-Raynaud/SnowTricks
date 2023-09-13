@@ -4,7 +4,7 @@
 
 {% block main %}
 
-    <main class="flex-grow-1">
+    <main class="home">
         <div {{ stimulus_controller('anchor') }}>
 
             <div id="banner-home">
@@ -20,14 +20,13 @@
                     </a>
                 </div>
             </div>
-            <div data-anchor-target="path" class="container-fluid row justify-content-center"
+            <div data-anchor-target="path" class="home__content"
                     {{ stimulus_controller('components/loader') }}
                  data-components--loader-path-value="{{ path('get_tricks') }}"
                  data-components--loader-element-anchor-value="tricks-arrow-anchor-up"
             >
 
                 <div id="tricks-container"
-                     class="row g-5 px-4 justify-content-center"
                      data-components--loader-target="container">
                 </div>
 

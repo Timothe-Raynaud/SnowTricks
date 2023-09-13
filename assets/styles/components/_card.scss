@@ -5,7 +5,7 @@
   -1px -1px 10px rgba(10, 10, 10, 0.4);
   z-index: 1;
   height: 270px !important;
-  border-radius: 0.7rem !important;
+  border-radius: 0.2rem !important;
   position: relative;
   transition: all 1000ms;
 
@@ -13,7 +13,7 @@
     position: relative;
     height: 100%;
     display: flex;
-    border-radius: 0.7rem;
+    border-radius: 0.2rem;
     background-color: rgba(0, 0, 0, 0.55);
 
     .card-body {
@@ -43,7 +43,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 0 0 0.5rem 0.5rem;
+    border-radius: 0 0 0.2rem 0.2rem;
     background-color: rgba(0, 0, 0, 0.55);
     transition: all 600ms;
 

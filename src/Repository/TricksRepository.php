@@ -68,7 +68,6 @@ class TricksRepository extends ServiceEntityRepository
                     , i.trick_id
                 FROM images i
                 ORDER BY i.id
-                LIMIT 1
             ) subquery_image ON subquery_image.trick_id = t.trick_id
             WHERE 1
             {$where}
