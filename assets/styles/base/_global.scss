@@ -13,6 +13,6 @@ body{
   position: relative;
 
   @media #{$media-mobile} {
-    padding-bottom: 11vh;
+    min-height: 90%;
   }
 }

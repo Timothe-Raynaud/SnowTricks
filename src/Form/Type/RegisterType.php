@@ -33,20 +33,6 @@ class RegisterType extends AbstractType
                     'placeholder' => 'Email',
                 ],
             ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'label_attr' => [
-                    'class' => 'form-check-label mt-2'
-                ],
-                'attr' => [
-                    'class' => 'form-check-input ms-2 mt-2'
-                ],
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'Vous devez accepter nos conditions.',
-                    ]),
-                ],
-            ])
             ->add('password', PasswordType::class, [
                 'mapped' => true,
                 'label' => false,

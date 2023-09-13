@@ -1,0 +1,65 @@
+@import "../utils/variables";
+
+
+#security{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  @media #{$media-mobile} {
+    min-height: 90vh;
+  }
+
+
+  &__background{
+    box-shadow: 1px 1px 24px 3px rgba(50, 50, 50, 0.7) inset;
+    filter: grayscale(80%);
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-image: url('../../../public/images/pages/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    &::after{
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background: rgba(100, 100, 100, 0.3);
+    }
+  }
+
+  &__footer{
+    z-index: 10;
+    color: white;
+  }
+
+  &__box{
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+
+    .content{
+      padding: 1rem;
+      background-color: rgba(227, 226, 226, 0.95);
+      box-shadow: 1px 1px 24px 3px rgba(50, 50, 50, 0.5);
+      width: 50%;
+
+      @media #{$media-desktop} {
+        width: 70%;
+      }
+
+      @media #{$media-mobile} {
+        width: 90%;
+      }
+    }
+  }
+}
