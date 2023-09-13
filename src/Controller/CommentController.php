@@ -49,7 +49,7 @@ class CommentController extends AbstractController
 
             $response = [];
             foreach($comments as $comment){
-                $response['html'][] = $this->renderView('pages/tricks/_comment.html.twig', [
+                $response['html'][] = $this->renderView('app/pages/tricks/_comment.html.twig', [
                     'comment' => $comment
                 ]);
                 $response['lastIndex'] = $comment['comment_id'];

@@ -24,7 +24,7 @@ class UserController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('pages/user/login.html.twig', [
+        return $this->render('app/pages/security/user/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
@@ -56,7 +56,7 @@ class UserController extends AbstractController
             $this->addFlash($result['type'], $result['message']);
         }
 
-        return $this->render('pages/user/register.html.twig', [
+        return $this->render('app/pages/security/user/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
@@ -65,11 +65,17 @@ class UserController extends AbstractController
     public function verifyUserEmail(Request $request, UserRepository $userRepository): Response
     {
         $id = $request->query->get('id');
-        if ($userRepository->setIsValidated($id)){
+        $user = $userRepository->findOneBy(['user_id' => $id]);
+
+        if ($user instanceof User){
+            $user->setIsVerified(true);
+            $userRepository->save($user);
             $this->addFlash('success', "Votre mail à bien été confirmer.");
-        } else {
-            $this->addFlash('error', "Une erreur est survenue lors de la validation de votre mail.");
+
+            return $this->redirectToRoute('user_login');
         }
+
+        $this->addFlash('error', "Une erreur est survenue lors de la validation de votre mail.");
 
         return $this->redirectToRoute('home');
     }

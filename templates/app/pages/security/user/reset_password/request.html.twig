@@ -1,0 +1,19 @@
+{% extends 'app/pages/security/_security_layout.html.twig' %}
+
+{% block title %}{{ siteName }} - Reset your password{% endblock %}
+
+{% block security %}
+    <h3 class="text-center">Mot de passe oubliée</h3>
+
+    <div class="mt-4">
+        Veuillez renseigner l'adresse email de votre compte :
+    </div>
+
+    {{ form_start(requestForm) }}
+        {{ form_row(requestForm.email) }}
+
+    <div class="text-center mt-3">
+        <button class="button button-secondary">Envoyer</button>
+    </div>
+    {{ form_end(requestForm) }}
+{% endblock %}

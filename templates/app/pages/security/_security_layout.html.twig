@@ -1,0 +1,11 @@
+{% extends 'app/layout/_layout.html.twig' %}
+
+{% block title %}{{ siteName }}{% endblock %}
+
+{% block main %}
+    <main class="security">
+        <div class="security-box">
+            {% block security %}{% endblock %}
+        </div>
+    </main>
+{% endblock %}

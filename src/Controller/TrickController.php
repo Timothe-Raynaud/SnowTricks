@@ -39,7 +39,7 @@ class TrickController extends AbstractController
 
             $response = [];
             foreach ($tricks as $trick) {
-                $response['html'][] = $this->renderView('pages/tricks/_card.html.twig', [
+                $response['html'][] = $this->renderView('app/pages/tricks/_card.html.twig', [
                     'trick' => $trick
                 ]);
                 $response['lastIndex'] = $trick['trickId'];
@@ -61,7 +61,7 @@ class TrickController extends AbstractController
         $trick = new Trick();
         $form = $this->createForm(TricksType::class, $trick);
 
-        return $this->render('pages/tricks/new_trick.html.twig', [
+        return $this->render('app/pages/tricks/new_trick.html.twig', [
             'form' => $form,
             'trick' => $trick
         ]);
@@ -84,7 +84,7 @@ class TrickController extends AbstractController
             $comment = new Comment();
             $form = $this->createForm(CommentType::class, $comment);
 
-            $html = $this->renderView('pages/tricks/_modal.html.twig', [
+            $html = $this->renderView('app/pages/tricks/_modal.html.twig', [
                 'trick' => $trick,
                 'form' => $form->createView(),
             ]);
@@ -138,7 +138,7 @@ class TrickController extends AbstractController
 
             $form = $this->createForm(TricksType::class, $trick);
 
-            $html = $this->renderView('pages/tricks/_update.html.twig', [
+            $html = $this->renderView('app/pages/tricks/_update.html.twig', [
                 'form' => $form->createView(),
                 'trick' => $trick
             ]);
