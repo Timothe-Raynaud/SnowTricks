@@ -16,7 +16,8 @@ class ImageType extends AbstractType
     {
         $builder
             ->add('file', FileType::class, [
-                'label' => 'Upload',
+                'label' => '<i class="fa-solid fa-upload"></i>',
+                'label_html' => true,
                 'mapped' => false,
                 'attr' => [
                     'class' => 'file-input__trigger',

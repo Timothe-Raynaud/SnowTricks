@@ -38,12 +38,12 @@
         <div class="upload-images">
             {% for key, imageForm in form.images %}
 
-                <div class="upload-images__row" {{ stimulus_controller('image-preview') }}
+                <div class="upload-images__box" {{ stimulus_controller('image-preview') }}
                      data-image-preview-target="box">
                     {{ form_widget(imageForm, { attr: {class: 'file-input', 'data-image-preview-target': 'boxToHide'}}) }}
-                    {{ form_row(imageForm.vars.button_delete, { label: 'X', attr:
+                    {{ form_row(imageForm.vars.button_delete, { label: '<i class="fa-solid fa-trash"></i>', label_html: true, attr:
                         {
-                            class: 'delete delete-image-upload',
+                            class: 'delete',
                             'data-image-preview-target': 'deleteButton',
                             'data-item-id-param': key
                         } }) }}
@@ -52,32 +52,32 @@
                          data-image-preview-target='previewImage'>
                 </div>
             {% endfor %}
-            {{ form_widget(form.images.vars.button_add, { label: '+ Add image', attr: {class: 'button button-secondary my-3'} }) }}
+            {{ form_widget(form.images.vars.button_add, { label: '<span>+</span><br> Add<br> Image', label_html: true, attr: {class: 'button button-secondary'} }) }}
         </div>
 
         <div class="upload-videos">
             {% for key, videoForm in form.videos %}
-                <div class="upload-videos__row" {{ stimulus_controller('video-preview') }}>
-                    {{ form_widget(videoForm) }}
-
-                    <iframe data-video-preview-target="embed"
-                        id="video_{{ key }}"
-                        src="{% if trick.videos[key].url is defined  %}{{ trick.videos[key].url }}{% endif %}"
-                        width="200"
-                        height="120"
-                        allowfullscreen
-                        class="embed-video"></iframe>
-
-                    {{ form_row(videoForm.vars.button_delete, { label: 'X', attr:
+                <div class="upload-videos__box" {{ stimulus_controller('video-preview') }}>
+                    {{ form_row(videoForm.vars.button_delete, { label: '<i class="fa-solid fa-trash"></i>', label_html: true, attr:
                         {
-                            class: 'delete delete-video-upload',
+                            class: 'delete',
                             'data-video-preview-target': 'deleteButton',
                             'data-item-id-param': key
                         }
                     }) }}
+
+                    <iframe data-video-preview-target="embed"
+                        id="video_{{ key }}"
+                        src="{% if trick.videos[key].url is defined  %}{{ trick.videos[key].url }}{% endif %}"
+                        width="100%"
+                        height="100px"
+                        allowfullscreen
+                        class="embed-video"></iframe>
+
+                    {{ form_widget(videoForm) }}
                 </div>
             {% endfor %}
-            {{ form_widget(form.videos.vars.button_add, { label: '+ Add video', attr: {class: 'button button-secondary my-3'} }) }}
+            {{ form_widget(form.videos.vars.button_add, { label: '<span>+</span><br> Add<br> Image', label_html: true, attr: {class: 'button button-secondary'} }) }}
         </div>
     </div>
     {{ form_end(form, {'render_rest': false}) }}

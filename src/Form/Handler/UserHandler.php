@@ -34,7 +34,7 @@ class UserHandler
             $user = $form->getData();
 
             if ($this->userRepository->findOneBy(['username' => $user->getUsername()])){
-                return $this->renderMessage("error", "Ce nom d'utilisateur est déjà prit");
+                return $this->renderMessage("error", "Ce nom d'utilisateur est déjà prit.");
             }
 
             if ($this->userRepository->findOneBy(['email' => $user->getEmail()])){
@@ -52,9 +52,9 @@ class UserHandler
                 $this->entity->flush();
                 $this->mailerController->sendConfirmationMailUser($user);
 
-                return $this->renderMessage('success', 'Un email de confirmation vent d\'être envoyé sur votre adresse email');
+                return $this->renderMessage('success', 'Un email de confirmation vent d\'être envoyé sur votre adresse email.');
             } catch (\Exception $e) {
-                dd($e);
+                return $this->renderMessage('error', 'Une erreur est survenue.');
             }
         }
 

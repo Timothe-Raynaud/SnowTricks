@@ -50,9 +50,7 @@ class TricksHandler
             try {
                 $this->entity->flush();
                 return $this->renderMessage('success', 'Le tricks à bien été enregistré.');
-            } catch (\Exception $e) {
-                dd($e);
-            }
+            } catch (\Exception $e) {}
         }
 
         return $this->renderMessage('error', 'Une erreur est survenu lors de l\'enregistrement du formulaire.');
