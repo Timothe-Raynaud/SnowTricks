@@ -1,8 +1,8 @@
-{% extends 'app/pages/security/_security_layout.html.twig' %}
+{% extends 'app/layout/_layout.html.twig' %}
 
 {% block title %}{{ siteName }} - Register{% endblock %}
 
-{% block security %}
+{% block main %}
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.username) }}
         {{ form_row(registrationForm.email) }}

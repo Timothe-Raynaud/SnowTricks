@@ -22,7 +22,7 @@ class TricksType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'class' => 'custom-input',
-                    'placeholder' => 'name'
+                    'placeholder' => 'Name'
                 ],
                 'required' => true,
             ])

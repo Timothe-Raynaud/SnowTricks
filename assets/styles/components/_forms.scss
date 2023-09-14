@@ -29,6 +29,11 @@
 
 select{
   padding: 0.14rem 0.7rem!important;
+  text-transform: capitalize;
+
+  option{
+    text-transform: capitalize;
+  }
 }
 
 .textarea {
@@ -43,6 +48,6 @@ select{
 .embed-video{
   background-color: rgb(0 0 0 / 58%);
   box-shadow: 3px 3px 15px #6b6a6a, -3px -3px 15px #ffffff;
-  border-radius: 0.375rem;
+  border-radius: 0;
   margin: 0 1rem;
 }

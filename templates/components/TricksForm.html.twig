@@ -20,6 +20,10 @@
         </button>
     </div>
 
+    <div>
+        {{ form_errors(form) }}
+    </div>
+
     <div class="d-flex">
         <div class="flex-grow-1 me-2">
             {{ form_row(form.name) }}
@@ -58,7 +62,7 @@
 
                     <iframe data-video-preview-target="embed"
                         id="video_{{ key }}"
-                        src=""
+                        src="{% if trick.videos[key].url is defined  %}{{ trick.videos[key].url }}{% endif %}"
                         width="200"
                         height="120"
                         allowfullscreen

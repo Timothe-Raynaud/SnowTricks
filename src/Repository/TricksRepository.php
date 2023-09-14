@@ -60,17 +60,12 @@ class TricksRepository extends ServiceEntityRepository
                 , t.name
                 , t.slug
                 , tt.name AS type
-                , subquery_image.image 
+                , (SELECT i.filename FROM images i WHERE i.trick_id = t.trick_id ORDER BY i.id LIMIT 1) as image
             FROM tricks t 
             INNER JOIN types_tricks tt ON tt.type_trick_id = t.type_trick_id
-            LEFT JOIN (
-                SELECT i.filename as image
-                    , i.trick_id
-                FROM images i
-                ORDER BY i.id
-            ) subquery_image ON subquery_image.trick_id = t.trick_id
             WHERE 1
             {$where}
+            GROUP BY t.trick_id
             ORDER BY t.trick_id DESC
             LIMIT :limit
         ";

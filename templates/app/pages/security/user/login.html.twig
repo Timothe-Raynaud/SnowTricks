@@ -1,8 +1,8 @@
-{% extends 'app/pages/security/_security_layout.html.twig' %}
+{% extends 'app/layout/_layout.html.twig' %}
 
 {% block title %}{{ siteName }} - Login{% endblock %}
 
-{% block security %}
+{% block main %}
     <form action="{{ path('user_login') }}" method="post">
 
         <input type="text" id="username" name="_username" value="{{ last_username }}" class="custom-input" placeholder="Username"/>
