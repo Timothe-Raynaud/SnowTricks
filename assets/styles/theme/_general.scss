@@ -49,6 +49,12 @@
 
     .content{
       padding: 1rem;
+      margin-top: 5vh;
+
+      @media #{$media-mobile} {
+        margin-bottom: 20vh;
+      }
+
       background-color: rgba(227, 226, 226, 0.95);
       box-shadow: 1px 1px 24px 3px rgba(50, 50, 50, 0.5);
       width: 50%;

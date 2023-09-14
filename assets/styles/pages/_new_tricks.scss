@@ -1,9 +1,2 @@
 @import "../utils/variables";
 
-.new-tricks {
-  width: 80%;
-  padding-top: 2vh;
-  @media #{$media-mobile} {
-    padding-bottom: 10vh;
-  }
-}

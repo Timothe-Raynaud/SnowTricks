@@ -36,6 +36,7 @@
 
     <div class="upload">
         <div class="upload-images">
+            {{ form_widget(form.images.vars.button_add, { label: '<span>+</span><br>Image', label_html: true, attr: {class: 'button button-secondary'} }) }}
             {% for key, imageForm in form.images %}
 
                 <div class="upload-images__box" {{ stimulus_controller('image-preview') }}
@@ -52,10 +53,10 @@
                          data-image-preview-target='previewImage'>
                 </div>
             {% endfor %}
-            {{ form_widget(form.images.vars.button_add, { label: '<span>+</span><br> Add<br> Image', label_html: true, attr: {class: 'button button-secondary'} }) }}
         </div>
 
         <div class="upload-videos">
+            {{ form_widget(form.videos.vars.button_add, { label: '<span>+</span><br> Video', label_html: true, attr: {class: 'button button-secondary'} }) }}
             {% for key, videoForm in form.videos %}
                 <div class="upload-videos__box" {{ stimulus_controller('video-preview') }}>
                     {{ form_row(videoForm.vars.button_delete, { label: '<i class="fa-solid fa-trash"></i>', label_html: true, attr:
@@ -77,7 +78,6 @@
                     {{ form_widget(videoForm) }}
                 </div>
             {% endfor %}
-            {{ form_widget(form.videos.vars.button_add, { label: '<span>+</span><br> Add<br> Image', label_html: true, attr: {class: 'button button-secondary'} }) }}
         </div>
     </div>
     {{ form_end(form, {'render_rest': false}) }}
