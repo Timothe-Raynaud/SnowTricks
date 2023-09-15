@@ -4,13 +4,13 @@
   border: none;
   border-radius: 0.2rem;
   padding: 0.5rem 0.7rem;
-  box-shadow:  3px 3px 15px #6b6a6a,
-  -3px -3px 15px #ffffff;
+  box-shadow:  8px 8px 20px #1e1e1e,
+  -8px -8px 20px #2a2a2a;
   font-weight: 500;
 
   &:hover{
-    box-shadow: inset 3px 3px 15px rgba(20, 20, 20, 0.3),
-    inset -3px -3px 15px rgba(50, 50, 50, 0.2);
+    box-shadow: inset 8px 8px 20px #1e1e1e,
+    inset -8px -8px 20px #2a2a2a;
   }
 }
 

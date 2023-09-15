@@ -81,8 +81,8 @@
           font-weight: 500;
           font-size: 2rem;
           cursor: pointer;
-          box-shadow:  3px 3px 15px #6b6a6a,
-          -3px -3px 15px #ffffff;
+          box-shadow:  8px 8px 20px #1e1e1e,
+          -8px -8px 20px #2a2a2a;
           transition: font-size 0.3s ease-in-out;
 
           &:hover {
@@ -147,7 +147,6 @@
       flex-direction: column;
 
       .custom-input {
-        box-shadow: 3px 3px 15px #6b6a6a, -3px -3px 15px #ffffff;
         height: 30px;
         margin-top: 10px;
         border-bottom: 1px solid #393838;

@@ -1,10 +1,15 @@
 @import "../utils/variables";
 
 
-@media (min-width: 576px) {
-  .modal-dialog {
-    max-width: 70% !important;
-
+.modal-dialog {
+  @media (min-width: 1275px) {
+    max-width: 50% !important;
+  }
+  @media (min-width: 1000px) {
+    max-width: 60% !important;
+  }
+  @media (min-width: 576px) {
+    max-width: 80% !important;
   }
 }
 
@@ -14,44 +19,59 @@
   }
 
   .modal-content {
+    border: none;
+    padding: 0;
     background: #efefef;
-    border-radius: 0.2rem;
-    margin-bottom: 2rem;
+    border-radius: 0;
 
-    .modal-header {
-      border: none;
-      padding-bottom: 0;
-    }
+    .modal-body{
+      padding: 0;
 
-    .modal-title {
-      text-align: center;
-      color: black;
-      font-weight: 600;
-      font-size: 2.5rem;
-
-      span{
-        padding: 0 3rem 0.2rem 3rem;
-        border-bottom: 1px solid rgba(180, 180, 180, 0.5);
+      .modal-header {
+        border: none;
+        padding: 0;
       }
-    }
 
-    .modal-infos{
-      display: flex;
-      justify-content: center;
-      font-size: 0.8rem;
-      font-style: italic;
-      text-align: justify;
+      .modal-main-content{
+        padding: 0 1rem;
 
-      div{
-        margin: 1.5rem 1rem 0.3rem 1rem;
+        .modal-title {
+          margin-top: 2rem;
+          text-align: center;
+          color: black;
+          font-weight: 600;
+          font-size: 2.5rem;
+        }
 
-        span{
-          font-weight: 700;
+        #trick-content{
+          padding: 2rem 0;
+          width: 90%;
+          margin: auto;
+          text-align: justify;
+          text-transform: capitalize;
+        }
+
+        .modal-infos{
+          display: flex;
+          justify-content: center;
+          font-size: 0.8rem;
+          font-style: italic;
+          text-align: justify;
+
+          div{
+            margin: 1.5rem 1rem 0.3rem 1rem;
+
+            span{
+              font-weight: 700;
+            }
+          }
         }
       }
-    }
 
+
+    }
     .modal-footer {
+      padding: 1rem;
       display: flex;
       justify-content: center;
 

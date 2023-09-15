@@ -6,4 +6,17 @@
   @media #{$media-mobile} {
     width: 90%;
   }
+
+  .new-trick-title{
+    color: #c3c3c3;
+    text-transform: uppercase;
+    font-size: 2.5rem;
+    font-weight: 700;
+    padding: 0 15rem 0.5rem 2rem ;
+    border-bottom: 1px solid #c3c3c3;
+
+    @media #{$media-desktop} {
+      padding: 0 0.5rem 0.5rem 0.5rem ;
+    }
+  }
 }
