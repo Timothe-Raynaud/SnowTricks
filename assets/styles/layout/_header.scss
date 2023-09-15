@@ -2,7 +2,7 @@
 
 .header {
   height: 10vh;
-  background-color: white;
+  background-color: #e3e2e2;
   box-shadow: 1px -2px 15px black;
   @media #{$media-mobile} {
     display: none;
@@ -19,21 +19,27 @@
     #nav {
       margin-right: 1rem;
       margin-bottom: 0;
-
-      li {
-        &:not(:last-child) {
-          border-right: 1px solid black;
-        }
-      }
+      //
+      //li {
+      //  &:not(:last-child) {
+      //    border-right: 1px solid white;
+      //  }
+      //}
 
       a {
-        padding: 0 10px;
+        text-transform: uppercase;
+        padding: 0 1.5rem;
         list-style: none;
         text-decoration: none;
-        color: black;
+        text-shadow: 1px 1px 8px rgba(50, 50, 50, 0.3);
+        font-weight: 500;
+        color: #555555;
+        font-size: 1.1rem;
+        transition: font-size 0.3s ease-out;
 
         &:hover {
-          color: $primary;
+          color: black;
+          font-size: 1.13rem;
         }
       }
     }
