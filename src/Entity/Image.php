@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -17,7 +16,7 @@ class Image
     #[ORM\Column(type: "integer")]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: "Trick", inversedBy: "images", cascade: ["persist"])]
+    #[ORM\ManyToOne(targetEntity: "Trick", cascade: ["persist"], inversedBy: "images")]
     #[ORM\JoinColumn(name: "trick_id", referencedColumnName: "trick_id", nullable: false)]
     private ?Trick $trick;
 
@@ -67,12 +66,10 @@ class Image
         return $this;
     }
 
-    /**
-     * @ORM\PreRemove()
-     */
-    public function removeImageFile()
+    #[ORM\PreRemove]
+    public function removeImageFile(): void
     {
-        $filePath = '/uploads/images/tricks/' . $this->getFilename();
+        $filePath = 'uploads/images/tricks/' . $this->getFilename();
         if (file_exists($filePath)) {
             unlink($filePath);
         }
