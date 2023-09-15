@@ -2,6 +2,8 @@
 
 {% block title %}{{ siteName }} - Login{% endblock %}
 
+{% block content_attributes %}content-security{% endblock %}
+
 {% block main %}
     <form action="{{ path('user_login') }}" method="post">
 

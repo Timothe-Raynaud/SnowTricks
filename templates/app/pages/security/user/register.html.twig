@@ -2,6 +2,8 @@
 
 {% block title %}{{ siteName }} - Register{% endblock %}
 
+{% block content_attributes %}content-security{% endblock %}
+
 {% block main %}
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.username) }}

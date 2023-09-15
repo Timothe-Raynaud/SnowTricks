@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Repository\ImagesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -14,12 +13,12 @@ class Video
     #[ORM\Column(type: "integer")]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: "Trick", inversedBy: "videos", cascade: ["persist"])]
+    #[ORM\ManyToOne(targetEntity: "Trick", cascade: ["persist"], inversedBy: "videos")]
     #[ORM\JoinColumn(name: "trick_id", referencedColumnName: "trick_id", nullable: true)]
     private ?Trick $trick;
 
     #[ORM\Column(type: "string", length: 255)]
-    private string $url;
+    private ?string $url = null;
 
     public function getId(): ?int
     {
@@ -41,7 +40,7 @@ class Video
         $this->trick = $trick;
     }
 
-    public function getUrl(): string
+    public function getUrl(): ?string
     {
         return $this->url;
     }
@@ -50,5 +49,4 @@ class Video
     {
         $this->url = $url;
     }
-
 }

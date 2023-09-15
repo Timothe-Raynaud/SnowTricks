@@ -69,7 +69,7 @@
 
                     <iframe data-video-preview-target="embed"
                         id="video_{{ key }}"
-                        src="{% if trick.videos[key].url is defined  %}{{ trick.videos[key].url }}{% endif %}"
+                        src="{% if trick.videos[key] is defined and trick.videos[key].url is defined %}{{ trick.videos[key].url|default('') }}{% endif %}"
                         width="100%"
                         height="100px"
                         allowfullscreen

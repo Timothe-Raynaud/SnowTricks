@@ -1,2 +1,9 @@
 @import "../utils/variables";
 
+.content-new-trick{
+  width: 80%;
+
+  @media #{$media-mobile} {
+    width: 90%;
+  }
+}
