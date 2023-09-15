@@ -30,7 +30,7 @@ class ResetPasswordController extends AbstractController
      * @throws TransportExceptionInterface
      */
     #[Route('', name: 'app_forgot_password_request', methods: ['GET', 'POST'])]
-    public function request(Request $request, MailerInterface $mailer, TranslatorInterface $translator): Response
+    public function request(Request $request, MailerInterface $mailer, EntityManagerInterface $entityManager, ResetPasswordHelperInterface $resetPasswordHelper): Response
     {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
@@ -39,11 +39,12 @@ class ResetPasswordController extends AbstractController
             return $this->processSendingPasswordResetEmail(
                 $form->get('email')->getData(),
                 $mailer,
-                $translator
+                $entityManager,
+                $resetPasswordHelper
             );
         }
 
-        return $this->render('app/pages/security/email/reset_password_email.html.twig', [
+        return $this->render('app/pages/security/user/reset_password/request.html.twig', [
             'requestForm' => $form->createView(),
         ]);
     }
@@ -51,8 +52,6 @@ class ResetPasswordController extends AbstractController
     #[Route('/check-email', name: 'app_check_email', methods: ['GET', 'POST'])]
     public function checkEmail(): Response
     {
-        $this->addFlash('success', 'Un mail de réinitialisation vient d\'être envoyé.');
-
         return $this->render('app/pages/home.html.twig');
     }
 
@@ -93,7 +92,7 @@ class ResetPasswordController extends AbstractController
             // Encode(hash) the plain password, and set it.
             $encodedPassword = $passwordHasher->hashPassword(
                 $user,
-                $form->get('plainPassword')->getData()
+                $form->get('password')->getData()
             );
 
             $user->setPassword($encodedPassword);
@@ -118,30 +117,30 @@ class ResetPasswordController extends AbstractController
         $user = $entityManager->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
         ]);
-
         // Do not reveal whether a user account was found or not.
         if (!$user) {
+            $this->addFlash('error', 'Le mail semble incorrect.');
             return $this->redirectToRoute('app_check_email');
         }
 
         try {
             $resetToken = $resetPasswordHelper->generateResetToken($user);
+            $email = (new TemplatedEmail())
+                ->from(new Address('contact@test.com', 'Snowtricks reset password'))
+                ->to($user->getEmail())
+                ->subject('Nouveau mot de passe')
+                ->htmlTemplate('app/pages/security/email/reset_password_email.html.twig')
+                ->context([
+                    'resetToken' => $resetToken,
+                ]);
+
+            $mailer->send($email);
+
+            $this->setTokenObjectInSession($resetToken);
+            $this->addFlash('success', 'Un mail de réinitialisation vient de vous être envoyé.');
         } catch (ResetPasswordExceptionInterface $e) {
-            return $this->redirectToRoute('app_check_email');
+            $this->addFlash('error', $e->getReason());
         }
-
-        $email = (new TemplatedEmail())
-            ->from(new Address('contact@test.com', 'Snowtricks reset password'))
-            ->to($user->getEmail())
-            ->subject('Nouveau mot de passe')
-            ->htmlTemplate('email/user/reset_password_email.html.twig')
-            ->context([
-                'resetToken' => $resetToken,
-            ]);
-
-        $mailer->send($email);
-
-        $this->setTokenObjectInSession($resetToken);
 
         return $this->redirectToRoute('app_check_email');
     }
