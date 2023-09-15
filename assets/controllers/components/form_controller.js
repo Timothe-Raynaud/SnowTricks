@@ -22,12 +22,10 @@ export default class extends Controller {
                 if (response.ok) {
                     return response.json()
                 } else {
-                    throw new Error('Un problème est survenu')
+                    toast('error', 'Une erreur est survenue.')
                 }
             })
             .then(data => {
-                toast(data.type, data.message)
-
                 // Hide the input box if option is set
                 if ('hideInputs' in this.optionValue && data.type ==='success'){
                     this.formTarget.remove()
@@ -44,13 +42,13 @@ export default class extends Controller {
                     this.dismiss();
                 }, 4000);
 
-            })
-            .finally(() => {
                 if (data.type === 'error'){
                     setTimeout(() => {
                         this.submitTarget.disabled = false
                     }, 1000)
                 }
+
+                toast(data.type, data.message)
             })
     }
 }

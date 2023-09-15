@@ -7,7 +7,7 @@
             <li><a href="{{ path('home') }}">Home</a></li>
             <li><a href="{{ path('add_tricks') }}">Tricks</a></li>
             {% if app.user %}
-                <li><a href="{{ path('user_logout') }}">Se deconnecter</a></li>
+                <li><a href="{{ path('user_logout') }}"><i class="fa-solid fa-right-from-bracket"></i></a></li>
             {% else %}
                 <li><a href="{{ path('user_login') }}">Sign in</a></li>
                 <li><a href="{{ path('user_register') }}">Sign up</a></li>
@@ -25,7 +25,7 @@
         </li>
         <li>
             <a href="{{ path('add_tricks') }}" class="{% if app.request.get('_route') == 'add_tricks' %}active{% endif %}">
-                <i class="fa-solid fa-tag"></i>
+                <i class="fa-solid fa-bookmark"></i>
             </a>
         </li>
         {% if app.user %}

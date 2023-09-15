@@ -2,7 +2,7 @@
 
 .header {
   height: 10vh;
-  background-color: #e3e2e2;
+  background-color: #141414;
   box-shadow: 1px -2px 15px black;
   @media #{$media-mobile} {
     display: none;
@@ -17,28 +17,21 @@
 
 
     #nav {
-      margin-right: 1rem;
-      margin-bottom: 0;
-      //
-      //li {
-      //  &:not(:last-child) {
-      //    border-right: 1px solid white;
-      //  }
-      //}
+      margin: 0;
 
       a {
         text-transform: uppercase;
-        padding: 0 1.5rem;
+        padding: 0 1.2rem;
         list-style: none;
         text-decoration: none;
         text-shadow: 1px 1px 8px rgba(50, 50, 50, 0.3);
         font-weight: 500;
-        color: #555555;
+        color: #a9a9a9;
         font-size: 1.1rem;
         transition: font-size 0.3s ease-out;
 
         &:hover {
-          color: black;
+          color: white;
           font-size: 1.13rem;
         }
       }

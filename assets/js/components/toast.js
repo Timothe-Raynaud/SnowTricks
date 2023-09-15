@@ -11,8 +11,8 @@ export function toast(type, message) {
         dismiss(toast);
     }, 4000);
 
-    toast.addEventListener("mouseenter", handleMouseEnter);
-    toast.addEventListener("mouseleave", handleMouseLeave);
+    toast.addEventListener("mouseenter", () => handleMouseEnter(toast));
+    toast.addEventListener("mouseleave", () => handleMouseLeave(toast));
 }
 
 function dismiss(toast) {
@@ -21,12 +21,12 @@ function dismiss(toast) {
     }
 }
 
-function handleMouseEnter() {
-    clearTimeout(this.dismissTimeout);
+function handleMouseEnter(toast) {
+    clearTimeout(toast.dismissTimeout);
 }
 
-function handleMouseLeave() {
-    this.dismissTimeout = setTimeout(() => {
-        dismiss(this);
+function handleMouseLeave(toast) {
+    toast.dismissTimeout = setTimeout(() => {
+        dismiss(toast);
     }, 1000);
 }
