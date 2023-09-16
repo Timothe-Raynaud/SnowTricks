@@ -1,7 +1,11 @@
 @import "../utils/variables";
 
 .content-new-trick{
-  width: 80%;
+  width: 60%;
+
+  @media #{$media-large-desktop} {
+    width: 80%;
+  }
 
   @media #{$media-mobile} {
     width: 90%;

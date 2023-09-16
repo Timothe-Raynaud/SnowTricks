@@ -1,11 +1,5 @@
 @import "../utils/variables";
 
-.form-box {
-  padding: 1rem;
-  border-radius: 0;
-  box-shadow: 1px 1px 24px 3px rgba(50, 50, 50, 0.5);
-}
-
 .custom-input {
   writing-mode: inherit;
   border: none;
@@ -46,7 +40,6 @@ select{
 
 .embed-video{
   background-color: rgb(0 0 0 / 58%);
-  box-shadow:  8px 8px 20px #1e1e1e,
-  -8px -8px 20px #2a2a2a;
+  box-shadow:  $neumorphisme;
   border-radius: 0;
 }

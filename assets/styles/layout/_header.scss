@@ -2,8 +2,9 @@
 
 .header {
   height: 10vh;
-  background: #292929;
+  background: #212121;
   box-shadow: 1px -2px 15px black;
+
   @media #{$media-mobile} {
     display: none;
   }

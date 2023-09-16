@@ -1,9 +1,6 @@
 @import "../utils/variables";
 
 .upload {
-  //display: grid;
-  //gap: 1rem;
-  //grid-template-columns: 1fr 1fr;
   @media #{$media-mobile} {
     display: block;
   }
@@ -81,8 +78,7 @@
           font-weight: 500;
           font-size: 2rem;
           cursor: pointer;
-          box-shadow:  8px 8px 20px #1e1e1e,
-          -8px -8px 20px #2a2a2a;
+          box-shadow:  0 0 7px rgba(0, 0, 0, 0.5);
           transition: font-size 0.3s ease-in-out;
 
           &:hover {
@@ -105,7 +101,7 @@
         object-fit: cover;
         filter: grayscale(0.5);
         border-radius: 0;
-        box-shadow: 3px 3px 15px #6b6a6a, -3px -3px 15px #ffffff;
+        box-shadow: $neumorphisme;
 
         &:hover {
           filter: grayscale(0.8);
