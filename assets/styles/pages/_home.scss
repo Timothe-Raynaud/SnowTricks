@@ -82,14 +82,13 @@
         bottom: 20px;
         right: 20px;
         padding: 5px 20px;
-        background-color: rgba(0, 0, 0, 0.15);
+        background-color: rgba(0, 0, 0, 0.12);
         font-size: 2em;
-        border-radius: 10px;
-        color: white;
+        color: rgba(250, 250, 250, 0.8);
 
         &:hover {
           background-color: rgba(0, 0, 0, 0.3);
-          color: lightgray;
+          color: white;
         }
       }
     }
@@ -102,14 +101,13 @@
       bottom: 1em;
       right: 20px;
       padding: 5px 20px;
-      background-color: rgba(0, 0, 0, 0.4);
+      background-color: rgba(0, 0, 0, 0.3);
       font-size: 2em;
-      border-radius: 10px;
-      color: white;
+      color: rgba(250, 250, 250, 0.8);
 
       &:hover {
         background-color: rgba(0, 0, 0, 0.6);
-        color: lightgray;
+        color: white;
       }
     }
   }
@@ -154,6 +152,10 @@
         a {
           text-decoration: none;
         }
+
+        &:hover{
+          border: none;
+        }
       }
     }
 
@@ -163,24 +165,47 @@
       margin: auto;
 
       a {
-        color: black;
+        position: relative;
+        display: block;
+        overflow: hidden;
+        color: #646464;
         text-decoration: none;
+        height: 50px;
 
         span {
+          position: absolute;
+          top: 5px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: auto;
           display: block;
           margin-top: 0.7em;
           line-height: 0.5em;
+          font-weight: 500;
+          transition: top 0.5s ease-out;
         }
 
         i {
-          font-size: 1em;
+          position: absolute;
+          top: 25px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 1.2em;
+          transition-property: top, font-size;
+          transition-duration: .5s;
+          transition-timing-function: ease-in-out;
         }
 
         &:hover {
-          color: $primary;
+          color: #484848;
+
+          span{
+            top: -25px;
+          }
 
           i {
-            font-size: 1.3em;
+            top: -2px;
+            font-size: 1.5em;
           }
         }
       }

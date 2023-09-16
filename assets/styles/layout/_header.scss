@@ -2,7 +2,7 @@
 
 .header {
   height: 10vh;
-  background-color: #141414;
+  background: #292929;
   box-shadow: 1px -2px 15px black;
   @media #{$media-mobile} {
     display: none;
@@ -24,9 +24,9 @@
         padding: 0 1.2rem;
         list-style: none;
         text-decoration: none;
-        text-shadow: 1px 1px 8px rgb(169 168 168 / 25%);
+        text-shadow: 1px 1px 8px rgb(169 168 168 / 15%);
         font-weight: 500;
-        color: #a9a9a9;
+        color: #b6b6b6;
         font-size: 1.1rem;
         transition: font-size 0.3s ease-out;
 
