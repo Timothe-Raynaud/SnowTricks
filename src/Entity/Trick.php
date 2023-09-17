@@ -139,9 +139,6 @@ class Trick
         return $this;
     }
 
-    /**
-     * @return Collection
-     */
     public function getVideos(): Collection
     {
         return $this->videos;

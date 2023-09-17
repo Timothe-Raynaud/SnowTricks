@@ -30,16 +30,9 @@
     </div>
     {% if app.user is not null %}
         <div class="card-action">
-            <div href="javascript:void(0)"
-               data-controller="components--push-content"
-               data-components--push-content-path-value="{{ path('get_update_trick_update_html') }}"
-               data-components--push-content-target-value="targetTrickModal"
-               data-components--push-content-param-value="{{ trick.slug }}"
-               data-bs-toggle="modal"
-               data-bs-target="#tricksModal"
-               data-action="click->components--push-content#request">
+            <a href="{{ path('add_tricks', {'slug' : trick.slug}) }}">
                 <i class="fa-solid fa-pencil"></i>
-            </div>
+            </a>
             <a href="{{ path('delete_trick', {'slug': trick.slug}) }}">
                 <i class="fa-solid fa-trash-can"></i>
             </a>

@@ -51,19 +51,30 @@ class TrickController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
-    #[Route(path: '/add-tricks', name: 'add_tricks', methods: ['GET', 'POST'])]
-    public function addTricks(): Response
+    /**
+     * @throws NonUniqueResultException
+     */
+    #[Route(path: '/trick-manager/{slug}', name: 'add_tricks', defaults: ["slug" => null], methods: ['GET', 'POST'])]
+    public function addTricks(?string $slug, TricksRepository $tricksRepository): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('user_login');
         }
 
-        $trick = new Trick();
-        $form = $this->createForm(TricksType::class, $trick);
+        $param = [];
+        if ($slug) {
+            $trick = $tricksRepository->findTrickBySlugWithMedia($slug);
+            if ($trick instanceof Trick){
+                $form = $this->createForm(TricksType::class, $trick);
+                $param = [
+                    'form' => $form->createView(),
+                    'trick' => $trick
+                ];
+            }
+        }
 
         return $this->render('app/pages/tricks/new_trick.html.twig', [
-            'form' => $form,
-            'trick' => $trick
+            'param' => $param
         ]);
     }
 
@@ -115,38 +126,6 @@ class TrickController extends AbstractController
         $this->addFlash('error', 'Un problème est survenue lors de la suppression du trick.');
 
         return $this->redirectToRoute('home', []);
-    }
-
-    /**
-     * @throws NonUniqueResultException
-     */
-    #[Route(path: '/updated/trick', name: 'get_update_trick_update_html', methods: ['GET', 'POST'])]
-    public function getUpdateTrickFetch(Request $request, TricksRepository $tricksRepository): Response
-    {
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('user_login');
-        }
-
-        $slug = $request->request->get('pushModule');
-
-        if ($slug) {
-            $trick = $tricksRepository->findTrickBySlugWithMedia($slug);
-
-            if (!$trick) {
-                throw $this->createNotFoundException('Trick not found');
-            }
-
-            $form = $this->createForm(TricksType::class, $trick);
-
-            $html = $this->renderView('app/pages/tricks/_update.html.twig', [
-                'form' => $form->createView(),
-                'trick' => $trick
-            ]);
-
-            return $this->json($html);
-        }
-
-        return $this->redirectToRoute('home');
     }
 
     #[Route(path: '/form/update/{id}', name: 'trick_form_fetch', defaults: ["id" => null], methods: ['POST'])]
