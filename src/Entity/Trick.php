@@ -167,4 +167,13 @@ class Trick
         return $this;
     }
 
+    public function setImages(ArrayCollection $images): void
+    {
+        $this->images = $images;
+    }
+
+    public function setVideos(ArrayCollection $videos): void
+    {
+        $this->videos = $videos;
+    }
 }

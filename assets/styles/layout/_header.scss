@@ -2,7 +2,7 @@
 
 .header {
   height: 10vh;
-  background: #212121;
+  background: #e5e5e5;
   box-shadow: 1px -2px 15px black;
 
   @media #{$media-mobile} {
@@ -25,15 +25,16 @@
         padding: 0 1.2rem;
         list-style: none;
         text-decoration: none;
-        text-shadow: 1px 1px 8px rgb(169 168 168 / 15%);
+        text-shadow: 1px 1px 8px rgb(120 120 120 / 15%);
         font-weight: 500;
-        color: #b6b6b6;
+        color: #4c4c4c;
         font-size: 1.1rem;
         transition: font-size 0.3s ease-out;
 
         &:hover {
-          color: white;
+          color: black;
           font-size: 1.13rem;
+        text-shadow: 1px 1px 8px rgb(120 120 120 / 30%);
         }
       }
     }

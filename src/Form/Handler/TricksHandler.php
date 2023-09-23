@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use function PHPUnit\Framework\throwException;
 
 class TricksHandler
 {
@@ -32,12 +33,22 @@ class TricksHandler
     public function handle(Request $request, FormInterface $form): array
     {
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-
             $form = $this->imageHandle($form);
 
             $trick = $form->getData();
+
+            // Filter empty images and videos
+            $filteredImages = $trick->getImages()->filter(function($image) {
+                return $image !== null && $image->getFilename() !== null;
+            });
+            $trick->setImages($filteredImages);
+
+            $filteredVideos = $trick->getVideos()->filter(function($video) {
+                return $video !== null && $video->getUrl() !== null;
+            });
+            $trick->setVideos($filteredVideos);
+
             $trick->setSlug();
 
             if (!$this->entity->contains($trick)){
