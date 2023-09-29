@@ -9,11 +9,9 @@ $secondary: #7175ab;
 $primary-gradient: linear-gradient(183deg, rgb(90 137 109) 0%, rgb(57 78 70) 100%);
 $secondary-gradient: linear-gradient(7deg, #2e3a3f 0%, #3c5973 100%);
 
-$neumorphisme : 1px 1px 15px #414141,
--1px -1px 21px #4f4f4f;
+$main-shadow : 0 0 5px rgba(30, 30, 30, 0.5);
 
-$neumorphisme-hover: inset 1px 1px 10px #414141,
-inset -1px -1px 10px #4f4f4f;
+$main-shadow-hover:  0 0 5px rgba(30, 30, 30, 0.5) inset;
 
 $media-large-desktop: "only screen and (max-width : 1240px)";
 $media-desktop: "only screen and (max-width : 1024px)";

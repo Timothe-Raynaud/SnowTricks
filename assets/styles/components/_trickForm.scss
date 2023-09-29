@@ -101,7 +101,7 @@
         object-fit: cover;
         filter: grayscale(0.5);
         border-radius: 0;
-        box-shadow: $neumorphisme;
+        box-shadow: $main-shadow;
 
         &:hover {
           filter: grayscale(0.8);

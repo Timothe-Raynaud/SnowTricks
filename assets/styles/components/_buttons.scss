@@ -4,11 +4,11 @@
   border: none;
   border-radius: 0;
   padding: 0.5rem 0.7rem;
-  box-shadow: $neumorphisme;
+  box-shadow: $main-shadow;
   font-weight: 500;
 
   &:hover{
-    box-shadow: $neumorphisme-hover;
+    box-shadow: $main-shadow-hover;
   }
 }
 

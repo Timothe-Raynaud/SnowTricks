@@ -22,18 +22,9 @@
     bottom: 0;
     background-image: url('../../../public/images/pages/background.jpg');
     background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-
-    &::after{
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-      background-color: rgba(24, 24, 24, 0.4);
-    }
   }
 
   &__footer{
@@ -49,8 +40,9 @@
     flex-grow: 1;
 
     .content{
-      padding: 1rem;
+      padding: 1rem 2rem;
       margin-top: 5vh;
+      background: rgba(71, 66, 54, 0.9);
 
       @media #{$media-mobile} {
         margin-bottom: 20vh;
