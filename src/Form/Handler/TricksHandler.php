@@ -2,7 +2,9 @@
 
 namespace App\Form\Handler;
 
+use App\Entity\Image;
 use App\Entity\Trick;
+use App\Entity\Video;
 use App\Repository\TricksRepository;
 use App\Traits\FlashTrait;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,20 +36,24 @@ class TricksHandler
     {
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
             $form = $this->imageHandle($form);
 
+            /** @var Trick $trick */
             $trick = $form->getData();
 
-            // Filter empty images and videos
-            $filteredImages = $trick->getImages()->filter(function($image) {
-                return $image !== null && $image->getFilename() !== null;
-            });
-            $trick->setImages($filteredImages);
 
-            $filteredVideos = $trick->getVideos()->filter(function($video) {
-                return $video !== null && $video->getUrl() !== null;
+            $trick->getImages()->forAll(function ($key, ?Image $image) use ($trick) {
+                if ($image === null || $image->getFilename() === null){
+                    $trick->removeImage($image);
+                }
             });
-            $trick->setVideos($filteredVideos);
+
+            $trick->getVideos()->forAll(function ($key, ?Video $video) use ($trick) {
+                if ($video === null || $video->getUrl() === null){
+                    $trick->removeVideo($video);
+                }
+            });
 
             $trick->setSlug();
 

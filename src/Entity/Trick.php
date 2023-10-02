@@ -130,10 +130,6 @@ class Trick
     {
         if ($this->images->contains($image)) {
             $this->images->removeElement($image);
-
-            if ($image->getTrick() === $this) {
-                $image->setTrick(null);
-            }
         }
 
         return $this;
@@ -158,10 +154,6 @@ class Trick
     {
         if ($this->videos->contains($video)) {
             $this->videos->removeElement($video);
-
-            if ($video->getTrick() === $this) {
-                $video->setTrick(null);
-            }
         }
 
         return $this;
