@@ -96,6 +96,7 @@ class TricksRepository extends ServiceEntityRepository
             ->leftJoin('t.videos', 'v')
             ->where('t.slug = :slug')
             ->setParameter('slug', $slug)
+            ->orderBy('i.id', 'ASC')
             ->getQuery()
             ->getOneOrNullResult();
     }

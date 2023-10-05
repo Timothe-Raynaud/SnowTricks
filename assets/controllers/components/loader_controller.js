@@ -39,7 +39,7 @@ export default class extends Controller {
     loadMoreElements() {
         // Load all element if there is no more element, else load all element less one
         let elementPerLoad = this.recurrenceValue === 1 ? this.initialLoadValue : this.elementsPerLoadValue
-        console.log(elementPerLoad, this.elementHtmlValue.length)
+
         for (let i = 0; (this.elementHtmlValue.length < elementPerLoad ? i : (i + 1)) < this.elementHtmlValue.length; i++) {
             this.containerTarget.innerHTML += this.elementHtmlValue[i]
         }

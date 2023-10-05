@@ -43,7 +43,7 @@ class CommentsHandler
             try {
                 $this->entity->persist($comment);
                 $this->entity->flush();
-                return $this->renderMessage('success', 'Le tricks à bien été enregistré.');
+                return $this->renderMessage('success', 'Votre commentaire a bien été enregistré.');
             } catch (\Exception $e) {
             }
         }

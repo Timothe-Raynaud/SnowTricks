@@ -7,7 +7,6 @@ use App\Entity\Trick;
 use App\Form\Handler\TricksHandler;
 use App\Form\Type\CommentType;
 use App\Form\Type\TricksType;
-use App\Repository\CommentsRepository;
 use App\Repository\TricksRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -55,7 +54,7 @@ class TrickController extends AbstractController
      * @throws NonUniqueResultException
      */
     #[Route(path: '/trick-manager/{slug}', name: 'add_tricks', defaults: ["slug" => null], methods: ['GET', 'POST'])]
-    public function addTricks(?string $slug, TricksRepository $tricksRepository): Response
+    public function trickManager(?string $slug, TricksRepository $tricksRepository): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('user_login');
@@ -82,7 +81,7 @@ class TrickController extends AbstractController
      * @throws NonUniqueResultException
      */
     #[Route(path: '/trick/detail', name: 'get_trick_detail_fetch', methods: ['POST'])]
-    public function getTrickFetch(Request $request, TricksRepository $tricksRepository, CommentsRepository $commentsRepository): Response
+    public function getTrickFetch(Request $request, TricksRepository $tricksRepository): Response
     {
         $slug = $request->request->get('pushModule');
 
