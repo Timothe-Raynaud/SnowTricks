@@ -15,13 +15,16 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class UserController extends AbstractController
 {
     #[Route(path: '/login', name: 'user_login', methods: ['GET', 'POST'])]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
         if($this->getUser()) {
             return $this->redirectToRoute('home');
         }
 
         $error = $authenticationUtils->getLastAuthenticationError();
+        if ($error){
+            $this->addFlash('error', 'Login ou mot de passe incorrect.');
+        }
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('app/pages/security/user/login.html.twig', [
