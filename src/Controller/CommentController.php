@@ -31,7 +31,7 @@ class CommentController extends AbstractController
     public function getCommentsFetch(string $slug, Request $request, CommentsRepository $commentsRepository, TricksRepository $tricksRepository): Response
     {
         $trick = $tricksRepository->findOneBy(['slug' => $slug]);
-        if ($trick === null){
+        if ($trick === null) {
             throw $this->createNotFoundException('Une erreur est survenue');
         }
 
@@ -48,7 +48,7 @@ class CommentController extends AbstractController
             $comments = $commentsRepository->getCommentsByTrick($trick->getTrickId(), $limit, $startingId);
 
             $response = [];
-            foreach($comments as $comment){
+            foreach ($comments as $comment) {
                 $response['html'][] = $this->renderView('app/pages/tricks/_comment.html.twig', [
                     'comment' => $comment
                 ]);

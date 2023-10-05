@@ -21,7 +21,7 @@ class ImageType extends AbstractType
                 'mapped' => false,
                 'attr' => [
                     'class' => 'file-input__trigger',
-                    'data-action'=> 'input->image-preview#upload',
+                    'data-action' => 'input->image-preview#upload',
                     'data-image-preview-target' => "inputFile"
                 ],
                 'label_attr' => [

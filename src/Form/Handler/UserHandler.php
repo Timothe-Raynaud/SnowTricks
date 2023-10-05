@@ -18,6 +18,7 @@ class UserHandler
     private UserRepository $userRepository;
     private MailerController $mailerController;
     private UserPasswordHasherInterface $userPasswordHasher;
+
     public function __construct(EntityManagerInterface $entity, UserRepository $userRepository, MailerController $mailerController, UserPasswordHasherInterface $userPasswordHasher)
     {
         $this->entity = $entity;
@@ -33,11 +34,11 @@ class UserHandler
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
 
-            if ($this->userRepository->findOneBy(['username' => $user->getUsername()])){
+            if ($this->userRepository->findOneBy(['username' => $user->getUsername()])) {
                 return $this->renderMessage("error", "Ce nom d'utilisateur est déjà prit.");
             }
 
-            if ($this->userRepository->findOneBy(['email' => $user->getEmail()])){
+            if ($this->userRepository->findOneBy(['email' => $user->getEmail()])) {
                 return $this->renderMessage("error", "Un compte est déjà liée à cet email.");
             }
             $user->setPassword(
@@ -60,5 +61,4 @@ class UserHandler
 
         return null;
     }
-
 }

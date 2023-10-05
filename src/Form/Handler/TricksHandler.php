@@ -43,14 +43,14 @@ class TricksHandler
             $trick = $form->getData();
 
             $trick->getImages()->forAll(function ($key, ?Image $image) use ($trick) {
-                if ($image === null || $image->getFilename() === null){
+                if ($image === null || $image->getFilename() === null) {
                     $trick->removeImage($image);
                 }
                 return true;
             });
 
             $trick->getVideos()->forAll(function ($key, ?Video $video) use ($trick) {
-                if ($video === null || $video->getUrl() === null){
+                if ($video === null || $video->getUrl() === null) {
                     $trick->removeVideo($video);
                 }
                 return true;
@@ -58,8 +58,8 @@ class TricksHandler
 
             $trick->setSlug();
 
-            if (!$this->entity->contains($trick)){
-                if ($this->tricksRepository->findOneBy(['slug' => $trick->getSlug()]) instanceof Trick){
+            if (!$this->entity->contains($trick)) {
+                if ($this->tricksRepository->findOneBy(['slug' => $trick->getSlug()]) instanceof Trick) {
                     return $this->renderMessage('error', 'Un trick avec ce nom existe déjà.');
                 }
                 $this->entity->persist($trick);
@@ -68,7 +68,8 @@ class TricksHandler
             try {
                 $this->entity->flush();
                 return $this->renderMessage('success', 'Le tricks à bien été enregistré.');
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+            }
         }
 
         return $this->renderMessage('error', 'Une erreur est survenu lors de l\'enregistrement du formulaire.');
@@ -78,7 +79,7 @@ class TricksHandler
     {
         foreach ($form['images'] as $imageForm) {
             // Test if filename exist. If is case there is no file to download.
-            if ($imageForm->has('filename') && ($imageForm->get('filename')->getData() !== null)){
+            if ($imageForm->has('filename') && ($imageForm->get('filename')->getData() !== null)) {
                 continue;
             }
 
