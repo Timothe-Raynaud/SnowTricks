@@ -41,7 +41,6 @@ class Trick
     private TypeTricks $type;
 
     #[ORM\OneToMany(mappedBy: "trick", targetEntity: "Image", cascade: ["persist", "remove"], orphanRemoval: true)]
-    #[Groups(["exclude_from_serialization"])]
     private ?Collection $images;
 
     #[ORM\OneToMany(mappedBy: "trick", targetEntity: "Video", cascade: ["persist", "remove"], orphanRemoval: true)]

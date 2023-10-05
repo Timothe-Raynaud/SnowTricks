@@ -42,17 +42,18 @@ class TricksHandler
             /** @var Trick $trick */
             $trick = $form->getData();
 
-
             $trick->getImages()->forAll(function ($key, ?Image $image) use ($trick) {
                 if ($image === null || $image->getFilename() === null){
                     $trick->removeImage($image);
                 }
+                return true;
             });
 
             $trick->getVideos()->forAll(function ($key, ?Video $video) use ($trick) {
                 if ($video === null || $video->getUrl() === null){
                     $trick->removeVideo($video);
                 }
+                return true;
             });
 
             $trick->setSlug();
