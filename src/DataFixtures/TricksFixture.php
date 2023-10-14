@@ -41,60 +41,70 @@ class TricksFixture extends Fixture
         // Trick Fixture
         $mute = new Trick();
         $mute->setName('Mute');
+        $mute->setSlug();
         $mute->setType($grabs);
         $mute->setDescription("saisie de la carre frontside de la planche entre les deux pieds avec la main avant.");
         $manager->persist($mute);
 
         $indy = new Trick();
         $indy->setName('Indy');
+        $indy->setSlug();
         $indy->setType($grabs);
         $indy->setDescription('Saisie de la carre frontside de la planche, entre les deux pieds, avec la main arrière.');
         $manager->persist($indy);
 
         $stalefish = new Trick();
         $stalefish->setName('Stalefish');
+        $stalefish->setSlug();
         $stalefish->setType($grabs);
         $stalefish->setDescription('Saisie de la carre backside de la planche entre les deux pieds avec la main arrière.');
         $manager->persist($stalefish);
 
         $tailGrab = new Trick();
         $tailGrab->setName('Tail grab');
+        $tailGrab->setSlug();
         $tailGrab->setType($grabs);
         $tailGrab->setDescription('Saisie de la partie arrière de la planche, avec la main arrière.');
         $manager->persist($tailGrab);
 
         $noseGrab = new Trick();
         $noseGrab->setName('Tail grab');
+        $noseGrab->setSlug();
         $noseGrab->setType($grabs);
         $noseGrab->setDescription('Saisie de la partie arrière de la planche, avec la main arrière.');
         $manager->persist($noseGrab);
 
         $japan = new Trick();
         $japan->setName('Japan');
+        $japan->setSlug();
         $japan->setType($grabs);
         $japan->setDescription('Saisie de l\'avant de la planche, avec la main avant, du côté de la carre frontside.');
         $manager->persist($japan);
 
         $halfTurn = new Trick();
         $halfTurn->setName('180');
+        $halfTurn->setSlug();
         $halfTurn->setType($rotations);
         $halfTurn->setDescription('Désigne un demi-tour, soit 180 degrés d\'angle.');
         $manager->persist($halfTurn);
 
         $frontFlip = new Trick();
         $frontFlip->setName('Front Flip');
+        $frontFlip->setSlug();
         $frontFlip->setType($flips);
         $frontFlip->setDescription('Rotations en avant.');
         $manager->persist($frontFlip);
 
         $noseSlide = new Trick();
         $noseSlide->setName('Nose Slide');
+        $noseSlide->setSlug();
         $noseSlide->setType($slides);
         $noseSlide->setDescription('L\'avant de la planche sur la barre');
         $manager->persist($noseSlide);
 
         $tailSlide = new Trick();
         $tailSlide->setName('Tail Slide');
+        $tailSlide->setSlug();
         $tailSlide->setType($slides);
         $tailSlide->setDescription('L\'arriere de la planche sur la barre');
         $manager->persist($tailSlide);
