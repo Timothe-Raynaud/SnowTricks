@@ -1,27 +1,18 @@
 import { Controller } from '@hotwired/stimulus';
+import { toast } from '../../js/components/toast.js';
 
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
-    static targets = ['submit', 'inputs', 'form']
+    static targets = ['submit', 'form']
     static values = {
         path: String,
-        option: String,
-        toastBox: {type: String, default: 'toast'},
-        toastContainer: {type: String, default: 'toast-container'},
-        toastContent: {type: String, default: 'toast-content'},
+        option: Object,
     }
 
-    send(event) {
+    send() {
         this.submitTarget.disabled = true
-        let toast = document.getElementById(this.toastBoxValue)
-        let toastContainer = document.getElementById(this.toastContainerValue)
-        let toastContent = document.getElementById(this.toastContentValue)
 
-        const form = new FormData()
-        const inputsArray = this.inputsTargets
-        Array.prototype.forEach.call(inputsArray, function(inputArray) {
-            form.append(inputArray.name, inputArray.value)
-        });
+        const form = new FormData(this.formTarget)
 
         fetch(this.pathValue, {
             method: 'POST',
@@ -31,48 +22,33 @@ export default class extends Controller {
                 if (response.ok) {
                     return response.json()
                 } else {
-                    throw new Error('Un problème est survenu')
+                    toast('error', 'Une erreur est survenue.')
                 }
             })
             .then(data => {
-                if (this.optionValue === 'hideInputs'){
+                // Hide the input box if option is set
+                if ('hideInputs' in this.optionValue && data.type ==='success'){
                     this.formTarget.remove()
                 }
-                console.log(data.type, data.message)
 
-                toastContainer.classList.add(data.type)
-                toast.classList.remove('d-none')
-                toastContent.innerText = data.message
+                if ('redirectUrl' in this.optionValue && data.type === 'success'){
+                    data.message = data.message + "<br> Vous allez être rediriger vers la page d'acceuil."
+                    setTimeout(() => {
+                        window.location.href = this.optionValue.redirectUrl
+                    }, 3000)
+                }
 
                 setTimeout(() => {
                     this.dismiss();
-                }, 5000);
+                }, 4000);
 
-                toast.addEventListener("mouseenter", this.handleMouseEnter.bind(this));
-                toast.addEventListener("mouseleave", this.handleMouseLeave.bind(this));
+                if (data.type === 'error'){
+                    setTimeout(() => {
+                        this.submitTarget.disabled = false
+                    }, 1000)
+                }
+
+                toast(data.type, data.message)
             })
-            .finally(() => {
-                setTimeout(() => {
-                    this.submitTarget.disabled = false
-                }, 1000)
-            })
-    }
-
-    handleMouseEnter() {
-        clearTimeout(this.dismissTimeout);
-    }
-
-    handleMouseLeave() {
-        this.dismissTimeout = setTimeout(() => {
-            this.dismiss();
-        }, 1000);
-    }
-
-    dismiss() {
-        let toast = document.getElementById(this.toastBoxValue)
-
-        if (!toast.matches(':hover')){
-            toast.remove();
-        }
     }
 }

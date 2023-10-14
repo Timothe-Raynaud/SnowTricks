@@ -2,18 +2,18 @@
 
 namespace App\Tests\Entity;
 
-use App\Entity\Tricks;
+use App\Entity\Trick;
 use PHPUnit\Framework\TestCase;
-use App\Entity\TypesTricks;
+use App\Entity\TypeTricks;
 
 class TricksTest extends TestCase
 {
     public function testTricks()
     {
-        $typeTrick = new TypesTricks();
+        $typeTrick = new TypeTricks();
         $typeTrick->setName('TestType');
 
-        $tricks = new Tricks();
+        $tricks = new Trick();
         $tricks->setId(10000);
         $tricks->setName('TestTricks');
         $tricks->setType($typeTrick);

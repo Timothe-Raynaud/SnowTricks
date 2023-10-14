@@ -2,8 +2,8 @@
 
 namespace App\Tests\Repository;
 
-use App\Entity\Tricks;
-use App\Entity\TypesTricks;
+use App\Entity\Trick;
+use App\Entity\TypeTricks;
 use App\Repository\TricksRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -21,7 +21,7 @@ class TricksRepositoryTest extends KernelTestCase
 
     public function testSaveAndFind(): void
     {
-        $trick = new Tricks();
+        $trick = new Trick();
         $trick->setName('test');
         $trick->setDescription('test description');
         $this->tricksRepository->save($trick, true);
@@ -29,13 +29,13 @@ class TricksRepositoryTest extends KernelTestCase
         $this->assertNotNull($id);
 
         $trick = $this->tricksRepository->find($id);
-        $this->assertInstanceOf(Tricks::class, $trick);
+        $this->assertInstanceOf(Trick::class, $trick);
         $this->assertEquals('test', $trick->getName());
     }
 
     public function testRemove(): void
     {
-        $trick = new Tricks();
+        $trick = new Trick();
         $trick->setName('test');
         $trick->setDescription('test description');
         $this->tricksRepository->save($trick, true);
@@ -56,8 +56,8 @@ class TricksRepositoryTest extends KernelTestCase
         $this->assertIsArray($tricks);
 
         foreach ($tricks as $trick) {
-            $this->assertInstanceOf(Tricks::class, $trick);
-            $this->assertInstanceOf(TypesTricks::class, $trick->getType());
+            $this->assertInstanceOf(Trick::class, $trick);
+            $this->assertInstanceOf(TypeTricks::class, $trick->getType());
         }
     }
 }

@@ -1,0 +1,9 @@
+{% extends 'app/layout/_layout.html.twig' %}
+
+{% block title %}{{ siteName }} - Trick Manager{% endblock %}
+
+{% block content_attributes %}content-new-trick{% endblock %}
+
+{% block main %}
+    {{ component('TricksForm', param) }}
+{% endblock %}

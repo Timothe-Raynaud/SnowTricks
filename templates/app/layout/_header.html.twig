@@ -1,0 +1,51 @@
+<header id="header" class="header px-4">
+    <div class="header__container">
+        <div id="logo" class="h-100">
+            <img src="{{ asset('images/pages/logo.png') }}" class="img-fluid h-100" alt="logo">
+        </div>
+        <ul id="nav" class="d-flex align-items-center">
+            <li><a href="{{ path('home') }}">Home</a></li>
+            <li><a href="{{ path('add_tricks') }}">Tricks</a></li>
+            {% if app.user %}
+                <li><a href="{{ path('user_logout') }}"><i class="fa-solid fa-right-from-bracket"></i></a></li>
+            {% else %}
+                <li><a href="{{ path('user_login') }}">Sign in</a></li>
+                <li><a href="{{ path('user_register') }}">Sign up</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</header>
+
+<header class="header-mobile">
+    <ul class="nav">
+        <li>
+            <a href="{{ path('home') }}" class="{% if app.request.get('_route') == 'home' %}active{% endif %}">
+                <i class="fa-solid fa-house"></i>
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('add_tricks') }}" class="{% if app.request.get('_route') == 'add_tricks' %}active{% endif %}">
+                <i class="fa-solid fa-bookmark"></i>
+            </a>
+        </li>
+        {% if app.user %}
+            <li>
+                <a href="{{ path('user_logout') }}" class="{% if app.request.get('_route') == 'user_logout' %}active{% endif %}">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                </a>
+            </li>
+        {% else %}
+            <li>
+                <a href="{{ path('user_login') }}" class="{% if app.request.get('_route') == 'user_login' %}active{% endif %}">
+                    <i class="fa-solid fa-user-large"></i>
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('user_register') }}" class="{% if app.request.get('_route') == 'user_register' %}active{% endif %}">
+                    <i class="fa-solid fa-person-circle-plus"></i>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</header>
+

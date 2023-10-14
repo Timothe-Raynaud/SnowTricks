@@ -1,0 +1,91 @@
+@import "../utils/variables";
+
+.tricks-card {
+  box-shadow: 1px 1px 10px rgba(10, 10, 10, 0.4),
+  -1px -1px 10px rgba(10, 10, 10, 0.4);
+  z-index: 1;
+  height: 270px !important;
+  border-radius: 0 !important;
+  position: relative;
+  transition: all 1000ms;
+
+  .card-section {
+    position: relative;
+    height: 100%;
+    display: flex;
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0.55);
+
+    .card-body {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      color: white;
+      text-align: center;
+      text-transform: capitalize;
+      transition: all 1000ms;
+
+      .card-title {
+        border-bottom: 1px solid white;
+      }
+    }
+
+  }
+
+  .card-action {
+    position: absolute;
+    bottom: -8px;
+    height: 8px;
+    right: 18px;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 0 0.2rem 0.2rem;
+    background-color: rgba(0, 0, 0, 0.55);
+    transition: all 600ms;
+
+    a, div {
+      display: none;
+      color: white;
+      padding: 0.7rem;
+      font-size: 1rem;
+
+      &:hover {
+        color: #a2a2a2;
+        cursor: pointer;
+      }
+    }
+  }
+
+
+  &:hover {
+    box-shadow: 1px 1px 15px rgba(10, 10, 10, 0.5),
+    1px 1px 15px rgba(10, 10, 10, 0.5);
+    transform: scale(1.07);
+    z-index: 5;
+
+    .card-body {
+      top: 18%;
+
+      .card-title {
+        border: none;
+      }
+
+      .card-type {
+        display: none;
+      }
+    }
+
+    .card-action {
+      bottom: -30px;
+      height: 30px;
+
+      a, div{
+        display: block;
+      }
+    }
+  }
+}

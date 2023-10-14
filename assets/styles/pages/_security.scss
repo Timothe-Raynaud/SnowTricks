@@ -1,0 +1,21 @@
+@import "../utils/variables";
+
+.content-security{
+  width:30%;
+
+  @media #{$media-large-desktop} {
+    width: 40%;
+  }
+
+  @media #{$media-desktop} {
+    width: 50%;
+  }
+
+  @media #{$media-tablet} {
+    width: 70%;
+  }
+
+  @media #{$media-mobile} {
+    width: 90%;
+  }
+}

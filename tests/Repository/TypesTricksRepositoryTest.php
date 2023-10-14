@@ -2,7 +2,7 @@
 
 namespace App\Tests\Repository;
 
-use App\Entity\TypesTricks;
+use App\Entity\TypeTricks;
 use App\Repository\TypesTricksRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -22,20 +22,20 @@ class TypesTricksRepositoryTest extends KernelTestCase
 
     public function testSaveAndFind(): void
     {
-        $type = new TypesTricks();
+        $type = new TypeTricks();
         $type->setName('test');
         $this->typesTricksRepository->save($type, true);
         $id = $type->getId();
         $this->assertNotNull($id);
 
         $type = $this->typesTricksRepository->find($id);
-        $this->assertInstanceOf(TypesTricks::class, $type);
+        $this->assertInstanceOf(TypeTricks::class, $type);
         $this->assertEquals('test', $type->getName());
     }
 
     public function testRemove(): void
     {
-        $type = new TypesTricks();
+        $type = new TypeTricks();
         $type->setName('test');
         $this->typesTricksRepository->save($type, true);
 

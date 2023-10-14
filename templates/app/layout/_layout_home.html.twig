@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% import "app/layout/_macros.html.twig" as macros %}
+
+{% block body %}
+    {{ macros.render_flash_messages() }}
+    {{ macros.render_toast() }}
+
+    {% block header %}
+        {% include 'app/layout/_header.html.twig' %}
+    {% endblock %}
+
+    {% block main %}{% endblock %}
+
+
+    {% block footer %}
+        {% include 'app/layout/_footer.html.twig' %}
+    {% endblock %}
+
+{% endblock %}

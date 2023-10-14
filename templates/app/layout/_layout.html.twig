@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% import "app/layout/_macros.html.twig" as macros %}
+
+{% block title %}{{ siteName }}{% endblock %}
+
+{% block body %}
+    {% block header %}
+        {% include 'app/layout/_header.html.twig' %}
+    {% endblock %}
+
+    <div class="general">
+        <div class="general__background"></div>
+        {{ macros.render_flash_messages() }}
+        {{ macros.render_toast() }}
+
+
+        <main class="general__box">
+            <div class="content {% block content_attributes %}{% endblock %}">
+                {% block main %}{% endblock %}
+            </div>
+        </main>
+
+        <div class="general__footer">
+            {% block footer %}
+                {% include 'app/layout/_footer.html.twig' %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

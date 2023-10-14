@@ -1,0 +1,17 @@
+{% extends 'app/layout/_layout.html.twig' %}
+
+{% block title %}{{ siteName }} - Register{% endblock %}
+
+{% block content_attributes %}content-security{% endblock %}
+
+{% block main %}
+    {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.username) }}
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.password)}}
+
+        <div class="text-center mt-3">
+            <button type="submit" class="button button-secondary">Inscription</button>
+        </div>
+    {{ form_end(registrationForm) }}
+{% endblock %}

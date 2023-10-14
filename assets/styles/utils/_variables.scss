@@ -3,9 +3,17 @@ $gray: #E9EAEC;
 $blue-gray: #E7F2F8;
 $dark-blue: #333652;
 
-$primary: #354551;
-$secondary: #534545;
+$primary: #55707c;
+$secondary: #7175ab;
 
+$primary-gradient: linear-gradient(7deg, rgb(6 77 58) 0%, rgb(97 187 137) 100%);
+$secondary-gradient: linear-gradient(7deg, #002b3d 0%, #6e97bb 100%);
+
+$main-shadow : 0 0 5px rgba(30, 30, 30, 0.5);
+
+$main-shadow-hover:  0 0 5px rgba(30, 30, 30, 0.5) inset;
+
+$media-large-desktop: "only screen and (max-width : 1240px)";
 $media-desktop: "only screen and (max-width : 1024px)";
 $media-tablet: "only screen and (max-width : 768px)";
 $media-mobile: "only screen and (max-width : 600px)";

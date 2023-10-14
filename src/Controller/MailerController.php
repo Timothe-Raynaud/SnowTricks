@@ -11,7 +11,6 @@ use Symfony\Component\Mailer\MailerInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 class MailerController extends AbstractController
 {
     private VerifyEmailHelperInterface $verifyEmailHelper;
@@ -23,10 +22,7 @@ class MailerController extends AbstractController
         $this->mailer = $mailer;
     }
 
-    /**
-     * @Route("/confirmation", name="email_confirmation_user", methods={"GET", "POST"})
-     * @throws TransportExceptionInterface
-     */
+    #[Route('/confirmation', name: 'email_confirmation_user', methods: ['GET', 'POST'])]
     public function sendConfirmationMailUser(User $user): void
     {
         $signatureComponents = $this->verifyEmailHelper->generateSignature(
@@ -39,10 +35,9 @@ class MailerController extends AbstractController
         $email = new TemplatedEmail();
         $email->from('send@example.com');
         $email->to($user->getEmail());
-        $email->htmlTemplate('email/user/confirmation_email.html.twig');
+        $email->htmlTemplate('app/pages/security/email/confirmation_email.html.twig');
         $email->context(['signedUrl' => $signatureComponents->getSignedUrl()]);
 
         $this->mailer->send($email);
     }
-
 }

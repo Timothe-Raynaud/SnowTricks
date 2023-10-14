@@ -1,0 +1,52 @@
+@import "../utils/variables";
+
+
+.general{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  @media #{$media-mobile} {
+    min-height: 90vh;
+  }
+
+
+  &__background{
+    box-shadow: 0 3px 7px 2px rgba(50, 50, 50, 0.8) inset;
+    filter: grayscale(80%);
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-image: url('../../../public/images/pages/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  &__footer{
+    z-index: 10;
+    color: white;
+  }
+
+  &__box{
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+
+    .content{
+      padding: 1rem 2rem;
+      margin-top: 5vh;
+      background: rgba(59, 48, 37, 0.95);
+
+      @media #{$media-mobile} {
+        margin-bottom: 20vh;
+      }
+    }
+  }
+}

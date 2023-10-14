@@ -1,0 +1,131 @@
+<div id="modal-content" class="modal-content">
+    <div class="modal-body">
+        <div class="display-media" {{ stimulus_controller('media') }}>
+            <div class="media-header">
+                {% if (trick.images|length + trick.videos|length) > 0 %}
+                    {% set key = 1 %}
+                    {% for image in trick.images %}
+                        <div class="media-item {% if key == 1 %}active{% endif %}" id="media-{{ key }}">
+                            <img
+                                 class="media-content"
+                                 src="{{ asset('uploads/images/tricks/' ~ image.filename) }}"
+                                 alt="image {{ key }}">
+                        </div>
+                        {% set key = key + 1 %}
+                    {% endfor %}
+                    {% for video in trick.videos %}
+                        <div class="media-item {% if key == 1 %}active{% endif %}" id="media-{{ key }}">
+                            <iframe
+                                    width="100%"
+                                    class="media-content"
+                                    src="{{ video.url }}"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen>
+
+                            </iframe>
+                        </div>
+                        {% set key = key + 1 %}
+                    {% endfor %}
+
+                {% else %}
+                    <div class="media-item active">
+                        <img class="media-content"
+                             src="{{ asset(trickImageUrl ~ 'default.jpg') }}" alt="image 1">
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if (trick.images|length + trick.videos|length) > 0 %}
+                <div class="media-bar scrollbar rounded-custom-scrollbar">
+                    {% set key = 1 %}
+                    {% for image in trick.images %}
+                        <div class="media-box {% if key == 1 %}active{% endif %}"
+                             data-media-id-param="{{ key }}"
+                             data-action="click->media#select"
+                             id="media-box-{{ key }}"
+                        >
+                            <img
+                                    class="media"
+                                    src="{{ asset(trickImageUrl ~ image.filename) }}"
+                                    alt="slide {{ key + 1 }}">
+                        </div>
+                        {% set key = key + 1 %}
+                    {% endfor %}
+                    {% for video in trick.videos %}
+                        <div class="media-box {% if key == 1 %}active{% endif %}"
+                             data-media-id-param="{{ key }}"
+                             data-action="click->media#select:prevent:stop"
+                             id="media-box-{{ key }}"
+                        >
+                            {% set idVideo = video.url|split('/')|last|split('?',-1) %}
+                            <img class="media"
+                                    src="{{'https://img.youtube.com/vi/' ~ idVideo|last ~'/0.jpg'}}"
+                                    alt="">
+                            <i class="fa-solid fa-play false-play"></i>
+                        </div>
+                        {% set key = key + 1 %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="modal-main-content">
+            <h5 id="trick-title" class="modal-title text-capitalize"><span>{{ trick.name }}</span></h5>
+
+            <div id="trick-content">
+                <p>
+                    {{ trick.description|nl2br }}
+                </p>
+            </div>
+
+            <div class="modal-infos">
+                <div>
+                    <span>Créer le :</span> {{ trick.createdAt|date('d/m/Y') }}
+                </div>
+                {% if trick.updatedAt > trick.createdAt %}
+                    <div>
+                        <span>Mis à jour le :</span> {{ trick.updatedAt|date('d/m/Y') }}
+                    </div>
+                {% endif %}
+                <div>
+                    <span>type :</span> {{ trick.type.name }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="box">
+            <div id="trick-post"
+                {{ stimulus_controller('components/loader') }}
+                data-components--loader-path-value="{{ path('comments_get_comments-fetch', {'slug': trick.slug}) }}"
+                data-components--loader-initial-load-value="5"
+            >
+                <div data-components--loader-target="container"></div>
+
+                <div id="load-more" data-components--loader-target="loadButton">
+                    <a href="javascript:void(0)" data-action="click->components--loader#loadMore">
+                        <span>Afficher plus</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </a>
+                </div>
+            </div>
+            {% if app.user is not null %}
+                {{ form_start(form, {
+                    attr : {
+                        'id': 'comment-form',
+                        'class': 'text-center',
+                        'data-controller': 'components--form',
+                        'data-components--form-path-value': path('comments_form', {'id' : trick.id}) ,
+                        'data-components--form-option-value': '{"hideInputs": true}',
+                        'data-components--form-target': 'form',
+                        'data-action': 'components--form#send',
+                        'action': 'javascript:void(0)',
+                    }
+                }) }}
+                    {{ form_row(form.content) }}
+                    {{ form_row(form.submit, {attr : {'data-components--form-target' : 'submit'}}) }}
+                {{ form_end(form) }}
+            {% endif %}
+        </div>
+    </div>
+</div>

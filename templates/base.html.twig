@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>{% block title %}{{ siteName }}{% endblock %}</title>
     <link rel="icon" type="image/ico" href="{{ asset('favicon.ico') }}" />
+    <link rel="apple-touch-icon" sizes="180x180" href=" {{ asset('favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href=" {{ asset('favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href=" {{ asset('favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href=" {{ asset('site.webmanifest') }}">
+    <meta name="msapplication-TileColor" content="#e3e2e2">
+    <meta name="theme-color" content="#e3e2e2">
 
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
@@ -16,7 +22,7 @@
         </script>
     {% endblock %}
 </head>
-<body class="scrollbar" id="style-1">
+<body class="scrollbar custom-scrollbar">
 {% block body %}{% endblock %}
 </body>
 </html>

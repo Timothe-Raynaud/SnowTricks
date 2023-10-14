@@ -1,0 +1,63 @@
+{% extends 'app/layout/_layout_home.html.twig' %}
+
+{% block title %}{{ siteName }}{% endblock %}
+
+{% block main %}
+
+    <main class="home">
+        <div {{ stimulus_controller('anchor') }}>
+
+            <div id="banner-home">
+                <div id="banner-home__filter"></div>
+                <div id="catch-phrase" class="container-fluid">
+                    <h3 class="w-50 text-center border-top border-bottom border-1 border-white py-4 fs-4 text-white">
+                        Découvrez les secrets des plus grandes figures de snowboard sur notre plateforme de référence.
+                    </h3>
+                </div>
+                <div id="tricks-arrow-anchor-down">
+                    <a href="" data-action="click->anchor#moveTo" >
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </a>
+                </div>
+            </div>
+            <div data-anchor-target="path" class="home__content"
+                    {{ stimulus_controller('components/loader') }}
+                 data-components--loader-path-value="{{ path('get_tricks') }}"
+                 data-components--loader-element-anchor-value="tricks-arrow-anchor-up"
+            >
+
+                <div id="tricks-container"
+                     data-components--loader-target="container">
+                </div>
+
+                <div id="load-more" class="col-8 mt-5" data-components--loader-target="loadButton">
+                    <a href="javascript:void(0)" data-action="click->components--loader#loadMore">
+                        <span>Afficher plus</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </a>
+                </div>
+
+            </div>
+
+            <div id="tricks-arrow-anchor-up" class="d-none">
+                <a href="" data-action="click->anchor#moveTo" >
+                    <i class="fa-solid fa-arrow-up"></i>
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    {# Modal container #}
+    <div class="modal fade  scrollbar custom-scrollbar" id="tricksModal" tabindex="-1" aria-hidden="true">
+        <div id="targetTrickModal" class="modal-dialog">
+        </div>
+    </div>
+
+    <script>
+        const tricksModal = document.getElementById('tricksModal')
+        tricksModal.addEventListener('hide.bs.modal', function () {
+            history.replaceState({}, "", "/");
+        })
+    </script>
+{% endblock %}

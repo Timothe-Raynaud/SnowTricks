@@ -1,0 +1,23 @@
+@import "../utils/variables";
+
+.button{
+  border: none;
+  border-radius: 0;
+  padding: 0.5rem 0.7rem;
+  box-shadow: $main-shadow;
+  font-weight: 500;
+
+  &:hover{
+    box-shadow: $main-shadow-hover;
+  }
+}
+
+.button-primary{
+  color: white;
+  background: $primary-gradient;
+}
+
+.button-secondary{
+  color: white;
+  background: $secondary-gradient;
+}

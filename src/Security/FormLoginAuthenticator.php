@@ -39,7 +39,7 @@ class FormLoginAuthenticator extends AbstractAuthenticator
 
         $user = $this->userRepository->findOneBy(['username' => $username, 'isVerified' => true]);
         if (!$user){
-            throw new UserNotFoundException();
+            throw new UserNotFoundException('Login ou mot de passe invalid');
         }
 
         $userBadge = new UserBadge($username);
@@ -63,14 +63,6 @@ class FormLoginAuthenticator extends AbstractAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
-        $data = [
-            // you may want to customize or obfuscate the message first
-            'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
-
-            // or to translate this message
-            // $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())
-        ];
-
-        return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
+        return null;
     }
 }

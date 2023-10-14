@@ -15,30 +15,32 @@ class ChangePasswordFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('plainPassword', RepeatedType::class, [
+            ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'options' => [
-                    'attr' => [
-                        'autocomplete' => 'Nouveau mot de passe',
-                        'class' => 'form-control mb-3'
-                    ],
-                ],
                 'first_options' => [
+                    'label' => false,
+                    'attr' => [
+                        'class' => 'custom-input',
+                        'placeholder' => 'Nouveau mot de passe.'
+                    ],
                     'constraints' => [
                         new NotBlank([
                             'message' => 'Please enter a password',
                         ]),
                         new Length([
                             'min' => 6,
-                            'minMessage' => 'Votre mot de passe doit faire 6 characteres minimum',
-                            // max length allowed by Symfony for Security reasons
-                            'max' => 4096,
+                            'minMessage' => 'Votre mot de passe doit faire {{ limit }} characteres minimum',
+                            'max' => 200,
+                            'maxMessage' => 'Votre mot de passe ne doit pas faire plus de {{ limit }} characteres',
                         ]),
                     ],
-                    'label' => 'Nouveau mot de passe',
                 ],
                 'second_options' => [
-                    'label' => 'Répété le nouveau mot de passe',
+                    'label' => false,
+                    'attr' => [
+                        'class' => 'custom-input',
+                        'placeholder' => 'Confirmer le mot de passe'
+                    ],
                 ],
                 'invalid_message' => 'Les mots de passent doivent être les mêmes',
                 'mapped' => false,

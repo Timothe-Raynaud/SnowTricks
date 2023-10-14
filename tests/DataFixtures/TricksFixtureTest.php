@@ -2,8 +2,8 @@
 
 namespace App\Tests\DataFixtures;
 
-use App\Entity\Tricks;
-use App\Entity\TypesTricks;
+use App\Entity\Trick;
+use App\Entity\TypeTricks;
 use App\DataFixtures\TricksFixture;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -28,10 +28,10 @@ class TricksFixtureTest extends KernelTestCase
         $fixture = new TricksFixture();
         $fixture->load($this->entityManager);
 
-        $typesTricks = $this->entityManager->getRepository(TypesTricks::class)->findAll();
+        $typesTricks = $this->entityManager->getRepository(TypeTricks::class)->findAll();
         $this->assertCount(12, $typesTricks);
 
-        $tricks = $this->entityManager->getRepository(Tricks::class)->findAll();
+        $tricks = $this->entityManager->getRepository(Trick::class)->findAll();
         $this->assertCount(20, $tricks);
 
         $this->assertEquals('Grabs', $tricks[0]->getType()->getName());

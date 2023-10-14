@@ -1,0 +1,41 @@
+<div class="card tricks-card"
+     data-controller="components--push-content"
+     data-components--push-content-path-value="{{ path('get_trick_detail_fetch') }}"
+     data-components--push-content-target-value="targetTrickModal"
+     data-components--push-content-param-value="{{ trick.slug }}"
+     data-components--push-content-url-value="/detail/{{ trick.slug }}"
+     style="
+         background-image: url(
+        {% if trick.image > 0  %}
+             {{ asset(trickImageUrl ~ trick.image) }}
+         {% else %}
+             {{ asset(trickImageUrl ~ 'default.jpg') }}
+         {% endif %});
+         background-position: center;
+         background-repeat: no-repeat;
+         background-size: cover;
+     "
+>
+    <div class="card-section"
+        id="{{ trick.slug }}"
+       data-bs-toggle="modal"
+       data-bs-target="#tricksModal"
+       data-action="click->components--push-content#request"
+    >
+        <div class="card-body">
+            <h2 class="card-title">{{ trick.name }}</h2>
+            <div class="card-type">{{ trick.type }}</div>
+        </div>
+
+    </div>
+    {% if app.user is not null %}
+        <div class="card-action">
+            <a href="{{ path('add_tricks', {'slug' : trick.slug}) }}">
+                <i class="fa-solid fa-pencil"></i>
+            </a>
+            <a href="{{ path('delete_trick', {'slug': trick.slug}) }}">
+                <i class="fa-solid fa-trash-can"></i>
+            </a>
+        </div>
+    {% endif %}
+</div>

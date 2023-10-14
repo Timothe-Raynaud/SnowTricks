@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\TypesTricks;
+use App\Entity\TypeTricks;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<TypesTricks>
+ * @extends ServiceEntityRepository<TypeTricks>
  *
- * @method TypesTricks|null find($id, $lockMode = null, $lockVersion = null)
- * @method TypesTricks|null findOneBy(array $criteria, array $orderBy = null)
- * @method TypesTricks[]    findAll()
- * @method TypesTricks[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method TypeTricks|null find($id, $lockMode = null, $lockVersion = null)
+ * @method TypeTricks|null findOneBy(array $criteria, array $orderBy = null)
+ * @method TypeTricks[]    findAll()
+ * @method TypeTricks[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class TypesTricksRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, TypesTricks::class);
+        parent::__construct($registry, TypeTricks::class);
     }
 
-    public function save(TypesTricks $entity, bool $flush = false): void
+    public function save(TypeTricks $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class TypesTricksRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(TypesTricks $entity, bool $flush = false): void
+    public function remove(TypeTricks $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
