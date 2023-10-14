@@ -68,10 +68,10 @@ class TricksFixture extends Fixture
         $manager->persist($tailGrab);
 
         $noseGrab = new Trick();
-        $noseGrab->setName('Tail grab');
+        $noseGrab->setName('nose grab');
         $noseGrab->setSlug();
         $noseGrab->setType($grabs);
-        $noseGrab->setDescription('Saisie de la partie arrière de la planche, avec la main arrière.');
+        $noseGrab->setDescription('Saisie de la partie avant de la planche, avec la main avant.');
         $manager->persist($noseGrab);
 
         $japan = new Trick();
@@ -80,6 +80,13 @@ class TricksFixture extends Fixture
         $japan->setType($grabs);
         $japan->setDescription('Saisie de l\'avant de la planche, avec la main avant, du côté de la carre frontside.');
         $manager->persist($japan);
+
+        $seaBelt = new Trick();
+        $seaBelt->setName('Seat Belt');
+        $seaBelt->setSlug();
+        $seaBelt->setType($grabs);
+        $seaBelt->setDescription('Saisie du carre frontside à l\'arrière avec la main avant.');
+        $manager->persist($seaBelt);
 
         $halfTurn = new Trick();
         $halfTurn->setName('180');
