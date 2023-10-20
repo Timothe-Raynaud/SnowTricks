@@ -20,7 +20,7 @@ class Comment
     #[ORM\Column(type: "string", length: 500)]
     private string $content;
 
-    #[ORM\ManyToOne(targetEntity: "Trick", cascade: ["persist"], inversedBy: "comments")]
+    #[ORM\ManyToOne(targetEntity: "Trick", cascade: ["persist"])]
     #[ORM\JoinColumn(name: "trick_id", referencedColumnName: "trick_id", onDelete: "CASCADE")]
     private Trick $trick;
 
