@@ -46,9 +46,6 @@ class Trick
     #[ORM\OneToMany(mappedBy: "trick", targetEntity: "Video", cascade: ["persist", "remove"], orphanRemoval: true)]
     private ?Collection $videos;
 
-    #[ORM\OneToMany(mappedBy: "trick", targetEntity: "Comment", cascade: ["persist", "remove"], orphanRemoval: true)]
-    private ?Collection $comments;
-
     public function setId(?int $trick_id): void
     {
         $this->trick_id = $trick_id;

@@ -44,26 +44,4 @@ class ImagesRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function getImageByTrickId(int $trickId) : ?array
-    {
-        $sql = "
-            SELECT i.filename
-                , i.is_main
-            FROM images i 
-            WHERE trick_id = :trickId
-        ";
-
-        $rsm = new ResultSetMapping();
-        $rsm->addScalarResult('filename', 'filename');
-        $rsm->addScalarResult('is_main', 'isMain');
-
-        $query = $this->em->createNativeQuery($sql, $rsm)
-            ->setParameter(':trickId', $trickId);
-
-        return $query->getResult();
-    }
 }

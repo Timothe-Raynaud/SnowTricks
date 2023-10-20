@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use function PHPUnit\Framework\throwException;
 
 class TricksHandler
 {

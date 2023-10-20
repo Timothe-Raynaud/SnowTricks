@@ -43,21 +43,4 @@ class VideosRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
-    public function getVideosByTrickId(int $trickId) : ?array
-    {
-        $sql = "
-            SELECT i.url
-            FROM video i 
-            WHERE trick_id = :trickId
-        ";
-
-        $rsm = new ResultSetMapping();
-        $rsm->addScalarResult('url', 'url');
-
-        $query = $this->em->createNativeQuery($sql, $rsm)
-            ->setParameter(':trickId', $trickId);
-
-        return $query->getResult();
-    }
 }

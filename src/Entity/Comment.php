@@ -21,7 +21,7 @@ class Comment
     private string $content;
 
     #[ORM\ManyToOne(targetEntity: "Trick", cascade: ["persist"], inversedBy: "comments")]
-    #[ORM\JoinColumn(name: "trick_id", referencedColumnName: "trick_id")]
+    #[ORM\JoinColumn(name: "trick_id", referencedColumnName: "trick_id", onDelete: "CASCADE")]
     private Trick $trick;
 
     #[ORM\ManyToOne(targetEntity: "User")]
