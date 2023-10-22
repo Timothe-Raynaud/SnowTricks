@@ -3,6 +3,7 @@ parameters:
     upload_directory: '%kernel.project_dir%/public/uploads'
     trick_image_directory: '%upload_directory%/images/tricks/'
     trick_image_directory_url: '/uploads/images/tricks/'
+    from: 'send@example.com'
 
 services:
     _defaults:

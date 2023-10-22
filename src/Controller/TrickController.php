@@ -23,7 +23,6 @@ class TrickController extends AbstractController
     #[Route(path: '/get_tricks', name: 'get_tricks', methods: ['POST'])]
     public function getTricks(Request $request, TricksRepository $tricksRepository): Response
     {
-
         $requestContent = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
         if (!empty($requestContent['elementNumber'])) {
@@ -54,22 +53,17 @@ class TrickController extends AbstractController
      * @throws NonUniqueResultException
      */
     #[Route(path: '/trick-manager/{slug}', name: 'add_tricks', defaults: ["slug" => null], methods: ['GET', 'POST'])]
-    public function trickManager(?string $slug, TricksRepository $tricksRepository): Response
+    public function trickManager(?Trick $trick): Response
     {
-        if (!$this->getUser()) {
-            return $this->redirectToRoute('user_login');
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
 
         $param = [];
-        if ($slug) {
-            $trick = $tricksRepository->findTrickBySlugWithMedia($slug);
-            if ($trick instanceof Trick){
-                $form = $this->createForm(TricksType::class, $trick);
-                $param = [
-                    'form' => $form->createView(),
-                    'trick' => $trick
-                ];
-            }
+        if ($trick instanceof Trick){
+            $form = $this->createForm(TricksType::class, $trick);
+            $param = [
+                'form' => $form->createView(),
+                'trick' => $trick
+            ];
         }
 
         return $this->render('app/pages/tricks/new_trick.html.twig', [
@@ -107,22 +101,18 @@ class TrickController extends AbstractController
     }
 
     #[Route(path: '/detail/{slug}', name: 'redirect_detail_to_home', methods: ['GET'])]
-    public function redirectDetailToHome(string $slug): Response
+    public function redirectDetailToHome(): Response
     {
         return $this->redirectToRoute('home', []);
     }
 
     #[Route(path: '/trick/delete/{slug}', name: 'delete_trick', methods: ['GET'])]
-    public function deleteTrick(string $slug, TricksRepository $tricksRepository): Response
+    public function deleteTrick(Trick $trick, TricksRepository $tricksRepository): Response
     {
-        $trick = $tricksRepository->findOneBy(['slug' => $slug]);
-        if ($trick instanceof Trick) {
-            $tricksRepository->remove($trick, true);
-            $this->addFlash('success', 'Le trick a bien été supprimé.');
-            return $this->redirectToRoute('home', []);
-        }
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
 
-        $this->addFlash('error', 'Un problème est survenue lors de la suppression du trick.');
+        $tricksRepository->remove($trick, true);
+        $this->addFlash('success', 'Le trick a bien été supprimé.');
 
         return $this->redirectToRoute('home', []);
     }
@@ -130,6 +120,8 @@ class TrickController extends AbstractController
     #[Route(path: '/form/update/{id}', name: 'trick_form_fetch', defaults: ["id" => null], methods: ['POST'])]
     public function trickFormFetch(Request $request, TricksHandler $tricksHandler, TricksRepository $tricksRepository, ?int $id): ?Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
+
         $trick = $id ? $tricksRepository->find($id) : new Trick();
         $form = $this->createForm(TricksType::class, $trick);
 

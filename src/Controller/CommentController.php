@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Trick;
 use App\Form\Handler\CommentsHandler;
 use App\Form\Type\CommentType;
 use App\Repository\CommentsRepository;
@@ -18,6 +19,8 @@ class CommentController extends AbstractController
     #[Route('/form/{id}', name: 'form', methods: ['POST'])]
     public function addComment(Request $request, int $id, CommentsHandler $commentsHandler): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
+
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
 
@@ -28,13 +31,8 @@ class CommentController extends AbstractController
      * @throws \JsonException
      */
     #[Route('/get-comments-fetch/{slug}', name: 'get_comments-fetch', methods: ['POST'])]
-    public function getCommentsFetch(string $slug, Request $request, CommentsRepository $commentsRepository, TricksRepository $tricksRepository): Response
+    public function getCommentsFetch(Trick $trick, Request $request, CommentsRepository $commentsRepository, TricksRepository $tricksRepository): Response
     {
-        $trick = $tricksRepository->findOneBy(['slug' => $slug]);
-        if ($trick === null) {
-            throw $this->createNotFoundException('Une erreur est survenue');
-        }
-
         $requestContent = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
         if (!empty($requestContent['elementNumber'])) {

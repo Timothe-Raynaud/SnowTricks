@@ -57,10 +57,13 @@ class TricksHandler
 
             $trick->setSlug();
 
+            // Récupération du message d'erreur pour le formulaire geré en fetch
+            $existTrick = $this->tricksRepository->findOneBy(['slug' => $trick->getSlug()]);
+            if ($existTrick instanceof Trick && $existTrick->getTrickId() !== $trick->getTrickId()) {
+                return $this->renderMessage('error', 'Un trick avec ce nom existe déjà.');
+            }
+
             if (!$this->entity->contains($trick)) {
-                if ($this->tricksRepository->findOneBy(['slug' => $trick->getSlug()]) instanceof Trick) {
-                    return $this->renderMessage('error', 'Un trick avec ce nom existe déjà.');
-                }
                 $this->entity->persist($trick);
             }
 

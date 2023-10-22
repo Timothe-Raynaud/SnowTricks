@@ -6,12 +6,17 @@ use App\Traits\TimestampableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity]
 #[ORM\Table(name: "tricks")]
 #[ORM\HasLifecycleCallbacks]
+#[UniqueEntity(
+    fields: ['slug'],
+    message: 'Une figure existe déja avec ce nom.'
+)]
 class Trick
 {
     use TimestampableTrait;
@@ -30,7 +35,7 @@ class Trick
     #[ORM\Column(type: "string", length: 100)]
     private string $name;
 
-    #[ORM\Column(type: "string", length: 100)]
+    #[ORM\Column(type: "string", length: 100, unique: true)]
     private string $slug;
 
     #[ORM\Column(type: "string", length: 3000)]
