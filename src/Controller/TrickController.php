@@ -9,6 +9,7 @@ use App\Form\Type\CommentType;
 use App\Form\Type\TricksType;
 use App\Repository\TricksRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,14 +50,10 @@ class TrickController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
-    /**
-     * @throws NonUniqueResultException
-     */
+    #[IsGranted('IS_AUTHENTICATED')]
     #[Route(path: '/trick-manager/{slug}', name: 'add_tricks', defaults: ["slug" => null], methods: ['GET', 'POST'])]
     public function trickManager(?Trick $trick): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
-
         $param = [];
         if ($trick instanceof Trick){
             $form = $this->createForm(TricksType::class, $trick);
@@ -106,22 +103,20 @@ class TrickController extends AbstractController
         return $this->redirectToRoute('home', []);
     }
 
+    #[IsGranted('IS_AUTHENTICATED')]
     #[Route(path: '/trick/delete/{slug}', name: 'delete_trick', methods: ['GET'])]
     public function deleteTrick(Trick $trick, TricksRepository $tricksRepository): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
-
         $tricksRepository->remove($trick, true);
         $this->addFlash('success', 'Le trick a bien été supprimé.');
 
         return $this->redirectToRoute('home', []);
     }
 
+    #[IsGranted('IS_AUTHENTICATED')]
     #[Route(path: '/form/update/{id}', name: 'trick_form_fetch', defaults: ["id" => null], methods: ['POST'])]
     public function trickFormFetch(Request $request, TricksHandler $tricksHandler, TricksRepository $tricksRepository, ?int $id): ?Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
-
         $trick = $id ? $tricksRepository->find($id) : new Trick();
         $form = $this->createForm(TricksType::class, $trick);
 

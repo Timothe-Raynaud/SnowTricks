@@ -8,6 +8,7 @@ use App\Form\Handler\CommentsHandler;
 use App\Form\Type\CommentType;
 use App\Repository\CommentsRepository;
 use App\Repository\TricksRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,11 +17,10 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/comments', name: 'comments_')]
 class CommentController extends AbstractController
 {
+    #[IsGranted('IS_AUTHENTICATED')]
     #[Route('/form/{id}', name: 'form', methods: ['POST'])]
     public function addComment(Request $request, int $id, CommentsHandler $commentsHandler): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
-
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
 
